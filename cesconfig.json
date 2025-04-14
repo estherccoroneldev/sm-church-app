@@ -1,0 +1,48 @@
+{
+  "cesVersion": "2.14.3",
+  "projectName": "sm-church-app",
+  "packages": [
+    {
+      "name": "react-navigation",
+      "type": "navigation",
+      "options": {
+        "type": "tabs"
+      }
+    },
+    {
+      "name": "tamagui",
+      "type": "styling"
+    },
+    {
+      "name": "firebase",
+      "type": "authentication"
+    },
+    {
+      "name": "zustand",
+      "type": "state-management"
+    },
+    {
+      "name": "i18next",
+      "type": "internationalization"
+    }
+  ],
+  "flags": {
+    "noGit": false,
+    "noInstall": false,
+    "overwrite": false,
+    "importAlias": true,
+    "packageManager": "yarn",
+    "eas": true,
+    "publish": false
+  },
+  "packageManager": {
+    "type": "yarn",
+    "version": "1.22.22"
+  },
+  "os": {
+    "type": "Darwin",
+    "platform": "darwin",
+    "arch": "arm64",
+    "kernelVersion": "24.3.0"
+  }
+}
