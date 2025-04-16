@@ -1,6 +1,5 @@
 import { createAnimations } from '@tamagui/animations-react-native';
 import { createInterFont } from '@tamagui/font-inter';
-import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
 import { createTamagui, styled, SizableText, H1, YStack, Button as ButtonTamagui } from 'tamagui';
@@ -25,9 +24,13 @@ const animations = createAnimations({
   },
 });
 
-const headingFont = createInterFont();
+const headingFont = createInterFont({
+  family: 'Inter-Bold',
+});
 
-const bodyFont = createInterFont();
+const bodyFont = createInterFont({
+  family: 'Inter-Medium',
+});
 
 export const Container = styled(YStack, {
   flex: 1,
@@ -94,7 +97,7 @@ const config = createTamagui({
   },
   themes,
   tokens,
-  media: createMedia({
+  media: {
     xs: { maxWidth: 660 },
     sm: { maxWidth: 800 },
     md: { maxWidth: 1020 },
@@ -109,7 +112,7 @@ const config = createTamagui({
     tall: { minHeight: 820 },
     hoverNone: { hover: 'none' },
     pointerCoarse: { pointer: 'coarse' },
-  }),
+  },
 });
 
 type AppConfig = typeof config;

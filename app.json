@@ -3,18 +3,14 @@
     "name": "sm-church-app",
     "slug": "sm-church-app",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
     "plugins": [
       "expo-localization",
-
       [
         "expo-dev-launcher",
         {
@@ -22,12 +18,9 @@
         }
       ]
     ],
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -35,12 +28,21 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
+      "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.lestherccoroneldev.smchurchapp",
+      "jsEngine": "hermes"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3ffce132-ac8c-4eb1-9f90-2246294fc13b"
       }
     }
   }

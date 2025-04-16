@@ -33,6 +33,7 @@
     "firebase": "^10.5.2",
     "i18next": "^23.7.20",
     "react": "18.3.1",
+    "react-dom": "18",
     "react-i18next": "^14.0.1",
     "react-native": "0.76.9",
     "react-native-gesture-handler": "~2.20.2",
@@ -53,7 +54,36 @@
     "typescript": "~5.3.3"
   },
   "eslintConfig": {
-    "extends": "universe/native",
+    "extends": [
+      "universe/native",
+      "universe/shared/typescript-analysis"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.ts",
+          "*.tsx",
+          "*.d.ts"
+        ],
+        "parserOptions": {
+          "project": "./tsconfig.json"
+        },
+        "rules": {
+          "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+              "argsIgnorePattern": "^_"
+            }
+          ],
+          "complexity": "warn",
+          "react-native/no-unused-styles": "error",
+          "react-native/split-platform-components": "error",
+          "react-native/no-color-literals": "error",
+          "react-native/no-raw-text": "error",
+          "react-native/no-single-element-style-arrays": "error"
+        }
+      }
+    ],
     "root": true
   },
   "main": "node_modules/expo/AppEntry.js",
