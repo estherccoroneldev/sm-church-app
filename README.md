@@ -15,12 +15,12 @@ This repository contains the **San Mateo Church App**, a mobile application desi
 
 ```
 sm-church-app/
-├── components/       # Reusable UI components
-├── screens/          # Application screens
-├── navigation/       # Navigation configuration
-├── services/         # API and backend services
-├── utils/            # Utility functions
-|── assets/           # Images, fonts, and other static assets
+├── components/           # Reusable UI components
+├── screens/              # Application screens
+├── navigation/           # Navigation configuration
+├── services/             # API and backend services
+├── utils/                # Utility functions
+|── assets/               # Images, fonts, and other static assets
 ├── tests/                # Unit and integration tests
 ├── package.json          # Project dependencies and scripts
 └── README.md             # Project documentation

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabOne Screen renders correctly 1`] = `
+<View
+  style={[]}
+>
+  <Text
+    style={[]}
+  >
+    Tab One
+  </Text>
+  <View
+    style={[]}
+  />
+  <View
+    style={[]}
+  >
+    <View
+      style={[]}
+    >
+      <Text
+        style={[]}
+      >
+        getStarted
+      </Text>
+      <View
+        style={[]}
+      >
+        <Text
+          style={[]}
+        >
+          screens/one.tsx
+        </Text>
+      </View>
+      <Text
+        style={[]}
+      >
+        changeCode
+      </Text>
+    </View>
+  </View>
+</View>
+`;
