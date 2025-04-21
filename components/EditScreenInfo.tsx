@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { YStack, H4, Paragraph } from 'tamagui';
+import { H4, Paragraph, YStack } from 'tamagui';
 
 export const EditScreenInfo = ({ path }: { path: string }) => {
   const { t } = useTranslation();

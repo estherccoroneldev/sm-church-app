@@ -1,4 +1,4 @@
-import { YStack, H2, Separator, Theme } from 'tamagui';
+import { H2, Separator, Theme, YStack } from 'tamagui';
 
 import { EditScreenInfo } from './EditScreenInfo';
 

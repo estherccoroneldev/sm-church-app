@@ -3,12 +3,12 @@ import { forwardRef } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
 export const HeaderButton = forwardRef<typeof Pressable, { onPress?: () => void }>(
-  ({ onPress }, ref) => {
+  ({ onPress }, _ref) => {
     return (
       <Pressable onPress={onPress}>
         {({ pressed }) => (
           <FontAwesome
-            name="info-circle"
+            name="user-circle"
             size={25}
             color="gray"
             style={[

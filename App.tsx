@@ -4,14 +4,16 @@ import 'react-native-gesture-handler';
 
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { TamaguiProvider } from 'tamagui';
 
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import RootStack from './navigation';
 import config from './tamagui.config';
-
 SplashScreen.preventAutoHideAsync();
 
+// TO DO: Add accessibility labels to all components
 export default function App() {
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
@@ -29,8 +31,11 @@ export default function App() {
   }
 
   return (
-    <TamaguiProvider config={config}>
-      <RootStack />
-    </TamaguiProvider>
+    <SafeAreaProvider>
+      <TamaguiProvider config={config}>
+        <StatusBar />
+        <RootStack />
+      </TamaguiProvider>
+    </SafeAreaProvider>
   );
 }
