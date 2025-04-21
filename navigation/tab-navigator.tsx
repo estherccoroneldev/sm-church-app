@@ -3,7 +3,6 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootStackParamList } from '.';
 import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
 import About from '../screens/about-screen';
@@ -14,6 +13,7 @@ import Giving from '../screens/giving-screen';
 import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
+import { RootStackParamList } from './root-stack-navigator';
 
 type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
@@ -42,11 +42,11 @@ export type AboutParamList = {
 
 // Define the type for the Tab Navigator's parameter list
 export type TabParamList = {
-  Home: NavigatorScreenParams<HomeParamList>;
-  Media: NavigatorScreenParams<MediaParamList>;
-  Events: NavigatorScreenParams<EventsParamList>;
-  Giving: NavigatorScreenParams<GivingParamList>;
-  About: NavigatorScreenParams<AboutParamList>;
+  HomeStack: NavigatorScreenParams<HomeParamList>;
+  MediaStack: NavigatorScreenParams<MediaParamList>;
+  EventsStack: NavigatorScreenParams<EventsParamList>;
+  GivingStack: NavigatorScreenParams<GivingParamList>;
+  AboutStack: NavigatorScreenParams<AboutParamList>;
 };
 
 const HomeStack = createNativeStackNavigator<HomeParamList>();
@@ -101,9 +101,27 @@ export default function TabLayout({ navigation }: Props) {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: 'black',
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: 'white',
+          position: 'absolute',
+          bottom: 24,
+          left: 24,
+          right: 24,
+          borderRadius: 16,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.5,
+          elevation: 4,
+          paddingTop: 5,
+        },
       }}>
       <Tab.Screen
-        name="Home"
+        name="HomeStack"
         component={HomeStackScreen}
         options={{
           title: 'Home',
@@ -113,15 +131,15 @@ export default function TabLayout({ navigation }: Props) {
         }}
       />
       <Tab.Screen
-        name="Media"
+        name="MediaStack"
         component={MediaStackScreen}
         options={{
           title: 'Media',
-          tabBarIcon: ({ color }) => <TabBarIcon name="film" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}
       />
       <Tab.Screen
-        name="Events"
+        name="EventsStack"
         component={EventsStackScreen}
         options={{
           title: 'Events',
@@ -129,7 +147,7 @@ export default function TabLayout({ navigation }: Props) {
         }}
       />
       <Tab.Screen
-        name="Giving"
+        name="GivingStack"
         component={GivingStackScreen}
         options={{
           title: 'Giving',
@@ -137,12 +155,12 @@ export default function TabLayout({ navigation }: Props) {
         }}
       />
       <Tab.Screen
-        name="About"
+        name="AboutStack"
         component={AboutStackScreen}
         options={{
           title: 'About',
           // TO DO: change this icon
-          tabBarIcon: ({ color }) => <TabBarIcon name="info-circle" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}
       />
     </Tab.Navigator>
