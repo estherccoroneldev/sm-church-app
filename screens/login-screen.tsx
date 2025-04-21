@@ -1,0 +1,116 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
+import { AuthStackParamList } from 'navigation/auth-navigator';
+import React from 'react';
+import { Dimensions } from 'react-native';
+import { Image, SizableText, YStack } from 'tamagui';
+import { Container, PrimaryButton } from 'tamagui.config';
+import { useAuth } from '../store/auth-store';
+
+const { width, height } = Dimensions.get('window');
+
+type LoginScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'Login'>;
+const Login: React.FC = () => {
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+
+  // TO DO: replace this leater by firebase auth
+  const signInAsGuest = useAuth((state) => state.signInAsGuest);
+  // const user = await auth().signInAnonymously();
+
+  const handlePress = () => {
+    signInAsGuest();
+  };
+
+  const handleGoToForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
+  };
+
+  return (
+    <>
+      <StatusBar translucent hideTransitionAnimation="fade" />
+      <YStack justifyContent="center" alignItems="center" flex={1.5}>
+        <Image
+          source={require('../assets/background-welcome.png')}
+          alt="Logo"
+          width={width}
+          height={height * 0.5}
+          resizeMethod="scale"
+        />
+      </YStack>
+
+      <YStack
+        flex={2}
+        justifyContent="center"
+        borderTopRightRadius={30}
+        borderTopLeftRadius={30}
+        mt={-30}
+        pt={30}
+        backgroundColor="$background"
+        padding="$4">
+        <Container>
+          <SizableText fontSize="$8" textAlign="center" marginBottom="$4">
+            Welcome to San Mateo Episcopal Church
+          </SizableText>
+          <SizableText fontSize="$4" textAlign="center" marginBottom="$8">
+            Join us in our mission to serve the community and grow in faith.
+          </SizableText>
+
+          {/* TO DO: this button should route or change state to Login Input */}
+          <PrimaryButton size="$4" mt="$6" mb="$2" onPress={handlePress}>
+            Login
+          </PrimaryButton>
+          <SizableText
+            disabled // TO DO: remove this when the register screen is ready
+            fontSize="$4"
+            textAlign="right"
+            marginBottom="$4"
+            onPress={handleGoToForgotPassword}
+            opacity={0.7}
+            hoverStyle={{ opacity: 1 }}
+            pressStyle={{ opacity: 0.5 }}
+            fontWeight="bold"
+            color="$blue10">
+            Forgot Password?
+          </SizableText>
+        </Container>
+        <Container justifyContent="flex-end">
+          <SizableText
+            fontSize="$4"
+            textAlign="center"
+            marginBottom="$2"
+            onPress={handlePress}
+            opacity={0.7}
+            hoverStyle={{ opacity: 1 }}
+            pressStyle={{ opacity: 0.5 }}>
+            Continue as a{' '}
+            <SizableText fontWeight="bold" color="$blue10">
+              Guest
+            </SizableText>
+          </SizableText>
+          <SizableText
+            disabled // TO DO: remove this when the register screen is ready
+            fontSize="$4"
+            textAlign="center"
+            marginBottom="$2"
+            onPress={handlePress}
+            opacity={0.7}
+            hoverStyle={{ opacity: 1 }}
+            pressStyle={{ opacity: 0.5 }}>
+            Don't have an account?{' '}
+            <SizableText fontWeight="bold" color="$blue10">
+              Register
+            </SizableText>
+          </SizableText>
+
+          {/* TO DO: Adds here the terms and conditions policies website link */}
+          {/* <SizableText fontSize="$4" textAlign="center" marginBottom="$4">
+            By signing in, you agree to our Terms of Service and Privacy Policy.
+          </SizableText> */}
+        </Container>
+      </YStack>
+    </>
+  );
+};
+
+export default Login;

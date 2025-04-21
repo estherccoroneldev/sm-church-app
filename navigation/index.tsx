@@ -1,31 +1,45 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
+import { useAuth } from 'store/auth-store';
+import AuthNavigator from './auth-navigator';
+import RootStack from './root-stack-navigator';
 
-import TabNavigator from './tab-navigator';
-import Modal from '../screens/modal';
+// import auth from '@react-native-firebase/auth';
 
-export type RootStackParamList = {
-  TabNavigator: undefined;
-  Modal: undefined;
-};
+// TO DO: handle conditional for login functionality w firebase
+function AppNavigator() {
+  const [initializing, setInitializing] = useState(true);
+  const user = useAuth((state) => state.user);
 
-const Stack = createStackNavigator<RootStackParamList>();
+  // TO DO: Remove this logic when using firebase
+  React.useEffect(() => {
+    const init = async () => {
+      setTimeout(() => {
+        setInitializing(false);
+        if (initializing) setInitializing(false);
+      }, 1000);
+    };
 
-export default function RootStack() {
+    init();
+  }, []);
+
+  // React.useEffect(() => {
+  //   const subscriber = auth().onAuthStateChanged((user) => {
+  //     setUser(user);
+  //     if (initializing) setInitializing(false);
+  //   });
+  //   return subscriber; // unsubscribe on unmount
+  // }, []);
+
+  if (initializing) return null;
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TabNavigator">
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Modal"
-          component={Modal}
-          options={{ presentation: 'modal', headerLeft: () => null }}
-        />
-      </Stack.Navigator>
+      <StatusBar />
+      {user ? <RootStack /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
+
+export default AppNavigator;
