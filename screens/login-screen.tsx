@@ -14,12 +14,26 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, '
 const Login: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
-  // TO DO: replace this leater by firebase auth
+  // TO DO: replace this later by firebase auth
   const signInAsGuest = useAuth((state) => state.signInAsGuest);
   // const user = await auth().signInAnonymously();
 
-  const handlePress = () => {
+  const signIn = useAuth((state) => state.signIn);
+  // const user = await auth().signInWithEmailAndPassword(email, password);
+
+  const handleSignInAsGuest = () => {
     signInAsGuest();
+  };
+
+  const handlePressSignIn = () => {
+    // TO DO: replace this later by firebase auth
+    const dummyUser = {
+      id: '1234',
+      name: 'John Doe',
+      isGuest: false,
+    };
+
+    signIn(dummyUser);
   };
 
   const handleGoToForgotPassword = () => {
@@ -57,7 +71,7 @@ const Login: React.FC = () => {
           </SizableText>
 
           {/* TO DO: this button should route or change state to Login Input */}
-          <PrimaryButton size="$4" mt="$6" mb="$2" onPress={handlePress}>
+          <PrimaryButton size="$4" mt="$6" mb="$2" onPress={handlePressSignIn}>
             Login
           </PrimaryButton>
           <SizableText
@@ -79,7 +93,7 @@ const Login: React.FC = () => {
             fontSize="$4"
             textAlign="center"
             marginBottom="$2"
-            onPress={handlePress}
+            onPress={handleSignInAsGuest}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
@@ -93,7 +107,7 @@ const Login: React.FC = () => {
             fontSize="$4"
             textAlign="center"
             marginBottom="$2"
-            onPress={handlePress}
+            onPress={handleSignInAsGuest}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
