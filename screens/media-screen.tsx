@@ -20,7 +20,7 @@ const Media: React.FC = () => {
   };
 
   return (
-    <ScreenContent path="screens/Media/index.tsx" title="Media Screen">
+    <ScreenContent path="screens/Media/index.tsx" title="Media Screen" backgroundColor="beige">
       <Button
         size="$4"
         onPress={handlePress}

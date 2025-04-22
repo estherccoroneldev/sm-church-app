@@ -11,7 +11,7 @@ const About: React.FC = () => {
   };
 
   return (
-    <ScreenContent path="screens/about-screen" title="About Screen">
+    <ScreenContent path="screens/about-screen" title="About Screen" backgroundColor="rosybrown">
       <Button
         size="$4"
         onPress={handlePress}

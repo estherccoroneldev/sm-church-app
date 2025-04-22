@@ -19,7 +19,7 @@ const Events: React.FC = () => {
   };
 
   return (
-    <ScreenContent path="screens/Events/index.tsx" title="Events Screen">
+    <ScreenContent path="screens/Events/index.tsx" title="Events Screen" backgroundColor="$blue8">
       <Button
         size="$4"
         onPress={handlePress}

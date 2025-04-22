@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <ScreenContent path="screens/Home/index.tsx" title="Home Screen">
+    <ScreenContent path="screens/Home/index.tsx" title="Home Screen" backgroundColor="$blue10">
       <Button
         size="$4"
         onPress={handlePress}
