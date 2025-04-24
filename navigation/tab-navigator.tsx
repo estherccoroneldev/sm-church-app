@@ -124,17 +124,20 @@ export default function TabLayout({ navigation }: Props) {
         name="HomeStack"
         component={HomeStackScreen}
         options={{
-          title: 'Home',
+          title: '',
+          headerShown: true,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           // TO DO: it should be a button header that navigate to the profile screen
           headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
+          headerShadowVisible: false,
         }}
       />
       <Tab.Screen
         name="MediaStack"
         component={MediaStackScreen}
         options={{
-          title: 'Media',
+          title: '',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}
       />
@@ -142,7 +145,8 @@ export default function TabLayout({ navigation }: Props) {
         name="EventsStack"
         component={EventsStackScreen}
         options={{
-          title: 'Events',
+          title: '',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
@@ -150,7 +154,8 @@ export default function TabLayout({ navigation }: Props) {
         name="GivingStack"
         component={GivingStackScreen}
         options={{
-          title: 'Giving',
+          title: '',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="gift" color={color} />,
         }}
       />
@@ -158,7 +163,8 @@ export default function TabLayout({ navigation }: Props) {
         name="AboutStack"
         component={AboutStackScreen}
         options={{
-          title: 'About',
+          title: '',
+          headerShown: false,
           // TO DO: change this icon
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}
