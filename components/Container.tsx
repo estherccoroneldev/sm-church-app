@@ -11,7 +11,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
       }}
       edges={['left', 'right']}>
       <Theme name="light">
-        <YStack flex={1} paddingHorizontal="$6" backgroundColor="$white">
+        <YStack flex={1} backgroundColor="$white">
           {children}
         </YStack>
       </Theme>
