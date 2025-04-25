@@ -3,6 +3,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Announcement } from '../@types/announcement';
+import { Event } from '../@types/event';
 import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
 import About from '../screens/about-screen';
@@ -19,12 +21,13 @@ type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
-  AnnouncementDetails: { id: number; title: string; description: string; date: string };
+  AnnouncementDetails: Announcement;
+  EventDetails: Event;
 };
 
 export type EventsParamList = {
   Events: undefined;
-  EventDetails: { id: number; title: string; description: string; date: string };
+  EventDetails: Event;
 };
 
 export type MediaParamList = {
@@ -62,6 +65,8 @@ export function HomeStackScreen() {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="AnnouncementDetails" component={AnnouncementDetails} />
+      {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Think later */}
+      <HomeStack.Screen name="EventDetails" component={EventDetails} />
     </HomeStack.Navigator>
   );
 }
