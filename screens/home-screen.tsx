@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, Image, ScrollView, SizableText, XStack, YStack } from 'tamagui';
 import { useAuth } from '../store/auth-store';
 
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { ListRenderItem } from 'react-native';
 import { Announcement } from '../@types/announcement';
 import { Event } from '../@types/event';
@@ -30,6 +31,7 @@ const logoStyle = {
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation<HomeScreenNavigationProp>();
+  const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const user = useAuth((state) => state.user);
   // TO DO: need to be in the store, when working on the calendar tab
   const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
@@ -45,7 +47,11 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <ScrollView flex={1} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        flex={1}
+        paddingHorizontal="$4"
+        contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT }}
+        showsVerticalScrollIndicator={false}>
         <YStack marginBottom="$6" gap="$4">
           <Image source={require('../assets/logo-episcosanmateo.png')} style={logoStyle} />
           <SizableText
