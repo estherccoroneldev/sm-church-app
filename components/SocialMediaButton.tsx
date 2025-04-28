@@ -7,7 +7,7 @@ interface SocialMediaButtonProps extends React.ComponentProps<typeof FontAwesome
 }
 
 export const SocialMediaButton = forwardRef<typeof Pressable, SocialMediaButtonProps>(
-  ({ onPress, name, size, color }, _ref) => {
+  ({ onPress, name, size = 28, color }, _ref) => {
     return (
       <Pressable onPress={onPress}>
         {({ pressed }) => (
