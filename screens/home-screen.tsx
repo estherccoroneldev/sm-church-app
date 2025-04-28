@@ -5,6 +5,7 @@ import { Button, Image, ScrollView, SizableText, XStack, YStack } from 'tamagui'
 import { useAuth } from '../store/auth-store';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { SocialMediaButton } from 'components/SocialMediaButton';
 import { ListRenderItem } from 'react-native';
 import { Announcement } from '../@types/announcement';
 import { Event } from '../@types/event';
@@ -81,15 +82,15 @@ const Home: React.FC = () => {
           keyExtractor={keyExtractor}
         />
 
-        {/* TO DO: customize it */}
+        {/* Footer Section */}
         <YStack marginBottom="$6">
-          <SizableText size="$8" aria-label="Follow Us" mb="$4">
-            Follow Us
+          <SizableText size="$8" aria-label="Follow Us" mb="$6">
+            Follow Us on Social Media
           </SizableText>
           <XStack justifyContent="space-around">
-            <Button>Facebook</Button>
-            <Button>Instagram</Button>
-            <Button>Twitter</Button>
+            <SocialMediaButton name="facebook-square" size={32} color={'#3b5998'} />
+            <SocialMediaButton name="instagram" size={32} color={'#d62976'} />
+            <SocialMediaButton name="youtube" size={32} color={'#cd201f'} />
           </XStack>
         </YStack>
       </ScrollView>
