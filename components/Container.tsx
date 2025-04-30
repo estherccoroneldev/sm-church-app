@@ -1,8 +1,11 @@
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Theme, YStack } from 'tamagui';
+import { ScrollView, Theme } from 'tamagui';
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
+  const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
+
   return (
     <SafeAreaView
       style={{
@@ -11,9 +14,13 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
       }}
       edges={['left', 'right']}>
       <Theme name="light">
-        <YStack flex={1} backgroundColor="$white">
+        <ScrollView
+          flex={1}
+          paddingHorizontal="$4"
+          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT }}
+          showsVerticalScrollIndicator={false}>
           {children}
-        </YStack>
+        </ScrollView>
       </Theme>
     </SafeAreaView>
   );
