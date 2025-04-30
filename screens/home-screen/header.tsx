@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { User } from 'store/auth-store';
-import { H3, Image, SizableText, YStack } from 'tamagui';
+import { H3, Image, YStack } from 'tamagui';
 const { width } = Dimensions.get('window');
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ user }) => (
-  <YStack marginBottom="$6" gap="$4">
+  <YStack marginBottom="$4" gap="$1">
     <Image
       source={require('../../assets/logo-sm-w-shadow.png')}
       style={{

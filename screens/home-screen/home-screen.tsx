@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { Image, ScrollView, SizableText, XStack, YStack } from 'tamagui';
+import { H3, SizableText } from 'tamagui';
 import { useAuth } from '../../store/auth-store';
 
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { ListRenderItem } from 'react-native';
 import Footer from 'screens/home-screen/footer';
 import Header from 'screens/home-screen/header';
@@ -25,7 +24,6 @@ function keyExtractor<T extends { id: string }>(item: T) {
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation<HomeScreenNavigationProp>();
-  const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const user = useAuth((state) => state.user);
   // TO DO: need to be in the store, when working on the calendar tab
   const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
@@ -41,39 +39,38 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <ScrollView
-        flex={1}
-        paddingHorizontal="$4"
-        contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT }}
-        showsVerticalScrollIndicator={false}>
-        {/* Header section */}
-        <Header user={user} />
+      {/* Header section */}
+      <Header user={user} />
+      <H3 aria-label="Announcements" mb="$4">
+        Announcements
+      </H3>
 
-        {/* Announcements section */}
-        <HorizontalListSection<Announcement>
-          title="Announcements"
-          data={announcements}
-          renderItem={renderAnnouncementItem}
-          loading={loading}
-          error={error}
-          ListEmptyComponent={() => <SizableText size="$4">No announcements yet.</SizableText>}
-          keyExtractor={keyExtractor}
-        />
+      {/* Upcoming Events section */}
+      <HorizontalListSection<Event>
+        title="Upcoming Events"
+        data={upcomingEvents}
+        renderItem={renderEventItem}
+        loading={loadingEvents}
+        error={eventsError}
+        ListEmptyComponent={() => <SizableText size="$4">No events yet.</SizableText>}
+        keyExtractor={keyExtractor}
+      />
 
-        {/* Upcoming Events section */}
-        <HorizontalListSection<Event>
-          title="Upcoming Events"
-          data={upcomingEvents}
-          renderItem={renderEventItem}
-          loading={loadingEvents}
-          error={eventsError}
-          ListEmptyComponent={() => <SizableText size="$4">No events yet.</SizableText>}
-          keyExtractor={keyExtractor}
-        />
+      {/* TO DO: adds the servings opportunities data */}
+      <HorizontalListSection<Announcement>
+        title="Serving Opportunities"
+        data={announcements}
+        renderItem={renderAnnouncementItem}
+        loading={loading}
+        error={error}
+        ListEmptyComponent={() => (
+          <SizableText size="$4">No serving opportunities yet.</SizableText>
+        )}
+        keyExtractor={keyExtractor}
+      />
 
-        {/* Footer Section */}
-        <Footer />
-      </ScrollView>
+      {/* Footer Section */}
+      <Footer />
     </Container>
   );
 };

@@ -59,8 +59,8 @@ const CardItem = <T extends BaseItem>({ item, onPress, fullmode = false }: CardI
             }}
             accessibilityRole="image"
           />
-          <YStack paddingHorizontal="$2" paddingVertical="$4" gap="$2" overflow="hidden">
-            <H4>{item.title}</H4>
+          <YStack paddingHorizontal="$3" paddingVertical="$4" gap="$2" overflow="hidden">
+            <H4 numberOfLines={1}>{item.title}</H4>
           </YStack>
           {fullmode ? (
             <>

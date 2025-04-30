@@ -1,5 +1,5 @@
 import React from 'react';
-import { H3, SizableText, XStack, YStack } from 'tamagui';
+import { H3, XStack, YStack } from 'tamagui';
 import { SocialMediaButton } from '../../components/SocialMediaButton';
 
 const Footer: React.FC = () => (
