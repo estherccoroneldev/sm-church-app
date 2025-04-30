@@ -17,7 +17,8 @@
           "launchMode": "most-recent"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",

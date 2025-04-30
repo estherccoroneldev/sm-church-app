@@ -1,5 +1,5 @@
 import { ActivityIndicator, FlatList, ListRenderItem } from 'react-native';
-import { SizableText, YStack, YStackProps } from 'tamagui';
+import { H3, SizableText, YStack, YStackProps } from 'tamagui';
 
 interface HorizontalListSectionProps<T> extends YStackProps {
   data: T[];
@@ -22,9 +22,9 @@ export default function HorizontalListSection<T>({
 }: HorizontalListSectionProps<T>) {
   return (
     <YStack flex={1} marginBottom="$4">
-      <SizableText size="$8" aria-label={title} mb="$4">
+      <H3 aria-label={title} mb="$4">
         {title}
-      </SizableText>
+      </H3>
       {loading ? (
         <ActivityIndicator />
       ) : error ? (

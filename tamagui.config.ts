@@ -25,11 +25,11 @@ const animations = createAnimations({
 });
 
 const headingFont = createInterFont({
-  family: 'Inter-Bold',
+  family: 'Outfit_600SemiBold',
 });
 
 const bodyFont = createInterFont({
-  family: 'Inter-Medium',
+  family: 'Outfit_300Light',
 });
 
 export const Container = styled(YStack, {
@@ -57,10 +57,10 @@ export const PrimaryButton = styled(ButtonTamagui, {
   backgroundColor: '$blue10Light',
   borderRadius: 28,
   hoverStyle: {
-    backgroundColor: '#5a5fcf',
+    backgroundColor: '$gray10',
   },
   pressStyle: {
-    backgroundColor: '#5a5fcf',
+    backgroundColor: '$gray10',
   },
   maxWidth: 500,
 

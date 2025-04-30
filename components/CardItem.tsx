@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { H5, Image, SizableText, YStack } from 'tamagui';
+import { H4, Image, SizableText, YStack } from 'tamagui';
 
 interface CardItemProps<T> {
   item: T;
@@ -60,7 +60,7 @@ const CardItem = <T extends BaseItem>({ item, onPress, fullmode = false }: CardI
             accessibilityRole="image"
           />
           <YStack paddingHorizontal="$2" paddingVertical="$4" gap="$2" overflow="hidden">
-            <H5>{item.title}</H5>
+            <H4>{item.title}</H4>
           </YStack>
           {fullmode ? (
             <>

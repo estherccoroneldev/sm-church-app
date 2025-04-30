@@ -2,7 +2,7 @@ import './translation';
 
 import 'react-native-gesture-handler';
 
-import { useFonts } from 'expo-font';
+import { Outfit_300Light, Outfit_600SemiBold, useFonts } from '@expo-google-fonts/outfit';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { TamaguiProvider } from 'tamagui';
@@ -17,6 +17,8 @@ export default function App() {
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+    Outfit_600SemiBold,
+    Outfit_300Light,
   });
 
   useEffect(() => {
