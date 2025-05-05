@@ -4,7 +4,9 @@ export type Event = {
   title: string;
   description: string;
   date: string;
-  place?: string;
+  contactName?: string;
+  location?: string; // TO DO: standardize this later
+  place?: string; // TO DO: remove this later
   department?: string;
   imageUrl?: string;
   downloadUrl?: string;

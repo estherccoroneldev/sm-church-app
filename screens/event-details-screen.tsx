@@ -7,9 +7,9 @@ type EventDetailsRouteProp = RouteProp<EventsParamList, 'EventDetails'>;
 
 const EventDetails: React.FC = () => {
   const { params } = useRoute<EventDetailsRouteProp>();
-  const { imageUrl, contact = 'Gary Oldman' } = params || {};
+  const { imageUrl, contactName = 'Gary Oldman' } = params || {};
 
-  return <DetailsLayout currentDetail={{ imageUrl, contact, ...params }} />;
+  return <DetailsLayout currentDetail={{ imageUrl, contactName, ...params }} />;
 };
 
 export default EventDetails;
