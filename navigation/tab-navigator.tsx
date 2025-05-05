@@ -152,7 +152,7 @@ export default function TabLayout({ navigation }: Props) {
         component={EventsStackScreen}
         options={{
           title: '',
-          headerShown: false,
+          headerShadowVisible: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
