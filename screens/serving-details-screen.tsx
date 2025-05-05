@@ -1,20 +1,17 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
+import DetailsLayout from 'components/DetailsLayout';
 import React from 'react';
-import { ScreenContent } from '../components/ScreenContent';
 import { HomeParamList } from '../navigation/tab-navigator';
 
 type ServingDetailsRouteProp = RouteProp<HomeParamList, 'ServingDetails'>;
 
 const ServingDetails: React.FC = () => {
   const { params } = useRoute<ServingDetailsRouteProp>();
+  const { imageUrl, contactName = 'Gary Oldman' } = params || {};
 
-  // Extract the eventId from params
-  const ServingId = params?.id;
-  // Log the ServingId to verify it's being passed correctly
-  console.log('Event ID:', ServingId);
-  const { title, description } = params || {};
-  console.log('Event Details:', { title, description });
-  return <ScreenContent path="screens/serving-details-screen" title="ServingDetails Screen" />;
+  return (
+    <DetailsLayout currentDetail={{ imageUrl, contactName, ...params }} hasDateSection={false} />
+  );
 };
 
 export default ServingDetails;
