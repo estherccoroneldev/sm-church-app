@@ -23,7 +23,7 @@ const DetailsLayout = <T extends Event>({
   hasLocationSection = true,
   children,
 }: Props<T>) => {
-  const { imageUrl, title, date, contact, description } = currentDetail;
+  const { imageUrl, title, date, contactName, description } = currentDetail;
 
   return (
     <Container>
@@ -51,7 +51,7 @@ const DetailsLayout = <T extends Event>({
           <SizableText size="$4">{'Event Contact'.toUpperCase()}</SizableText>
 
           {/* Avatar Section */}
-          {contact ? (
+          {contactName ? (
             <XStack flex={1} alignItems="center" gap="$4">
               <Avatar circular size="$6">
                 {/* TO DO: replace real image later, add to the DB structure */}
@@ -63,7 +63,7 @@ const DetailsLayout = <T extends Event>({
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
               </Avatar>
               {/* TO DO: add contact to the DB */}
-              <SizableText size="$6">{contact}</SizableText>
+              <SizableText size="$6">{contactName}</SizableText>
             </XStack>
           ) : (
             <SizableText size="$6">Unknown Contact</SizableText>

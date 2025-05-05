@@ -1,6 +1,9 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { H4, Image, SizableText, YStack } from 'tamagui';
+import { Dimensions, TouchableOpacity } from 'react-native';
+import { H3, H4, H5, Image, SizableText, YStack } from 'tamagui';
+import { formatDate } from '../utils/formatDate';
+
+const { width } = Dimensions.get('window');
 
 interface CardItemProps<T> {
   item: T;
@@ -11,7 +14,7 @@ interface BaseItem {
   id: string;
   title: string;
   description?: string;
-  date?: string;
+  date: string;
   imageUrl?: string;
   place?: string;
   department?: string;
@@ -23,32 +26,51 @@ interface CardItemProps<T extends BaseItem> {
   item: T;
   onPress: () => void;
   fullmode?: boolean;
+  hasDateSection?: boolean;
+  hasDescription?: boolean;
 }
+
+// TO DO: split out and exports, change the fontSize
+const Subtitle = ({ text }: { text: string }) => {
+  return (
+    <SizableText textTransform="uppercase" fontFamily="$heading" fontSize="$4">
+      {text}
+    </SizableText>
+  );
+};
 
 const DEFAULT_IMAGE = require('../assets/church-placeholder.jpg');
 
-const CardItem = <T extends BaseItem>({ item, onPress, fullmode = false }: CardItemProps<T>) => {
+const CardItem = <T extends BaseItem>({
+  item,
+  onPress,
+  fullmode = false,
+  hasDescription = false,
+  hasDateSection = false,
+}: CardItemProps<T>) => {
   const [image, setImage] = React.useState(item.imageUrl ? { uri: item.imageUrl } : DEFAULT_IMAGE);
+  const Title = fullmode ? H3 : H5;
 
   return (
     <TouchableOpacity onPress={onPress}>
       <YStack
-        marginRight="$4"
-        width={280}
-        borderRadius="$6"
-        borderWidth={1}
-        borderColor="$borderColor"
-        elevation={4}
-        marginBottom="$4"
-        backgroundColor="#fff">
+        marginRight={fullmode ? undefined : '$4'}
+        maxWidth={fullmode ? width : undefined}
+        width={fullmode ? undefined : width * 0.8}
+        borderRadius={fullmode ? '$6' : undefined}
+        borderWidth={fullmode ? 1 : undefined}
+        borderColor={fullmode ? '$borderColor' : undefined}
+        elevation={fullmode ? 4 : undefined}
+        marginBottom={fullmode ? '$4' : undefined}
+        backgroundColor={fullmode ? '#fff' : undefined}>
         <YStack flex={1}>
           <Image
             source={image}
             defaultSource={DEFAULT_IMAGE}
             width="100%"
-            height={160}
+            height={fullmode ? 220 : 180}
             borderRadius="$6"
-            marginBottom="$2"
+            marginBottom="$1"
             alt={item.title}
             aria-label={item.title}
             onError={(event) => {
@@ -59,35 +81,22 @@ const CardItem = <T extends BaseItem>({ item, onPress, fullmode = false }: CardI
             }}
             accessibilityRole="image"
           />
-          <YStack paddingHorizontal="$3" paddingVertical="$4" gap="$2" overflow="hidden">
-            <H4 numberOfLines={1}>{item.title}</H4>
-          </YStack>
-          {fullmode ? (
-            <>
-              {item.description ? (
-                <SizableText numberOfLines={3}>{item.description}</SizableText>
-              ) : null}
-              {item.date ? <SizableText>{item.date}</SizableText> : null}
 
-              {/* TO DO: Maybe in a next version */}
-              {/* {item.place ? <SizableText>{item.place}</SizableText> : null}
-            {item.department ? <SizableText>{item.department}</SizableText> : null}
-            {item.linkUrl ? (
-              <SizableText color="$blue10" fontWeight="bold">
-                {item.linkUrl}
-              </SizableText>
-            ) : null}
-            {item.isActive ? (
-              <SizableText color="$green10" fontWeight="bold">
-                Active
-              </SizableText>
-            ) : (
-              <SizableText color="$red10" fontWeight="bold">
-                Inactive
-              </SizableText>
-            )} */}
-            </>
-          ) : null}
+          {fullmode ? (
+            <YStack padding={'$4'} gap="$4" overflow="hidden">
+              <YStack>
+                <Title numberOfLines={1}>{item.title}</Title>
+                {hasDateSection && item.date ? <Subtitle text={formatDate(item.date)} /> : null}
+              </YStack>
+              {hasDescription && item.description ? (
+                <SizableText fontSize={'$6'} numberOfLines={3}>
+                  {item.description}
+                </SizableText>
+              ) : null}
+            </YStack>
+          ) : (
+            <Title numberOfLines={1}>{item.title}</Title>
+          )}
         </YStack>
       </YStack>
     </TouchableOpacity>
