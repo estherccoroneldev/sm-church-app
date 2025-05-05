@@ -29,6 +29,7 @@
     "@tamagui/shorthands": "^1.125.8",
     "@tamagui/themes": "^1.125.8",
     "axios": "^1.8.4",
+    "date-fns": "^4.1.0",
     "expo": "^52.0.44",
     "expo-dev-client": "~5.0.4",
     "expo-dev-launcher": "^5.0.17",
