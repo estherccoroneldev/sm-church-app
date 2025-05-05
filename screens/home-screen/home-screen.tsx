@@ -7,13 +7,13 @@ import { useAuth } from '../../store/auth-store';
 import { ListRenderItem } from 'react-native';
 import Footer from 'screens/home-screen/footer';
 import Header from 'screens/home-screen/header';
-import { Announcement } from '../../@types/announcement';
 import { Event } from '../../@types/event';
+import { Serving } from '../../@types/serving';
 import CardItem from '../../components/CardItem';
 import { Container } from '../../components/Container';
 import HorizontalListSection from '../../components/HorizontalListSection';
-import useAnnouncements from '../../hooks/use-announcements';
 import useEvents from '../../hooks/use-events';
+import useServings from '../../hooks/use-servings';
 import { HomeParamList } from '../../navigation/tab-navigator';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<HomeParamList, 'Home'>;
@@ -27,10 +27,10 @@ const Home: React.FC = () => {
   const user = useAuth((state) => state.user);
   // TO DO: need to be in the store, when working on the calendar tab
   const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
-  const { announcements, loading, error } = useAnnouncements();
+  const { servings, loading, error } = useServings();
 
-  const renderAnnouncementItem: ListRenderItem<Announcement> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigate('AnnouncementDetails', item)} />
+  const renderServingItem: ListRenderItem<Serving> = ({ item }) => (
+    <CardItem item={item} onPress={() => navigate('ServingDetails', item)} />
   );
 
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
@@ -57,10 +57,10 @@ const Home: React.FC = () => {
       />
 
       {/* TO DO: adds the servings opportunities data */}
-      <HorizontalListSection<Announcement>
+      <HorizontalListSection<Serving>
         title="Serving Opportunities"
-        data={announcements}
-        renderItem={renderAnnouncementItem}
+        data={servings}
+        renderItem={renderServingItem}
         loading={loading}
         error={error}
         ListEmptyComponent={() => (

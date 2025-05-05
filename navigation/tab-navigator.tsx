@@ -3,25 +3,25 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Announcement } from '../@types/announcement';
 import { Event } from '../@types/event';
+import { Serving } from '../@types/serving';
 import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
 import About from '../screens/about-screen';
-import AnnouncementDetails from '../screens/announcement-details-screen';
 import EventDetails from '../screens/event-details-screen';
 import Events from '../screens/events-screen';
 import Giving from '../screens/giving-screen';
 import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
+import ServingDetails from '../screens/serving-details-screen';
 import { RootStackParamList } from './root-stack-navigator';
 
 type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
-  AnnouncementDetails: Announcement;
+  ServingDetails: Serving;
   EventDetails: Event;
 };
 
@@ -64,7 +64,7 @@ export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="AnnouncementDetails" component={AnnouncementDetails} />
+      <HomeStack.Screen name="ServingDetails" component={ServingDetails} />
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Think later */}
       <HomeStack.Screen name="EventDetails" component={EventDetails} />
     </HomeStack.Navigator>
@@ -133,6 +133,7 @@ export default function TabLayout({ navigation }: Props) {
           headerShown: true,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           // TO DO: it should be a button header that navigate to the profile screen
+          // TO DO: add this button to the home screen header
           headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
           headerShadowVisible: false,
         }}
