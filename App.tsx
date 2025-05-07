@@ -12,7 +12,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import config from './tamagui.config';
 SplashScreen.preventAutoHideAsync();
 
-// TO DO: Add accessibility labels to all components
+SplashScreen.setOptions({
+  duration: 1200,
+  fade: true,
+});
+
 export default function App() {
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),

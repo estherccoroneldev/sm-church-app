@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Iglesia Episcopal San Mateo",
+    "name": "San Mateo Iglesia Episcopal",
     "slug": "sm-church-app",
     "version": "1.0.0",
     "web": {
@@ -18,16 +18,20 @@
         }
       ],
       "expo-secure-store",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "imageWidth": 280,
+          "resizeMode": "native",
+          "backgroundColor": "#ffffff",
+          "image": "./assets/logo-san-mateo.png"
+        }
+      ]
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/logo-sm-w-shadow.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
