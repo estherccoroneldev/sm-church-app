@@ -22,29 +22,27 @@
       [
         "expo-splash-screen",
         {
-          "imageWidth": 280,
+          "imageWidth": 300,
           "resizeMode": "native",
           "backgroundColor": "#ffffff",
-          "image": "./assets/logo-san-mateo.png"
+          "image": "./assets/app-icon.png"
         }
       ]
     ],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
-      "jsEngine": "jsc"
+      "bundleIdentifier": "com.lestherccoroneldev.smchurchapp"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lestherccoroneldev.smchurchapp",
-      "jsEngine": "hermes"
+      "package": "com.lestherccoroneldev.smchurchapp"
     },
     "extra": {
       "eas": {
