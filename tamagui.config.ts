@@ -32,6 +32,11 @@ const bodyFont = createInterFont({
   family: 'Outfit_300Light',
 });
 
+export const Container = styled(YStack, {
+  flex: 1,
+  padding: 24,
+});
+
 export const Main = styled(YStack, {
   flex: 1,
   justifyContent: 'space-between',

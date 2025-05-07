@@ -1,6 +1,8 @@
+import { getMonth } from 'date-fns';
 import React from 'react';
 import { Event } from '../@types/event';
 import fetchEvents from '../services/events';
+import { parseDate } from '../utils/parseDate';
 import sortByDate from '../utils/sortBydate';
 
 export default function useEvents() {
@@ -26,14 +28,11 @@ export default function useEvents() {
     getEvents();
   }, [getEvents]);
 
-  const upcomingEvents = sortByDate(events, 'desc');
+  const upcomingEvents = sortByDate([...events].slice(0, 6), 'desc');
 
-  // TO DO: add the functionality to filter by ministry, when working on the calendar tab
-  // const ministry = 'Ministry of Health'; // Example ministry, should be an Entity in DB?
-  // const eventsByMinistry = [...(events ?? [])].filter(event => event.department === ministry)
-
-  const getEventsByMonthName = (monthName: string) => {
-    const monthIndex = new Date(`${monthName} 1, 2000`).getMonth();
+  // TO DO: add a safe, efficient, and idiomatic timeout to set loading when filtering out
+  const getEventsByMonth = (monthLabel: string) => {
+    const monthIndex = getMonth(parseDate(`${monthLabel} 1, 2000`));
     setEventsByMonth(
       [...events].filter((eventItem) => new Date(eventItem.date).getMonth() === monthIndex)
     );
@@ -44,11 +43,11 @@ export default function useEvents() {
       events,
       upcomingEvents,
       eventsByMonth,
-      getEventsByMonthName,
+      getEventsByMonth,
       loading,
       error,
       getEvents,
     }),
-    [events, upcomingEvents, loading, error, eventsByMonth, getEventsByMonthName, getEvents]
+    [events, upcomingEvents, loading, error, eventsByMonth, getEventsByMonth, getEvents]
   );
 }

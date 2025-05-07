@@ -4,7 +4,18 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, H2, SizableText, Spinner, styled, Theme, XStack, YStack } from 'tamagui';
+import {
+  Button,
+  H2,
+  H3,
+  Separator,
+  SizableText,
+  Spinner,
+  styled,
+  Theme,
+  XStack,
+  YStack,
+} from 'tamagui';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
 import useEvents from '../hooks/use-events';
@@ -12,37 +23,42 @@ import { EventsParamList } from '../navigation/tab-navigator';
 
 type EventsScreenNavigationProp = NativeStackNavigationProp<EventsParamList, 'Events'>;
 
+const months = [
+  'All',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
 
 const TagFilter = styled(Button, {
   variant: 'outlined',
-  size: '$3',
+  size: '$4',
+  fontSize: '$5',
+  borderColor: '#5EA1CA',
+  color: '#076CB5',
+  borderRadius: 30,
 });
 
 const EventsScreen: React.FC = () => {
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
+  const { navigate } = useNavigation<EventsScreenNavigationProp>();
+  const { events, loading, eventsByMonth, getEventsByMonth } = useEvents();
 
   const [showMonthModal, setShowModal] = useState(false);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  const { navigate } = useNavigation<EventsScreenNavigationProp>();
-  const handlePressItem = (item: Event) => navigate('EventDetails', item);
-  const { events, loading, eventsByMonth, getEventsByMonthName } = useEvents();
+  // TO DO: change this typing to enum later
   const [listStatus, setListStatus] = useState<'all' | 'by-month'>('all');
 
   // TO DO: type this later
@@ -51,6 +67,7 @@ const EventsScreen: React.FC = () => {
     'by-month': eventsByMonth,
   };
 
+  const handlePressItem = (item: Event) => navigate('EventDetails', item);
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
     <CardItem
       fullmode
@@ -61,13 +78,38 @@ const EventsScreen: React.FC = () => {
     />
   );
 
+  const renderModalItem: ListRenderItem<string> = ({ item, index }) => (
+    <>
+      <Button
+        backgroundColor={'white'}
+        size="$6"
+        fontFamily={'$heading'}
+        onPress={() => {
+          if (index === 0) {
+            setListStatus('all');
+            setShowModal(false);
+            return;
+          }
+          console.log('item', item);
+
+          getEventsByMonth(item);
+          setListStatus('by-month');
+          setShowModal(false);
+        }}
+        m="$2">
+        {item}
+      </Button>
+      <Separator my={'$2'} />
+    </>
+  );
+
   const renderHeader = () => {
     return (
-      <YStack gap="$4">
-        <H2 mb={'$5'}>Calendar</H2>
-        <XStack gap={'$4'}>
-          <SizableText>Filter:</SizableText>
-          <TagFilter>Ministry</TagFilter>
+      <YStack gap="$2" mb={'$4'}>
+        <H2 mb={'$2'}>Calendar</H2>
+        <XStack gap={'$4'} alignItems="center">
+          <SizableText fontSize={'$6'}>Filter:</SizableText>
+          {/* <TagFilter disabled>Ministry</TagFilter> */}
           <TagFilter onPress={() => setShowModal(true)}>Month</TagFilter>
         </XStack>
         {showMonthModal && (
@@ -85,31 +127,16 @@ const EventsScreen: React.FC = () => {
               backgroundColor={'rgba(0,0,0,0.5)'}>
               <YStack
                 width="100%"
-                height="60%"
+                height="70%"
                 backgroundColor="white"
                 borderTopLeftRadius={20}
                 borderTopRightRadius={20}
                 padding={20}>
-                <SizableText fontWeight="bold" fontSize={20} mb="$4">
-                  Select a Month
-                </SizableText>
+                <H3 mb="$4">Select a Month</H3>
                 <FlatList
                   data={months}
-                  numColumns={3}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    <Button
-                      backgroundColor={item}
-                      size="$4"
-                      borderRadius={9999}
-                      onPress={() => {
-                        getEventsByMonthName(item);
-                        setListStatus('by-month');
-                        setShowModal(false);
-                      }}
-                      m="$2"
-                    />
-                  )}
+                  renderItem={renderModalItem}
                 />
                 <Button onPress={() => setShowModal(false)}>Close</Button>
               </YStack>
