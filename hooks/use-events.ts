@@ -49,6 +49,6 @@ export default function useEvents() {
       error,
       getEvents,
     }),
-    [events, upcomingEvents, loading, error, getEvents]
+    [events, upcomingEvents, loading, error, eventsByMonth, getEventsByMonthName, getEvents]
   );
 }
