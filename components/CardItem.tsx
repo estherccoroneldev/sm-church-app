@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
-import { H3, H4, H5, Image, SizableText, YStack } from 'tamagui';
+import { Dimensions, Pressable } from 'react-native';
+import { H3, H5, Image, SizableText, YStack } from 'tamagui';
 import { formatDate } from '../utils/formatDate';
 
 const { width } = Dimensions.get('window');
@@ -52,54 +52,57 @@ const CardItem = <T extends BaseItem>({
   const Title = fullmode ? H3 : H5;
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <YStack
-        marginRight={fullmode ? undefined : '$4'}
-        maxWidth={fullmode ? width : undefined}
-        width={fullmode ? undefined : width * 0.8}
-        borderRadius={fullmode ? '$6' : undefined}
-        borderWidth={fullmode ? 1 : undefined}
-        borderColor={fullmode ? '$borderColor' : undefined}
-        elevation={fullmode ? 4 : undefined}
-        marginBottom={fullmode ? '$4' : undefined}
-        backgroundColor={fullmode ? '#fff' : undefined}>
-        <YStack flex={1}>
-          <Image
-            source={image}
-            defaultSource={DEFAULT_IMAGE}
-            width="100%"
-            height={fullmode ? 220 : 180}
-            borderRadius="$6"
-            marginBottom="$1"
-            alt={item.title}
-            aria-label={item.title}
-            onError={(event) => {
-              if (event.nativeEvent.error) {
-                console.error('Error loading image', event.nativeEvent.error);
-                setImage(DEFAULT_IMAGE);
-              }
-            }}
-            accessibilityRole="image"
-          />
+    <Pressable onPress={onPress}>
+      {({ pressed }) => (
+        <YStack
+          marginRight={fullmode ? undefined : '$4'}
+          maxWidth={fullmode ? width : undefined}
+          width={fullmode ? undefined : width * 0.8}
+          borderRadius={fullmode ? '$6' : undefined}
+          borderWidth={fullmode ? 1 : undefined}
+          borderColor={fullmode ? '$borderColor' : undefined}
+          elevation={fullmode ? 4 : undefined}
+          marginBottom={fullmode ? '$4' : undefined}
+          backgroundColor={fullmode ? '#fff' : undefined}
+          opacity={pressed ? 0.5 : 1}>
+          <YStack flex={1}>
+            <Image
+              source={image}
+              defaultSource={DEFAULT_IMAGE}
+              width="100%"
+              height={fullmode ? 220 : 180}
+              borderRadius="$6"
+              marginBottom="$1"
+              alt={item.title}
+              aria-label={item.title}
+              onError={(event) => {
+                if (event.nativeEvent.error) {
+                  console.error('Error loading image', event.nativeEvent.error);
+                  setImage(DEFAULT_IMAGE);
+                }
+              }}
+              accessibilityRole="image"
+            />
 
-          {fullmode ? (
-            <YStack padding={'$4'} gap="$4" overflow="hidden">
-              <YStack>
-                <Title numberOfLines={1}>{item.title}</Title>
-                {hasDateSection && item.date ? <Subtitle text={formatDate(item.date)} /> : null}
+            {fullmode ? (
+              <YStack padding={'$4'} gap="$4" overflow="hidden">
+                <YStack>
+                  <Title numberOfLines={1}>{item.title}</Title>
+                  {hasDateSection && item.date ? <Subtitle text={formatDate(item.date)} /> : null}
+                </YStack>
+                {hasDescription && item.description ? (
+                  <SizableText fontSize={'$6'} numberOfLines={3}>
+                    {item.description}
+                  </SizableText>
+                ) : null}
               </YStack>
-              {hasDescription && item.description ? (
-                <SizableText fontSize={'$6'} numberOfLines={3}>
-                  {item.description}
-                </SizableText>
-              ) : null}
-            </YStack>
-          ) : (
-            <Title numberOfLines={1}>{item.title}</Title>
-          )}
+            ) : (
+              <Title numberOfLines={1}>{item.title}</Title>
+            )}
+          </YStack>
         </YStack>
-      </YStack>
-    </TouchableOpacity>
+      )}
+    </Pressable>
   );
 };
 
