@@ -50,7 +50,7 @@ const TagFilter = styled(Button, {
   size: '$4',
   fontSize: '$5',
   borderColor: '#5EA1CA',
-  color: '#076CB5',
+  color: '#5EA1CA',
   borderRadius: 30,
 });
 

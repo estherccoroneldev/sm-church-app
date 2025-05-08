@@ -56,7 +56,7 @@ const Home: React.FC = () => {
         keyExtractor={keyExtractor}
       />
 
-      {/* TO DO: adds the servings opportunities data */}
+      {/* Servings opportunities  section */}
       <HorizontalListSection<Serving>
         title="Serving Opportunities"
         data={servings}
