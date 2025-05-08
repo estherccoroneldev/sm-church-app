@@ -16,6 +16,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
+import { PrimaryButton } from 'tamagui.config';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
 import useEvents from '../hooks/use-events';
@@ -43,6 +44,7 @@ function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
 
+// TO DO: split this out
 const TagFilter = styled(Button, {
   variant: 'outlined',
   size: '$4',
@@ -131,14 +133,15 @@ const EventsScreen: React.FC = () => {
                 backgroundColor="white"
                 borderTopLeftRadius={20}
                 borderTopRightRadius={20}
-                padding={20}>
+                padding={20}
+                gap={'$4'}>
                 <H3 mb="$4">Select a Month</H3>
                 <FlatList
                   data={months}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={renderModalItem}
                 />
-                <Button onPress={() => setShowModal(false)}>Close</Button>
+                <PrimaryButton onPress={() => setShowModal(false)}>Close</PrimaryButton>
               </YStack>
             </YStack>
           </Modal>
@@ -146,6 +149,15 @@ const EventsScreen: React.FC = () => {
       </YStack>
     );
   };
+
+  const renderEmptyComponent = () =>
+    loading ? (
+      <Spinner size="large" />
+    ) : (
+      <SizableText size={'$6'} alignSelf="center">
+        No events.
+      </SizableText>
+    );
 
   return (
     <SafeAreaView
@@ -161,7 +173,7 @@ const EventsScreen: React.FC = () => {
           }}
           contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT, paddingHorizontal: 24 }}
           ListHeaderComponent={renderHeader}
-          ListEmptyComponent={loading ? <Spinner size="large" /> : undefined}
+          ListEmptyComponent={renderEmptyComponent}
           data={data[listStatus]}
           renderItem={renderEventItem}
           keyExtractor={keyExtractor}

@@ -54,13 +54,13 @@ export const Subtitle = styled(SizableText, {
 });
 
 export const PrimaryButton = styled(ButtonTamagui, {
-  backgroundColor: '$blue10Light',
-  borderRadius: 28,
+  backgroundColor: '#076CB5',
+  borderRadius: '$6',
   hoverStyle: {
-    backgroundColor: '$gray10',
+    backgroundColor: '#5EA1CA',
   },
   pressStyle: {
-    backgroundColor: '$gray10',
+    backgroundColor: '#5EA1CA',
   },
   maxWidth: 500,
 
@@ -75,8 +75,8 @@ export const PrimaryButton = styled(ButtonTamagui, {
 
   // Button text
   color: '#FFFFFF',
-  fontWeight: '600', // Is not passed down to the text. Probably a bug in Tamagui: https://github.com/tamagui/tamagui/issues/1156#issuecomment-1802594930
-  fontSize: 16,
+  fontFamily: '$heading',
+  fontSize: '$6',
 });
 
 const config = createTamagui({
