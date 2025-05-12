@@ -41,7 +41,7 @@ const Home: React.FC = () => {
     <Container>
       {/* Header section */}
       <Header user={user} />
-      <H3 aria-label="Announcements" mb="$6">
+      <H3 aria-label="Announcements" mb="$8">
         Announcements
       </H3>
 

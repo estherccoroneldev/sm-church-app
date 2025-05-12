@@ -21,7 +21,7 @@ export default function HorizontalListSection<T>({
   error,
 }: HorizontalListSectionProps<T>) {
   return (
-    <YStack flex={1} marginBottom="$4" minHeight={280}>
+    <YStack flex={1} mb="$8" minHeight={280}>
       <H3 aria-label={title} mb="$4">
         {title}
       </H3>
