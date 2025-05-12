@@ -1,41 +1,72 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import useSermons from 'hooks/use-sermons';
 import React from 'react';
-import { Button, ButtonText } from 'tamagui';
-import { ScreenContent } from '../components/ScreenContent';
-import { MediaParamList } from '../navigation/tab-navigator';
-
-type MediaScreenNavigationProp = NativeStackNavigationProp<MediaParamList, 'Media'>;
+import { FlatList, Linking, ListRenderItem } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ListItem, Separator, SizableText, Spinner, Theme } from 'tamagui';
+import { Sermon } from '../@types/sermon';
 
 const Media: React.FC = () => {
-  const navigation = useNavigation<MediaScreenNavigationProp>();
-
-  const handlePress = () => {
-    navigation.navigate('MediaDetails', {
-      id: 1,
-      title: 'Media Title',
-      description: 'Media Description',
-      date: '2023-10-01',
-    });
+  const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
+  // TO DO: Get videos from this API: GET https://www.googleapis.com/youtube/v3/videos, need API_KEY
+  const { sermons, loading } = useSermons();
+  const renderItem: ListRenderItem<Sermon> = ({ item }) => {
+    return (
+      <ListItem
+        hoverTheme
+        pressTheme
+        title={item.title}
+        size={'$7'}
+        fontFamily={'$heading'}
+        padding={0}
+        paddingVertical={'$4'}
+        paddingHorizontal={'$3'}
+        subTitle={item.description}
+        icon={<FontAwesome name="film" size={28} color="#C6233F" />}
+        iconAfter={<FontAwesome name="chevron-right" size={16} color="gray" />}
+        borderRadius={'$4'}
+        onPress={() => Linking.openURL(item.videoUrl)}
+      />
+    );
   };
 
+  const renderEmptyComponent = () =>
+    loading ? (
+      <Spinner size="large" />
+    ) : (
+      <SizableText size={'$6'} alignSelf="center">
+        No videos.
+      </SizableText>
+    );
+
   return (
-    <ScreenContent path="screens/Media/index.tsx" title="Media Screen" backgroundColor="beige">
-      <Button
-        size="$4"
-        onPress={handlePress}
-        theme="alt1"
-        backgroundColor="$background"
-        color="$color"
-        borderWidth={1}
-        borderColor="$borderColor"
-        borderRadius="$2"
-        padding="$2"
-        margin="$2">
-        <ButtonText>Go to Media Details Screen</ButtonText>
-      </Button>
-    </ScreenContent>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: 'white',
+      }}
+      edges={['left', 'right']}>
+      <Theme name="light">
+        <FlatList<Sermon>
+          style={{
+            flex: 1,
+          }}
+          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT, paddingHorizontal: 24 }}
+          ListEmptyComponent={renderEmptyComponent}
+          data={sermons}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          showsVerticalScrollIndicator
+          ItemSeparatorComponent={() => <Separator />}
+        />
+      </Theme>
+    </SafeAreaView>
   );
 };
+
+function keyExtractor<T extends { id: string }>(item: T) {
+  return item.id.toString();
+}
 
 export default Media;
