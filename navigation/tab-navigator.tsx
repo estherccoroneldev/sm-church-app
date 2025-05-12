@@ -110,7 +110,7 @@ export default function TabLayout({ navigation }: Props) {
         tabBarStyle: {
           backgroundColor: 'white',
           position: 'absolute',
-          bottom: 24,
+          bottom: 16,
           left: 24,
           right: 24,
           borderRadius: 16,
@@ -142,8 +142,12 @@ export default function TabLayout({ navigation }: Props) {
         name="MediaStack"
         component={MediaStackScreen}
         options={{
-          title: '',
-          headerShown: false,
+          title: 'Media',
+          headerTitleStyle: {
+            fontSize: 32,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}
       />
@@ -151,12 +155,17 @@ export default function TabLayout({ navigation }: Props) {
         name="EventsStack"
         component={EventsStackScreen}
         options={{
-          title: '',
+          title: 'Calendar',
+          headerTitleStyle: {
+            fontSize: 32,
+            fontFamily: 'Outfit_600SemiBold',
+          },
           headerShadowVisible: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
-      <Tab.Screen
+      {/* TO DO: Add on next version */}
+      {/* <Tab.Screen
         name="GivingStack"
         component={GivingStackScreen}
         options={{
@@ -164,7 +173,7 @@ export default function TabLayout({ navigation }: Props) {
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="gift" color={color} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="AboutStack"
         component={AboutStackScreen}

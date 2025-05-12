@@ -6,7 +6,6 @@ import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Button,
-  H2,
   H3,
   Separator,
   SizableText,
@@ -108,7 +107,6 @@ const EventsScreen: React.FC = () => {
   const renderHeader = () => {
     return (
       <YStack gap="$2" mb={'$4'}>
-        <H2 mb={'$2'}>Calendar</H2>
         <XStack gap={'$4'} alignItems="center">
           <SizableText fontSize={'$6'}>Filter:</SizableText>
           {/* <TagFilter disabled>Ministry</TagFilter> */}
