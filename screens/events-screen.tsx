@@ -4,20 +4,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  Button,
-  H3,
-  Separator,
-  SizableText,
-  Spinner,
-  styled,
-  Theme,
-  XStack,
-  YStack,
-} from 'tamagui';
+import { Button, H3, Separator, SizableText, Spinner, Theme, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
+import { TagFilter } from '../components/TagFilter';
 import useEvents from '../hooks/use-events';
 import { EventsParamList } from '../navigation/tab-navigator';
 
@@ -42,16 +33,6 @@ const months = [
 function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
-
-// TO DO: split this out
-const TagFilter = styled(Button, {
-  variant: 'outlined',
-  size: '$4',
-  fontSize: '$5',
-  borderColor: '#5EA1CA',
-  color: '#5EA1CA',
-  borderRadius: 30,
-});
 
 const EventsScreen: React.FC = () => {
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
@@ -91,7 +72,6 @@ const EventsScreen: React.FC = () => {
             setShowModal(false);
             return;
           }
-          console.log('item', item);
 
           getEventsByMonth(item);
           setListStatus('by-month');
