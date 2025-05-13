@@ -5,16 +5,11 @@ import { formatDate } from '../utils/formatDate';
 
 const { width } = Dimensions.get('window');
 
-interface CardItemProps<T> {
-  item: T;
-  onPress: () => void;
-}
-
 interface BaseItem {
   id: string;
   title: string;
   description?: string;
-  date: string;
+  date?: string;
   imageUrl?: string;
   place?: string;
   department?: string;
