@@ -3,11 +3,14 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ServingListScreen from 'screens/serving-list-screen';
 import { Event } from '../@types/event';
+import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
 import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
-import About from '../screens/about-screen';
+import AboutUsScreen from '../screens/about-us';
+import { default as Connect } from '../screens/connect-screen';
 import EventDetails from '../screens/event-details-screen';
 import Events from '../screens/events-screen';
 import Giving from '../screens/giving-screen';
@@ -32,15 +35,18 @@ export type EventsParamList = {
 
 export type MediaParamList = {
   Media: undefined;
-  MediaDetails: { id: number; title: string; description: string; date: string };
+  MediaDetails: Sermon;
 };
 
 export type GivingParamList = {
   Giving: undefined;
 };
 
-export type AboutParamList = {
-  About: undefined;
+export type ConnectParamList = {
+  ConnectTab: undefined;
+  AboutUs: undefined;
+  ServingDetails: Serving;
+  ServingList: undefined;
 };
 
 // Define the type for the Tab Navigator's parameter list
@@ -49,14 +55,14 @@ export type TabParamList = {
   MediaStack: NavigatorScreenParams<MediaParamList>;
   EventsStack: NavigatorScreenParams<EventsParamList>;
   GivingStack: NavigatorScreenParams<GivingParamList>;
-  AboutStack: NavigatorScreenParams<AboutParamList>;
+  ConnectStack: NavigatorScreenParams<ConnectParamList>;
 };
 
 const HomeStack = createNativeStackNavigator<HomeParamList>();
 const EventsStack = createNativeStackNavigator<EventsParamList>();
 const MediaStack = createNativeStackNavigator<MediaParamList>();
 const GivingStack = createNativeStackNavigator<GivingParamList>();
-const AboutStack = createNativeStackNavigator<AboutParamList>();
+const ConnectStack = createNativeStackNavigator<ConnectParamList>();
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -65,7 +71,7 @@ export function HomeStackScreen() {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="ServingDetails" component={ServingDetails} />
-      {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Think later */}
+      {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
       <HomeStack.Screen name="EventDetails" component={EventDetails} />
     </HomeStack.Navigator>
   );
@@ -93,38 +99,42 @@ export function GivingStackScreen() {
     </GivingStack.Navigator>
   );
 }
-export function AboutStackScreen() {
+export function ConnectStackScreen() {
   return (
-    <AboutStack.Navigator screenOptions={{ headerShown: false }}>
-      <AboutStack.Screen name="About" component={About} />
-    </AboutStack.Navigator>
+    <ConnectStack.Navigator screenOptions={{ headerShown: false }}>
+      <ConnectStack.Screen name="ConnectTab" component={Connect} />
+      <ConnectStack.Screen name="ServingDetails" component={ServingDetails} />
+      <ConnectStack.Screen name="ServingList" component={ServingListScreen} />
+      <ConnectStack.Screen name="AboutUs" component={AboutUsScreen} />
+    </ConnectStack.Navigator>
   );
 }
 
 export default function TabLayout({ navigation }: Props) {
+  const tabOptions = {
+    tabBarActiveTintColor: 'black',
+    tabBarShowLabel: false,
+    tabBarStyle: {
+      backgroundColor: 'white',
+      position: 'absolute',
+      bottom: 16,
+      left: 24,
+      right: 24,
+      borderRadius: 16,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+      elevation: 4,
+      paddingTop: 5,
+    },
+  } as const;
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: 'black',
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: 'white',
-          position: 'absolute',
-          bottom: 16,
-          left: 24,
-          right: 24,
-          borderRadius: 16,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.5,
-          elevation: 4,
-          paddingTop: 5,
-        },
-      }}>
+    <Tab.Navigator screenOptions={tabOptions}>
       <Tab.Screen
         name="HomeStack"
         component={HomeStackScreen}
@@ -175,10 +185,10 @@ export default function TabLayout({ navigation }: Props) {
         }}
       /> */}
       <Tab.Screen
-        name="AboutStack"
-        component={AboutStackScreen}
+        name="ConnectStack"
+        component={ConnectStackScreen}
         options={{
-          title: '',
+          title: 'Conéctate',
           headerShown: false,
           // TO DO: change this icon
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
