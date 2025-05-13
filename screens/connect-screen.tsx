@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ConnectParamList } from 'navigation/tab-navigator';
+import { YStack } from 'tamagui';
 import CardItem from '../components/CardItem';
 import { Container } from '../components/Container';
 
@@ -54,16 +55,18 @@ const Connect: React.FC = () => {
   };
   return (
     <Container>
-      {connectItems.map((item) => (
-        <CardItem
-          key={item.id}
-          fullmode
-          item={item}
-          hasDateSection
-          hasDescription
-          onPress={handlePress(item.id)}
-        />
-      ))}
+      <YStack px="$2" mt="$4">
+        {connectItems.map((item) => (
+          <CardItem
+            key={item.id}
+            fullmode
+            item={item}
+            hasDateSection
+            hasDescription
+            onPress={handlePress(item.id)}
+          />
+        ))}
+      </YStack>
     </Container>
   );
 };

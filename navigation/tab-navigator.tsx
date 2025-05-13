@@ -189,6 +189,10 @@ export default function TabLayout({ navigation }: Props) {
         component={ConnectStackScreen}
         options={{
           title: 'Conéctate',
+          headerTitleStyle: {
+            fontSize: 32,
+            fontFamily: 'Outfit_600SemiBold',
+          },
           headerShadowVisible: false,
           // TO DO: change this icon
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
