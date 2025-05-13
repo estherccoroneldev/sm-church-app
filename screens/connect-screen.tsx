@@ -42,7 +42,6 @@ const Connect: React.FC = () => {
   const { navigate } = useNavigation<ConnectScreenNavigationProp>();
 
   const handlePress = (itemId: string) => () => {
-    console.log('item ID ', itemId);
     switch (itemId) {
       case 'item-3':
         return navigate('ServingList');
