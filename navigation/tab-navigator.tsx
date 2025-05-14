@@ -9,7 +9,7 @@ import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
 import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
-import AboutUsScreen from '../screens/about-us';
+import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
 import EventDetails from '../screens/event-details-screen';
 import Events from '../screens/events-screen';
@@ -68,19 +68,72 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 export function HomeStackScreen() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="ServingDetails" component={ServingDetails} />
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        options={{
+          headerShown: false,
+        }}
+        component={Home}
+      />
+      <HomeStack.Screen
+        name="ServingDetails"
+        options={{
+          title: 'Detalles',
+          headerTitleStyle: {
+            fontSize: 26,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={ServingDetails}
+      />
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
-      <HomeStack.Screen name="EventDetails" component={EventDetails} />
+      <HomeStack.Screen
+        name="EventDetails"
+        options={{
+          title: 'Detalles del evento',
+          headerTitleStyle: {
+            fontSize: 26,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={EventDetails}
+      />
     </HomeStack.Navigator>
   );
 }
 export function EventsStackScreen() {
   return (
-    <EventsStack.Navigator screenOptions={{ headerShown: false }}>
-      <EventsStack.Screen name="Events" component={Events} />
-      <EventsStack.Screen name="EventDetails" component={EventDetails} />
+    <EventsStack.Navigator>
+      <EventsStack.Screen
+        name="Events"
+        options={{
+          title: 'Calendar',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+        }}
+        component={Events}
+      />
+      <EventsStack.Screen
+        name="EventDetails"
+        options={{
+          title: 'Evento',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={EventDetails}
+      />
     </EventsStack.Navigator>
   );
 }
@@ -101,11 +154,58 @@ export function GivingStackScreen() {
 }
 export function ConnectStackScreen() {
   return (
-    <ConnectStack.Navigator screenOptions={{ headerShown: false }}>
-      <ConnectStack.Screen name="ConnectTab" component={Connect} />
-      <ConnectStack.Screen name="ServingDetails" component={ServingDetails} />
-      <ConnectStack.Screen name="ServingList" component={ServingListScreen} />
-      <ConnectStack.Screen name="AboutUs" component={AboutUsScreen} />
+    <ConnectStack.Navigator>
+      <ConnectStack.Screen
+        options={{
+          title: 'Conéctate',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+        }}
+        name="ConnectTab"
+        component={Connect}
+      />
+      <ConnectStack.Screen
+        name="ServingDetails"
+        options={{
+          title: 'Detalles',
+          headerTitleStyle: {
+            fontSize: 26,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={ServingDetails}
+      />
+      <ConnectStack.Screen
+        name="ServingList"
+        options={{
+          headerTitle: 'Ministerios',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerBackButtonDisplayMode: 'minimal',
+          headerShadowVisible: false,
+        }}
+        component={ServingListScreen}
+      />
+      <ConnectStack.Screen
+        name="AboutUs"
+        options={{
+          headerTitle: 'Sobre nosotros',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={AboutUsScreen}
+      />
     </ConnectStack.Navigator>
   );
 }
@@ -140,12 +240,12 @@ export default function TabLayout({ navigation }: Props) {
         component={HomeStackScreen}
         options={{
           title: '',
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           // TO DO: it should be a button header that navigate to the profile screen
           // TO DO: add this button to the home screen header
-          headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
-          headerShadowVisible: false,
+          // headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
+          // headerShadowVisible: false,
         }}
       />
       <Tab.Screen
@@ -154,7 +254,7 @@ export default function TabLayout({ navigation }: Props) {
         options={{
           title: 'Media',
           headerTitleStyle: {
-            fontSize: 32,
+            fontSize: 28,
             fontFamily: 'Outfit_600SemiBold',
           },
           headerShadowVisible: false,
@@ -165,12 +265,7 @@ export default function TabLayout({ navigation }: Props) {
         name="EventsStack"
         component={EventsStackScreen}
         options={{
-          title: 'Calendar',
-          headerTitleStyle: {
-            fontSize: 32,
-            fontFamily: 'Outfit_600SemiBold',
-          },
-          headerShadowVisible: false,
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
@@ -188,12 +283,7 @@ export default function TabLayout({ navigation }: Props) {
         name="ConnectStack"
         component={ConnectStackScreen}
         options={{
-          title: 'Conéctate',
-          headerTitleStyle: {
-            fontSize: 32,
-            fontFamily: 'Outfit_600SemiBold',
-          },
-          headerShadowVisible: false,
+          headerShown: false,
           // TO DO: change this icon
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}

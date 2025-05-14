@@ -149,7 +149,11 @@ const EventsScreen: React.FC = () => {
           style={{
             flex: 1,
           }}
-          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT, paddingHorizontal: 24 }}
+          contentContainerStyle={{
+            paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
+            paddingHorizontal: 24,
+            paddingTop: 16,
+          }}
           ListHeaderComponent={renderHeader}
           ListEmptyComponent={renderEmptyComponent}
           data={data[listStatus]}
