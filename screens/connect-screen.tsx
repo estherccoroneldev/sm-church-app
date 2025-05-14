@@ -11,22 +11,29 @@ const connectItems = [
   {
     id: 'item-1',
     title: 'Conéctate con nosotros',
-    description: 'Haznos saber cómo podemos ayudarte.',
+    description: 'Haznos saber cómo podemos apoyarte.',
+    imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-4296_orig.jpg',
   },
   {
     id: 'item-2',
     title: 'Encuentra un grupo',
     description: 'Encuentra tu lugar uniéndote a uno de nuestros grupos',
+    imageUrl:
+      'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/conferencia-lideres-hispanos-2023-2_1.jpg',
   },
   {
     id: 'item-3',
     title: 'Oportunidades de Servicio',
     description: 'Encuentra tu lugar sirviendo en la iglesia, en la ciudad o en el mundo',
+    imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-8256_orig.jpg',
   },
   {
     id: 'item-4',
     title: 'Sobre nosotros',
     description: '',
+    // TO DO: replace this image by the actual church front
+    imageUrl:
+      'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/background-images/936258497.jpg',
   },
 ];
 
@@ -54,7 +61,7 @@ const Connect: React.FC = () => {
   };
   return (
     <Container>
-      <YStack px="$2" mt="$4">
+      <YStack px="$2" mt="$2">
         {connectItems.map((item) => (
           <CardItem
             key={item.id}
