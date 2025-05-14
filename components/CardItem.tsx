@@ -34,7 +34,7 @@ const Subtitle = ({ text }: { text: string }) => {
   );
 };
 
-const DEFAULT_IMAGE = require('../assets/church-placeholder.jpg');
+const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
 
 const CardItem = <T extends BaseItem>({
   item,
@@ -80,7 +80,7 @@ const CardItem = <T extends BaseItem>({
             />
 
             {fullmode ? (
-              <YStack padding={'$4'} gap="$4" overflow="hidden">
+              <YStack padding={'$4'} gap="$2" overflow="hidden">
                 <YStack>
                   <Title numberOfLines={1}>{item.title}</Title>
                   {hasDateSection && item.date ? <Subtitle text={formatDate(item.date)} /> : null}

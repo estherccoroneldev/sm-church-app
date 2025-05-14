@@ -14,7 +14,8 @@ const Header: React.FC<Props> = ({ user }) => (
       source={require('../../assets/logo-sm-w-shadow.png')}
       style={{
         objectFit: 'contain',
-        width: width * 0.7,
+        width: width * 0.65,
+        height: 150,
         alignSelf: 'center',
       }}
       alt="Logo"

@@ -17,7 +17,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
         <ScrollView
           flex={1}
           paddingHorizontal="$4"
-          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT }}
+          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT, paddingTop: 16 }}
           showsVerticalScrollIndicator={false}>
           {children}
         </ScrollView>

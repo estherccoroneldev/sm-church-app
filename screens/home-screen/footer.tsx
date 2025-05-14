@@ -15,7 +15,7 @@ const openExternalUrl = (url: string) => {
 };
 
 const Footer: React.FC = () => (
-  <YStack my="$4">
+  <YStack my="$2">
     <YStack my="$6">
       <H4 textAlign="center">Tu donación nos ayuda a llevar este mensaje al mundo.</H4>
       <Pressable onPress={() => openExternalUrl(PAYPAL_URL)}>

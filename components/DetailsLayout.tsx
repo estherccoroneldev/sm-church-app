@@ -10,10 +10,10 @@ interface Props<T extends Event> {
   hasDateSection?: boolean;
   hasContactSection?: boolean;
   hasLocationSection?: boolean;
-  children?: React.ReactNode; // TO DO: define this type later
+  children?: React.ReactNode;
 }
 
-const DEFAULT_IMAGE = require('../assets/church-placeholder.jpg');
+const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
 const { height } = Dimensions.get('window');
 
 const DetailsLayout = <T extends Event>({
@@ -43,7 +43,9 @@ const DetailsLayout = <T extends Event>({
         ) : null}
       </YStack>
 
-      <SizableText fontSize="$7">{description}</SizableText>
+      <SizableText fontFamily={'$body'} fontSize="$7">
+        {description}
+      </SizableText>
 
       {/* Contact Section */}
       {hasContactSection ? (
