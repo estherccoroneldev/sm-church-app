@@ -1,5 +1,5 @@
 import { ActivityIndicator, FlatList, ListRenderItem } from 'react-native';
-import { H3, SizableText, YStack, YStackProps } from 'tamagui';
+import { H3, SizableText, Spinner, YStack, YStackProps } from 'tamagui';
 
 interface HorizontalListSectionProps<T> extends YStackProps {
   data: T[];
@@ -26,7 +26,7 @@ export default function HorizontalListSection<T>({
         {title}
       </H3>
       {loading ? (
-        <ActivityIndicator size="small" style={{ alignSelf: 'center' }} />
+        <Spinner size="small" color={'#076CB5'} style={{ alignSelf: 'center' }} />
       ) : error ? (
         <SizableText color="$red10">{`Error: ${error}`}</SizableText>
       ) : (

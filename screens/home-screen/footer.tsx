@@ -29,8 +29,8 @@ const Footer: React.FC = () => (
                 opacity: pressed ? 0.5 : 1,
               },
             ]}>
-            <FontAwesome name="paypal" size={48} color="#2A3A7C" />
-            <H5 color={'#5EA1CA'}>Donar con Paypal</H5>
+            <FontAwesome name="paypal" size={32} color="#2A3A7C" />
+            <H5 color={'#076CB5'}>Donar con Paypal</H5>
           </XStack>
         )}
       </Pressable>
@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     backgroundColor: 'white',
-    paddingVertical: 16,
+    paddingVertical: 12,
     paddingHorizontal: 32,
     marginHorizontal: 'auto',
     borderRadius: 50,

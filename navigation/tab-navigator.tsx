@@ -226,14 +226,14 @@ export function ConnectStackScreen() {
 
 export default function TabLayout({ navigation }: Props) {
   const tabOptions = {
-    tabBarActiveTintColor: 'black',
+    tabBarActiveTintColor: '#C6233F',
     tabBarShowLabel: false,
     tabBarStyle: {
       backgroundColor: 'white',
       position: 'absolute',
       bottom: 16,
-      left: 24,
-      right: 24,
+      left: 16,
+      right: 16,
       borderRadius: 16,
       shadowColor: '#000',
       shadowOffset: {
@@ -243,12 +243,20 @@ export default function TabLayout({ navigation }: Props) {
       shadowOpacity: 0.25,
       shadowRadius: 3.5,
       elevation: 4,
-      paddingTop: 5,
+      height: 65,
+    },
+    tabBarAllowFontScaling: true,
+    tabBarHideOnKeyboard: true,
+    tabBarIconStyle: {
+      margin: 'auto',
     },
   } as const;
 
   return (
-    <Tab.Navigator screenOptions={tabOptions}>
+    <Tab.Navigator
+      screenOptions={{
+        ...tabOptions,
+      }}>
       <Tab.Screen
         name="HomeStack"
         component={HomeStackScreen}

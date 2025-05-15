@@ -83,7 +83,9 @@ const config = createTamagui({
   light: {
     color: {
       background: 'white',
-      text: 'black',
+      text: '#3E464B',
+      primary: '#076CB5',
+      secondary: '#C6233F',
     },
   },
   defaultFont: 'body',
