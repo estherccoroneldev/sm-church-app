@@ -8,6 +8,7 @@ import { Event } from '../@types/event';
 import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
 // import { HeaderButton } from '../components/HeaderButton';
+import ConnectDetailsScreen from 'screens/connect-details-screen';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -46,6 +47,7 @@ export type ConnectParamList = {
   ConnectTab: undefined;
   AboutUs: undefined;
   ServingDetails: Serving;
+  ConnectDetails: undefined;
   ServingList: undefined;
 };
 
@@ -166,6 +168,18 @@ export function ConnectStackScreen() {
         }}
         name="ConnectTab"
         component={Connect}
+      />
+      <ConnectStack.Screen
+        options={{
+          title: 'Conéctate',
+          headerTitleStyle: {
+            fontSize: 28,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+          headerShadowVisible: false,
+        }}
+        name="ConnectDetails"
+        component={ConnectDetailsScreen}
       />
       <ConnectStack.Screen
         name="ServingDetails"

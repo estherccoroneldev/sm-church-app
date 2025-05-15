@@ -6,7 +6,8 @@ const info = {
   address: '6635 Alder Dr., Houston, TX 77081',
   phone: '(713) 664-7792',
   email: 'admin@iglesiasanmateo.org',
-  schedules: 'Martes - Jueves: 9:00am – 3:00pm\nSábado: 8:30am – 12:00pm',
+  schedules:
+    'Lunes - Jueves: 9:00 AM – 4:00 PM\nSábado: 8:00 AM – 12:00 PM\nDomingo: 8:00 AM – 12:00 PM',
 };
 
 interface InfoProps {

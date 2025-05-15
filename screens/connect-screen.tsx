@@ -2,10 +2,10 @@ import React from 'react';
 // import { useAuth } from 'store/auth-store';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ConnectParamList } from 'navigation/tab-navigator';
 import { YStack } from 'tamagui';
 import CardItem from '../components/CardItem';
 import { Container } from '../components/Container';
+import { ConnectParamList } from '../navigation/tab-navigator';
 
 const connectItems = [
   {
@@ -50,6 +50,8 @@ const Connect: React.FC = () => {
 
   const handlePress = (itemId: string) => () => {
     switch (itemId) {
+      case 'item-1':
+        return navigate('ConnectDetails');
       case 'item-3':
         return navigate('ServingList');
       case 'item-4':

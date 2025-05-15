@@ -58,8 +58,8 @@ const DetailsLayout = <T extends Event>({
               <Avatar circular size="$6">
                 {/* TO DO: replace real image later, add to the DB structure */}
                 <Avatar.Image
-                  accessibilityLabel="Nate Wienert"
-                  src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?&w=100&h=100&dpr=2&q=80"
+                  accessibilityLabel="Cam"
+                  src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
                 />
                 {/* TO DO: change this color later according to the theme */}
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
