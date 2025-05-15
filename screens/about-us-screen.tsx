@@ -1,4 +1,5 @@
 import DetailsLayout from 'components/DetailsLayout';
+import StaticInfo from 'components/StaticInfo';
 import React from 'react';
 
 const CURRENT_DETAIL = {
@@ -17,8 +18,9 @@ const AboutUsScreen: React.FC = () => {
       hasDateSection={false}
       hasContactSection={false}
       hasLocationSection={false}
-      currentDetail={CURRENT_DETAIL}
-    />
+      currentDetail={CURRENT_DETAIL}>
+      <StaticInfo />
+    </DetailsLayout>
   );
 };
 

@@ -7,7 +7,7 @@ import ServingListScreen from 'screens/serving-list-screen';
 import { Event } from '../@types/event';
 import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
-import { HeaderButton } from '../components/HeaderButton';
+// import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -284,7 +284,6 @@ export default function TabLayout({ navigation }: Props) {
         component={ConnectStackScreen}
         options={{
           headerShown: false,
-          // TO DO: change this icon
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}
       />
