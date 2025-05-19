@@ -13,7 +13,7 @@ import config from './tamagui.config';
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
-  duration: 1200,
+  duration: 800,
   fade: true,
 });
 

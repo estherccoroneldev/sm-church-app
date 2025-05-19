@@ -22,24 +22,29 @@
       [
         "expo-splash-screen",
         {
-          "imageWidth": 300,
           "resizeMode": "native",
           "backgroundColor": "#ffffff",
-          "image": "./assets/app-icon.png"
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200
         }
       ]
     ],
     "orientation": "portrait",
-    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
+      "icon": "./assets/icon.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.lestherccoroneldev.smchurchapp"
+      "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/app-icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.lestherccoroneldev.smchurchapp"
