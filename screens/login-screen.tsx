@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Image, SizableText, YStack } from 'tamagui';
+import { H3, Image, SizableText, YStack } from 'tamagui';
 import { Container, PrimaryButton } from 'tamagui.config';
 import { useAuth } from '../store/auth-store';
 
@@ -63,57 +63,60 @@ const Login: React.FC = () => {
         backgroundColor="$background"
         padding="$4">
         <Container>
-          <SizableText fontSize="$8" textAlign="center" marginBottom="$4">
-            Welcome to San Mateo Episcopal Church
-          </SizableText>
-          <SizableText fontSize="$4" textAlign="center" marginBottom="$8">
-            Join us in our mission to serve the community and grow in faith.
+          {/* Welcome to San Mateo Episcopal Church */}
+          <H3 textAlign="center" marginBottom="$4">
+            Le damos la bienvenida a la Iglesia Episcopal San Mateo
+          </H3>
+          {/* Join us in our mission to serve the community and grow in faith. */}
+          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$8">
+            Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
           {/* TO DO: this button should route or change state to Login Input */}
-          <PrimaryButton size="$4" mt="$6" mb="$2" onPress={handlePressSignIn}>
-            Login
+          <PrimaryButton size="$5" mt="$6" mb="$2" onPress={handlePressSignIn}>
+            Iniciar Sesión
           </PrimaryButton>
           <SizableText
             disabled // TO DO: remove this when the register screen is ready
-            fontSize="$4"
+            fontFamily={'$heading'}
+            fontSize="$5"
             textAlign="right"
             marginBottom="$4"
             onPress={handleGoToForgotPassword}
             opacity={0.7}
-            hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}
-            fontWeight="bold"
             color="$blue10">
-            Forgot Password?
+            Olvidó su contraseña?
           </SizableText>
         </Container>
         <Container justifyContent="flex-end">
           <SizableText
-            fontSize="$4"
+            fontFamily={'$body'}
+            fontSize="$5"
             textAlign="center"
             marginBottom="$2"
             onPress={handleSignInAsGuest}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
-            Continue as a{' '}
-            <SizableText fontWeight="bold" color="$blue10">
-              Guest
+            Continuar como{' '}
+            <SizableText fontFamily={'$heading'} fontSize="$5" color="$blue10">
+              Invitado
             </SizableText>
           </SizableText>
           <SizableText
+            fontFamily={'$body'}
             disabled // TO DO: remove this when the register screen is ready
-            fontSize="$4"
+            fontSize="$5"
             textAlign="center"
             marginBottom="$2"
             onPress={handleSignInAsGuest}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
-            Don't have an account?{' '}
-            <SizableText fontWeight="bold" color="$blue10">
-              Register
+            No tiene una cuenta?{' '}
+            <SizableText fontFamily={'$heading'} fontSize="$5" color="$blue10">
+              Crear cuenta
             </SizableText>
           </SizableText>
 
