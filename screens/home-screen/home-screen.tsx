@@ -41,30 +41,33 @@ const Home: React.FC = () => {
     <Container>
       {/* Header section */}
       <Header user={user} />
+      {/* Announcements */}
       <H3 aria-label="Announcements" mb="$8">
-        Announcements
+        Anúncios
       </H3>
 
       {/* Upcoming Events section */}
       <HorizontalListSection<Event>
-        title="Upcoming Events"
+        // title="Upcoming Events"
+        title="Próximas Actividades"
         data={upcomingEvents}
         renderItem={renderEventItem}
         loading={loadingEvents}
         error={eventsError}
-        ListEmptyComponent={() => <SizableText size="$4">No events yet.</SizableText>}
+        ListEmptyComponent={() => <SizableText size="$4">Aún no hay anúncios.</SizableText>}
         keyExtractor={keyExtractor}
       />
 
       {/* Servings opportunities  section */}
       <HorizontalListSection<Serving>
-        title="Serving Opportunities"
+        // title="Serving Opportunities"
+        title="Oportunidades de Servicio"
         data={servings}
         renderItem={renderServingItem}
         loading={loading}
         error={error}
         ListEmptyComponent={() => (
-          <SizableText size="$4">No serving opportunities yet.</SizableText>
+          <SizableText size="$4">Aún no hay oportunidades de servicio.</SizableText>
         )}
         keyExtractor={keyExtractor}
       />

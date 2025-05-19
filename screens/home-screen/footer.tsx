@@ -37,7 +37,8 @@ const Footer: React.FC = () => (
     </YStack>
     <YStack my="$4">
       <H3 aria-label="Follow Us" my="$6">
-        Follow Us on Social Media
+        {/* Follow Us on Social Media */}
+        Síguenos en Nuestras Redes Sociales
       </H3>
       <XStack justifyContent="space-around">
         <SocialMediaButton
