@@ -12,17 +12,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function RootStack() {
   return (
     <Stack.Navigator initialRouteName="TabNavigator">
-      <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ headerShown: false }}
-        />
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Group>
       <Stack.Group
         screenOptions={{
           presentation: 'modal',
-          headerBackTitle: 'Back',
+          headerBackButtonDisplayMode: 'minimal',
         }}>
         <Stack.Screen name="Modal" component={Modal} />
       </Stack.Group>

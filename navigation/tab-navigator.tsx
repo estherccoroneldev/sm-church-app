@@ -68,6 +68,11 @@ const ConnectStack = createNativeStackNavigator<ConnectParamList>();
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
+const headerTitleStyle = {
+  fontSize: 28,
+  fontFamily: 'Outfit_600SemiBold',
+} as const;
+
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
@@ -82,10 +87,7 @@ export function HomeStackScreen() {
         name="ServingDetails"
         options={{
           title: 'Detalles',
-          headerTitleStyle: {
-            fontSize: 26,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -96,10 +98,7 @@ export function HomeStackScreen() {
         name="EventDetails"
         options={{
           title: 'Detalles del evento',
-          headerTitleStyle: {
-            fontSize: 26,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -115,10 +114,7 @@ export function EventsStackScreen() {
         name="Events"
         options={{
           title: 'Calendar',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
         }}
         component={Events}
@@ -127,10 +123,7 @@ export function EventsStackScreen() {
         name="EventDetails"
         options={{
           title: 'Evento',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -160,10 +153,7 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         options={{
           title: 'Conéctate',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
         }}
         name="ConnectTab"
@@ -172,10 +162,7 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         options={{
           title: 'Conéctate',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
         }}
         name="ConnectDetails"
@@ -185,10 +172,7 @@ export function ConnectStackScreen() {
         name="ServingDetails"
         options={{
           title: 'Detalles',
-          headerTitleStyle: {
-            fontSize: 26,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -198,10 +182,7 @@ export function ConnectStackScreen() {
         name="ServingList"
         options={{
           headerTitle: 'Ministerios',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerBackButtonDisplayMode: 'minimal',
           headerShadowVisible: false,
         }}
@@ -211,10 +192,7 @@ export function ConnectStackScreen() {
         name="AboutUs"
         options={{
           headerTitle: 'Sobre nosotros',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -275,10 +253,7 @@ export default function TabLayout({ navigation }: Props) {
         component={MediaStackScreen}
         options={{
           title: 'Media',
-          headerTitleStyle: {
-            fontSize: 28,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
           headerShadowVisible: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}

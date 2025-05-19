@@ -7,13 +7,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { TamaguiProvider } from 'tamagui';
 
+import { StatusBar } from 'expo-status-bar';
 import AppNavigator from 'navigation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import config from './tamagui.config';
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
-  duration: 800,
+  duration: 500,
   fade: true,
 });
 
@@ -38,6 +39,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <TamaguiProvider config={config}>
+        <StatusBar style={'light'} translucent={false} />
         <AppNavigator />
       </TamaguiProvider>
     </SafeAreaProvider>
