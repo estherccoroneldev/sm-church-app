@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     backgroundColor: 'white',
-    padding: 15,
+    padding: 16,
     borderRadius: 50,
   },
 });
