@@ -1,6 +1,6 @@
-import DetailsLayout from 'components/DetailsLayout';
-import StaticInfo from 'components/StaticInfo';
 import React from 'react';
+import DetailsLayout from '../components/DetailsLayout';
+import StaticInfo from '../components/StaticInfo';
 
 const CURRENT_DETAIL = {
   id: 'connect-with-us',

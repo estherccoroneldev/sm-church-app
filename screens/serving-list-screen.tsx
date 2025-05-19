@@ -37,7 +37,7 @@ const ServingListScreen: React.FC = () => {
 
   const renderEmptyComponent = () =>
     loading ? (
-      <Spinner size="large" />
+      <Spinner size="large" color={'#076CB5'} />
     ) : (
       <SizableText size={'$6'} alignSelf="center">
         No servings.
