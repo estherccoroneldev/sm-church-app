@@ -1,0 +1,8 @@
+{
+  "button": {
+    "french": "Cambiar idioma a francés",
+    "english": "Cambiar idioma a inglés"
+  },
+  "getStarted": "Abre el código para esta pantalla:",
+  "changeCode": "Cambia cualquiera de los textos, guarda el archivo y tu aplicación se actualizará automáticamente."
+}
