@@ -11,24 +11,9 @@ import CardItem from '../components/CardItem';
 import { TagFilter } from '../components/TagFilter';
 import useEvents from '../hooks/use-events';
 import { EventsParamList } from '../navigation/tab-navigator';
+import months from '../utils/months';
 
 type EventsScreenNavigationProp = NativeStackNavigationProp<EventsParamList, 'Events'>;
-
-const months = [
-  'All',
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
@@ -88,9 +73,9 @@ const EventsScreen: React.FC = () => {
     return (
       <YStack gap="$2" mb={'$4'}>
         <XStack gap={'$4'} alignItems="center">
-          <SizableText fontSize={'$6'}>Filter:</SizableText>
+          <SizableText fontSize={'$6'}>Filtrar lista:</SizableText>
           {/* <TagFilter disabled>Ministry</TagFilter> */}
-          <TagFilter onPress={() => setShowModal(true)}>Month</TagFilter>
+          <TagFilter onPress={() => setShowModal(true)}>Por mes</TagFilter>
         </XStack>
         {showMonthModal && (
           <Modal
@@ -113,9 +98,9 @@ const EventsScreen: React.FC = () => {
                 borderTopRightRadius={20}
                 padding={20}
                 gap={'$4'}>
-                <H3 mb="$4">Select a Month</H3>
+                <H3 mb="$4">Seleccione un mes</H3>
                 <FlatList
-                  data={months}
+                  data={months.spanish}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={renderModalItem}
                 />
@@ -133,7 +118,7 @@ const EventsScreen: React.FC = () => {
       <Spinner size="large" color={'#076CB5'} />
     ) : (
       <SizableText size={'$6'} alignSelf="center">
-        No events.
+        No hay eventos
       </SizableText>
     );
 
