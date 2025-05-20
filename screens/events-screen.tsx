@@ -100,7 +100,9 @@ const EventsScreen: React.FC = () => {
                 gap={'$4'}>
                 <H3 mb="$4">Seleccione un mes</H3>
                 <FlatList
-                  data={months.spanish}
+                  // TO DO: add intl for months
+                  // TO DO: add a better way to get the months
+                  data={months.english}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={renderModalItem}
                 />
