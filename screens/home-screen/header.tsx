@@ -20,7 +20,7 @@ const Header: React.FC<Props> = ({ user }) => (
       }}
       alt="Logo"
     />
-    <H3 aria-label="Welcome">{`Welcome, ${user?.name || 'Guest'}!`}</H3>
+    <H3 aria-label="Welcome">{`Le damos la bienvenida, ${user?.name || 'Guest'}!`}</H3>
   </YStack>
 );
 
