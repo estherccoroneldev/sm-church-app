@@ -4,5 +4,19 @@
     "english": "Switch language to English"
   },
   "getStarted": "Open up the code for this screen:",
-  "changeCode": "Change any of the text, save the file, and your app will automatically update."
+  "changeCode": "Change any of the text, save the file, and your app will automatically update.",
+  "month": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  }
 }

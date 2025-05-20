@@ -1,7 +1,10 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { format } from 'date-fns';
+import { enUS, es } from 'date-fns/locale';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, H3, Separator, SizableText, Spinner, Theme, XStack, YStack } from 'tamagui';
@@ -11,7 +14,6 @@ import CardItem from '../components/CardItem';
 import { TagFilter } from '../components/TagFilter';
 import useEvents from '../hooks/use-events';
 import { EventsParamList } from '../navigation/tab-navigator';
-import months from '../utils/months';
 
 type EventsScreenNavigationProp = NativeStackNavigationProp<EventsParamList, 'Events'>;
 
@@ -19,7 +21,28 @@ function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
 
+const useGetIntlMonths = () => {
+  const { i18n } = useTranslation();
+  const months = new Array(12)
+    .fill(0) // fill the array with 0s to avoid undefined values
+    .map((_, i) => {
+      const date = new Date(0); // explicitly set the date to 0 to avoid timezone issues
+      date.setMonth(i);
+      console.log('i18n.language', i18n.language); // Check the current language
+      console.log('date', date); // Check the date being formatted
+
+      return {
+        label: format(date, 'MMMM', { locale: enUS }),
+        index: i,
+      };
+    });
+  return months;
+};
+
 const EventsScreen: React.FC = () => {
+  const months = useGetIntlMonths();
+  console.log('months', months);
+
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { navigate } = useNavigation<EventsScreenNavigationProp>();
   const { events, loading, eventsByMonth, getEventsByMonth } = useEvents();
@@ -100,11 +123,11 @@ const EventsScreen: React.FC = () => {
                 gap={'$4'}>
                 <H3 mb="$4">Seleccione un mes</H3>
                 <FlatList
-                  data={months.spanish}
+                  data={[]}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={renderModalItem}
                 />
-                <PrimaryButton onPress={() => setShowModal(false)}>Close</PrimaryButton>
+                <PrimaryButton onPress={() => setShowModal(false)}>Cerrar</PrimaryButton>
               </YStack>
             </YStack>
           </Modal>
@@ -128,7 +151,7 @@ const EventsScreen: React.FC = () => {
         flex: 1,
         backgroundColor: 'white',
       }}
-      edges={['top', 'left', 'right', 'bottom']}>
+      edges={['left', 'right', 'bottom']}>
       <Theme name="light">
         <FlatList<Event>
           style={{

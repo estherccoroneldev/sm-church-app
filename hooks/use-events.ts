@@ -30,7 +30,6 @@ export default function useEvents() {
 
   const upcomingEvents = sortByDate([...events].slice(0, 6), 'desc');
 
-  // TO DO: add a safe, efficient, and idiomatic timeout to set loading when filtering out
   const getEventsByMonth = (monthLabel: string) => {
     const monthIndex = getMonth(parseDate(`${monthLabel} 1, 2000`));
     setEventsByMonth(
