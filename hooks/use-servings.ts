@@ -23,6 +23,20 @@ export default function useServings() {
     }
   }, []);
 
+  // TO DO: filter servings by ministry
+  // const filterServings = React.useCallback(
+  //   (servings: Serving[], ministry: string) => {
+  //     return servings.filter((serving) => serving.ministry === ministry);
+  //   },
+  //   [servings]
+  // );
+  // const filteredServings = React.useMemo(() => {
+  //   return filterServings(servings, ministry);
+  // }, [filterServings, servings, ministry]);
+  // const getFilteredServings = React.useCallback(() => {
+  //   setServings(filteredServings);
+  // }, [filteredServings]);
+
   React.useEffect(() => {
     getServings();
   }, [getServings]);

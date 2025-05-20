@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { useAuth } from 'store/auth-store';
+import { Spinner } from 'tamagui';
 import AuthNavigator from './auth-navigator';
 import RootStack from './root-stack-navigator';
 
@@ -18,7 +18,7 @@ function AppNavigator() {
       setTimeout(() => {
         setInitializing(false);
         if (initializing) setInitializing(false);
-      }, 1000);
+      }, 300);
     };
 
     init();
@@ -32,14 +32,10 @@ function AppNavigator() {
   //   return subscriber; // unsubscribe on unmount
   // }, []);
 
-  if (initializing) return null;
+  if (initializing)
+    return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;
 
-  return (
-    <NavigationContainer>
-      <StatusBar />
-      {user ? <RootStack /> : <AuthNavigator />}
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{user ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
 }
 
 export default AppNavigator;
