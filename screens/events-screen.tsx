@@ -102,11 +102,13 @@ const EventsScreen: React.FC = () => {
                 <FlatList
                   // TO DO: add intl for months
                   // TO DO: add a better way to get the months
-                  data={months.english}
-                  keyExtractor={(item, index) => index.toString()}
+                  data={months.spanish}
+                  keyExtractor={(_, index) => index.toString()}
                   renderItem={renderModalItem}
                 />
-                <PrimaryButton onPress={() => setShowModal(false)}>Close</PrimaryButton>
+                <PrimaryButton onPress={() => setShowModal(!showMonthModal)}>
+                  Cancelar
+                </PrimaryButton>
               </YStack>
             </YStack>
           </Modal>
@@ -120,7 +122,7 @@ const EventsScreen: React.FC = () => {
       <Spinner size="large" color={'#076CB5'} />
     ) : (
       <SizableText size={'$6'} alignSelf="center">
-        No hay eventos
+        No hay eventos en este mes.
       </SizableText>
     );
 
@@ -130,7 +132,7 @@ const EventsScreen: React.FC = () => {
         flex: 1,
         backgroundColor: 'white',
       }}
-      edges={['top', 'left', 'right', 'bottom']}>
+      edges={['left', 'right', 'bottom']}>
       <Theme name="light">
         <FlatList<Event>
           style={{

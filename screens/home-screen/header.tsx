@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ user }) => (
-  <YStack mb="$8" gap="$1">
+  <YStack mt="$4" mb="$8" gap="$1">
     <Image
       source={require('../../assets/logo-sm-w-shadow.png')}
       style={{

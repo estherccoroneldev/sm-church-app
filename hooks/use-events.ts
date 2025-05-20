@@ -2,6 +2,7 @@ import { getMonth } from 'date-fns';
 import React from 'react';
 import { Event } from '../@types/event';
 import fetchEvents from '../services/events';
+import months from '../utils/months';
 import { parseDate } from '../utils/parseDate';
 import sortByDate from '../utils/sortBydate';
 
@@ -30,9 +31,17 @@ export default function useEvents() {
 
   const upcomingEvents = sortByDate([...events].slice(0, 6), 'desc');
 
-  // TO DO: add a safe, efficient, and idiomatic timeout to set loading when filtering out
   const getEventsByMonth = (monthLabel: string) => {
-    const monthIndex = getMonth(parseDate(`${monthLabel} 1, 2000`));
+    // TO DO: remove this entire logic when implementing the intl month picker, pleeeeease. It's a mess
+    if (monthLabel === 'Todos') {
+      setEventsByMonth(events);
+      return;
+    }
+    const indexES = months.spanish.findIndex((month) => month === monthLabel);
+    const monthLabelEN = months.english[indexES];
+    // TO DO: remove this entire logic when implementing the intl month picker, pleeeeease. It's a mess
+
+    const monthIndex = getMonth(parseDate(`${monthLabelEN} 1, 2000`));
     setEventsByMonth(
       [...events].filter((eventItem) => new Date(eventItem.date).getMonth() === monthIndex)
     );
