@@ -12,7 +12,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
         flex: 1,
         backgroundColor: 'white',
       }}
-      edges={['top', 'left', 'right', 'bottom']}>
+      edges={['left', 'right', 'bottom']}>
       <Theme name="light">
         <ScrollView
           flex={1}
