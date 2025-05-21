@@ -15,7 +15,7 @@ const Header: React.FC<Props> = ({ user }) => (
       style={{
         objectFit: 'contain',
         width: width * 0.65,
-        height: 150,
+        height: 140,
         alignSelf: 'center',
       }}
       alt="Logo"

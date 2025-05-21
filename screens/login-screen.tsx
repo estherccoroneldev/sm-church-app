@@ -29,7 +29,7 @@ const Login: React.FC = () => {
     // TO DO: replace this later by firebase auth
     const dummyUser = {
       id: '1234',
-      name: 'John Doe',
+      name: 'Rev',
       isGuest: false,
     };
 
@@ -68,7 +68,7 @@ const Login: React.FC = () => {
             Le damos la bienvenida a la Iglesia Episcopal San Mateo
           </H3>
           {/* Join us in our mission to serve the community and grow in faith. */}
-          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$8">
+          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$4">
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
@@ -81,7 +81,7 @@ const Login: React.FC = () => {
             fontFamily={'$heading'}
             fontSize="$5"
             textAlign="right"
-            marginBottom="$4"
+            marginBottom="$6"
             onPress={handleGoToForgotPassword}
             opacity={0.7}
             pressStyle={{ opacity: 0.5 }}
