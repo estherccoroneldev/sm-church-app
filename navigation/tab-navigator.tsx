@@ -116,7 +116,7 @@ export function EventsStackScreen() {
       <EventsStack.Screen
         name="Events"
         options={{
-          title: 'Calendar',
+          title: 'Calendario',
           headerTitleStyle,
           headerShadowVisible: false,
         }}

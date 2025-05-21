@@ -68,7 +68,7 @@ const Login: React.FC = () => {
             Le damos la bienvenida a la Iglesia Episcopal San Mateo
           </H3>
           {/* Join us in our mission to serve the community and grow in faith. */}
-          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$4">
+          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$6">
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
