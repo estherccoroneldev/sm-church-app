@@ -8,9 +8,6 @@ import { Event } from '../@types/event';
 import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
 // import { HeaderButton } from '../components/HeaderButton';
-import Foundation from '@expo/vector-icons/Foundation';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import ConnectDetailsScreen from 'screens/connect-details-screen';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
@@ -247,12 +244,7 @@ export default function TabLayout({ navigation }: Props) {
           title: '',
           headerShown: false,
           // TO DO: this button should be splitted out into a composed component, handle typos
-          tabBarIcon: ({ color, focused }) =>
-            focused ? (
-              <Foundation name="home" color={color} size={30} />
-            ) : (
-              <TabBarIcon name="home" color={color} />
-            ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           // TO DO: it should be a button header that navigate to the profile screen
           // TO DO: add this button to the home screen header
           // headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
@@ -266,12 +258,7 @@ export default function TabLayout({ navigation }: Props) {
           title: 'Media',
           headerTitleStyle,
           headerShadowVisible: false,
-          tabBarIcon: ({ color, focused }) =>
-            focused ? (
-              <MaterialIcons name="video-library" color={color} size={30} />
-            ) : (
-              <TabBarIcon name="video" color={color} />
-            ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}
       />
       <Tab.Screen
@@ -279,12 +266,7 @@ export default function TabLayout({ navigation }: Props) {
         component={EventsStackScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, focused }) =>
-            focused ? (
-              <Ionicons name="calendar-clear" color={color} size={30} />
-            ) : (
-              <TabBarIcon name="calendar" color={color} />
-            ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
       {/* TO DO: Add on next version */}
@@ -303,12 +285,7 @@ export default function TabLayout({ navigation }: Props) {
         options={{
           title: '',
           headerShown: false,
-          tabBarIcon: ({ color, focused }) =>
-            focused ? (
-              <Ionicons name="heart" color={color} size={30} />
-            ) : (
-              <TabBarIcon name="code-of-conduct" color={color} />
-            ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}
       />
     </Tab.Navigator>
