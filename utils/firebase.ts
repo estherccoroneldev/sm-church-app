@@ -1,9 +1,8 @@
+import * as SecureStore from 'expo-secure-store';
 import { initializeApp } from 'firebase/app';
+import { getAuth, getReactNativePersistence, initializeAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-// Optionally import the services that you want to use
-// import {...} from "firebase/auth";
-// import {...} from "firebase/database";
-// import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
 // import {...} from "firebase/storage";
 
@@ -19,8 +18,44 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const firebase = initializeApp(firebaseConfig);
-// For more information on how to access Firebase in your project,
-// see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
+/**
+ * ====== Creating the SecureStore wrapper ======
+ *
+ * Firebase's getReactNativePersistence expects an object with
+ * getItem, setItem, and removeItem methods that return Promises.
+ * expo-secure-store provides getItemAsync, setItemAsync, deleteItemAsync.
+ * We need to create a simple wrapper to match the expected interface.
+ *
+ **/
+const SecureStoreWrapper = {
+  async setItem(key: string, value: string) {
+    try {
+      await SecureStore.setItemAsync(key, value);
+    } catch (error) {
+      console.error('Error setting item in SecureStore:', error);
+    }
+  },
+  async getItem(key: string) {
+    try {
+      return await SecureStore.getItemAsync(key);
+    } catch (error) {
+      console.error('Error getting item from SecureStore:', error);
+      return null;
+    }
+  },
+  async removeItem(key: string) {
+    try {
+      await SecureStore.deleteItemAsync(key);
+    } catch (error) {
+      console.error('Error removing item from SecureStore:', error);
+    }
+  },
+};
 
-export default firebase;
+const app = initializeApp(firebaseConfig);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(SecureStoreWrapper),
+});
+const db = getFirestore(app);
+
+export { app, auth, db };
