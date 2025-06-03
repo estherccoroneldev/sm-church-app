@@ -22,6 +22,7 @@ export default function RootStack() {
         screenOptions={{
           presentation: 'modal',
           headerBackButtonDisplayMode: 'minimal',
+          headerBackTitle: '',
         }}>
         <Stack.Screen name="Modal" component={Modal} />
       </Stack.Group>
