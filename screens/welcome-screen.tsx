@@ -25,6 +25,10 @@ const Welcome: React.FC = () => {
     signInAsGuest();
   };
 
+  const handlePressRegister = () => {
+    navigation.navigate('Register');
+  };
+
   const handlePressSignIn = () => {
     // TO DO: replace this later by firebase auth
     const dummyUser = {
@@ -106,11 +110,10 @@ const Welcome: React.FC = () => {
           </SizableText>
           <SizableText
             fontFamily={'$body'}
-            disabled // TO DO: remove this when the register screen is ready
             fontSize="$5"
             textAlign="center"
             marginBottom="$2"
-            onPress={handleSignInAsGuest}
+            onPress={handlePressRegister}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
@@ -119,11 +122,6 @@ const Welcome: React.FC = () => {
               Crear cuenta
             </SizableText>
           </SizableText>
-
-          {/* TO DO: Adds here the terms and conditions policies website link */}
-          {/* <SizableText fontSize="$4" textAlign="center" marginBottom="$4">
-            By signing in, you agree to our Terms of Service and Privacy Policy.
-          </SizableText> */}
         </Container>
       </YStack>
     </>
