@@ -2,35 +2,30 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useAuth } from 'store/auth-store';
 import { Spinner } from 'tamagui';
+import { auth } from '../config/firebase';
 import AuthNavigator from './auth-navigator';
 import RootStack from './root-stack-navigator';
 
-// import auth from '@react-native-firebase/auth';
-
-// TO DO: handle conditional for login functionality w firebase
 function AppNavigator() {
   const [initializing, setInitializing] = useState(true);
   const user = useAuth((state) => state.user);
+  const signIn = useAuth((state) => state.signIn);
+  const signOut = useAuth((state) => state.signOut);
 
-  // TO DO: Remove this logic when using firebase
   React.useEffect(() => {
-    const init = async () => {
-      setTimeout(() => {
-        setInitializing(false);
-        if (initializing) setInitializing(false);
-      }, 200);
-    };
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (initializing) setInitializing(false);
 
-    init();
+      if (user) {
+        // TO DO: handle the name's source, e.g., from user profile or firestore users collection
+        signIn({ id: user.uid, name: user.displayName || 'Guest', isGuest: false });
+      } else {
+        signOut();
+      }
+    });
+
+    return () => unsubscribeAuth();
   }, []);
-
-  // React.useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged((user) => {
-  //     setUser(user);
-  //     if (initializing) setInitializing(false);
-  //   });
-  //   return subscriber; // unsubscribe on unmount
-  // }, []);
 
   if (initializing)
     return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;

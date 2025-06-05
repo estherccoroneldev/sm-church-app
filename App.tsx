@@ -11,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import AppNavigator from 'navigation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import config from './tamagui.config';
+
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
