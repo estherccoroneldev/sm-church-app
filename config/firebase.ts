@@ -1,10 +1,11 @@
 import * as SecureStore from 'expo-secure-store';
-import { initializeApp } from 'firebase/app';
-import { getReactNativePersistence, initializeAuth } from 'firebase/auth';
+import { getApp, getApps, initializeApp } from 'firebase/app';
+import {
+  // getAuth,
+  getReactNativePersistence,
+  initializeAuth,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
-// import {...} from "firebase/functions";
-// import {...} from "firebase/storage";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -18,6 +19,13 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApp();
+}
+
 /**
  * ====== Creating the SecureStore wrapper ======
  *
@@ -26,6 +34,7 @@ const firebaseConfig = {
  * expo-secure-store provides getItemAsync, setItemAsync, deleteItemAsync.
  * We need to create a simple wrapper to match the expected interface.
  *
+ * TO DO: solve console.errors
  **/
 const SecureStoreWrapper = {
   async setItem(key: string, value: string) {
@@ -52,10 +61,11 @@ const SecureStoreWrapper = {
   },
 };
 
-const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app);
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(SecureStoreWrapper),
 });
+
 const db = getFirestore(app);
 
 export { app, auth, db };
