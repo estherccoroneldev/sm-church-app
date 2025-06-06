@@ -19,7 +19,16 @@ export default function AuthNavigator() {
     <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          headerShown: true,
+          headerTitle: 'Registro',
+          headerTitleAlign: 'center',
+          headerShadowVisible: false,
+        }}
+      />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
