@@ -19,6 +19,15 @@ function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
 
+const renderEmptyComponent = (loading: boolean) => () =>
+  loading ? (
+    <Spinner size="large" color={'#076CB5'} />
+  ) : (
+    <SizableText size={'$6'} alignSelf="center">
+      No hay eventos en este mes.
+    </SizableText>
+  );
+
 const EventsScreen: React.FC = () => {
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { navigate } = useNavigation<EventsScreenNavigationProp>();
@@ -45,23 +54,25 @@ const EventsScreen: React.FC = () => {
     />
   );
 
+  const handlePressMonth = (index: number, item: string) => () => {
+    if (index === 0) {
+      setListStatus('all');
+      setShowModal(false);
+      return;
+    }
+
+    getEventsByMonth(item);
+    setListStatus('by-month');
+    setShowModal(false);
+  };
+
   const renderModalItem: ListRenderItem<string> = ({ item, index }) => (
     <>
       <Button
         backgroundColor={'white'}
         size="$6"
         fontFamily={'$heading'}
-        onPress={() => {
-          if (index === 0) {
-            setListStatus('all');
-            setShowModal(false);
-            return;
-          }
-
-          getEventsByMonth(item);
-          setListStatus('by-month');
-          setShowModal(false);
-        }}
+        onPress={handlePressMonth(index, item)}
         m="$2">
         {item}
       </Button>
@@ -69,62 +80,49 @@ const EventsScreen: React.FC = () => {
     </>
   );
 
-  const renderHeader = () => {
-    return (
-      <YStack gap="$2" mb={'$4'}>
-        <XStack gap={'$4'} alignItems="center">
-          <SizableText fontSize={'$6'}>Filtrar lista:</SizableText>
-          {/* <TagFilter disabled>Ministry</TagFilter> */}
-          <TagFilter onPress={() => setShowModal(true)}>Por mes</TagFilter>
-        </XStack>
-        {showMonthModal && (
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={showMonthModal}
-            onRequestClose={() => {
-              setShowModal(!showMonthModal);
-            }}>
+  const renderHeader = () => (
+    <YStack gap="$2" mb={'$4'}>
+      <XStack gap={'$4'} alignItems="center">
+        <SizableText fontSize={'$6'}>Filtrar lista:</SizableText>
+        {/* <TagFilter disabled>Ministry</TagFilter> */}
+        <TagFilter onPress={() => setShowModal(true)}>Por mes</TagFilter>
+      </XStack>
+      {showMonthModal && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showMonthModal}
+          onRequestClose={() => {
+            setShowModal(!showMonthModal);
+          }}>
+          <YStack
+            flex={1}
+            justifyContent="flex-end"
+            alignItems="center"
+            backgroundColor={'rgba(0,0,0,0.5)'}>
             <YStack
-              flex={1}
-              justifyContent="flex-end"
-              alignItems="center"
-              backgroundColor={'rgba(0,0,0,0.5)'}>
-              <YStack
-                width="100%"
-                height="70%"
-                backgroundColor="white"
-                borderTopLeftRadius={20}
-                borderTopRightRadius={20}
-                padding={20}
-                gap={'$4'}>
-                <H3 mb="$4">Seleccione un mes</H3>
-                <FlatList
-                  // TO DO: add intl for months
-                  // TO DO: add a better way to get the months
-                  data={months.spanish}
-                  keyExtractor={(_, index) => index.toString()}
-                  renderItem={renderModalItem}
-                />
-                <PrimaryButton onPress={() => setShowModal(!showMonthModal)}>
-                  Cancelar
-                </PrimaryButton>
-              </YStack>
+              width="100%"
+              height="70%"
+              backgroundColor="white"
+              borderTopLeftRadius={20}
+              borderTopRightRadius={20}
+              padding={20}
+              gap={'$4'}>
+              <H3 mb="$4">Seleccione un mes</H3>
+              <FlatList
+                // TO DO: add intl for months
+                // TO DO: add a better way to get the months
+                data={months.spanish}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={renderModalItem}
+              />
+              <PrimaryButton onPress={() => setShowModal(!showMonthModal)}>Cancelar</PrimaryButton>
             </YStack>
-          </Modal>
-        )}
-      </YStack>
-    );
-  };
-
-  const renderEmptyComponent = () =>
-    loading ? (
-      <Spinner size="large" color={'#076CB5'} />
-    ) : (
-      <SizableText size={'$6'} alignSelf="center">
-        No hay eventos en este mes.
-      </SizableText>
-    );
+          </YStack>
+        </Modal>
+      )}
+    </YStack>
+  );
 
   return (
     <SafeAreaView
@@ -144,7 +142,7 @@ const EventsScreen: React.FC = () => {
             paddingTop: 16,
           }}
           ListHeaderComponent={renderHeader}
-          ListEmptyComponent={renderEmptyComponent}
+          ListEmptyComponent={renderEmptyComponent(loading)}
           data={data[listStatus]}
           renderItem={renderEventItem}
           keyExtractor={keyExtractor}
