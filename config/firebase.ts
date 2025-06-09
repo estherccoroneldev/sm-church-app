@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import {
   // getAuth,
@@ -26,44 +26,9 @@ if (getApps().length === 0) {
   app = getApp();
 }
 
-/**
- * ====== Creating the SecureStore wrapper ======
- *
- * Firebase's getReactNativePersistence expects an object with
- * getItem, setItem, and removeItem methods that return Promises.
- * expo-secure-store provides getItemAsync, setItemAsync, deleteItemAsync.
- * We need to create a simple wrapper to match the expected interface.
- *
- * TO DO: solve console.errors
- **/
-const SecureStoreWrapper = {
-  async setItem(key: string, value: string) {
-    try {
-      await SecureStore.setItemAsync(key, value);
-    } catch (error) {
-      console.error('Error setting item in SecureStore:', error);
-    }
-  },
-  async getItem(key: string) {
-    try {
-      return await SecureStore.getItemAsync(key);
-    } catch (error) {
-      console.error('Error getting item from SecureStore:', error);
-      return null;
-    }
-  },
-  async removeItem(key: string) {
-    try {
-      await SecureStore.deleteItemAsync(key);
-    } catch (error) {
-      console.error('Error removing item from SecureStore:', error);
-    }
-  },
-};
-
 // const auth = getAuth(app);
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(SecureStoreWrapper),
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 
 const db = getFirestore(app);

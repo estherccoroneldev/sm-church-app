@@ -1,13 +1,11 @@
 import { create } from 'zustand';
 
-// Define the User type
 export type User = {
   id: string;
   name: string;
   isGuest: boolean;
 };
 
-// Define the Authentication State
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -16,7 +14,6 @@ interface AuthState {
   signOut: () => void;
 }
 
-// Create Zustand store
 const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
