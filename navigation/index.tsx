@@ -8,7 +8,7 @@ import RootStack from './root-stack-navigator';
 
 function AppNavigator() {
   const [initializing, setInitializing] = useState(true);
-  const user = useAuth((state) => state.user);
+  const authUser = useAuth((state) => state.user);
   const signIn = useAuth((state) => state.signIn);
   const signOut = useAuth((state) => state.signOut);
 
@@ -17,8 +17,8 @@ function AppNavigator() {
       if (initializing) setInitializing(false);
 
       if (user) {
-        // TO DO: handle the name's source, e.g., from user profile or firestore users collection
-        signIn({ id: user.uid, name: user.displayName || 'Guest', isGuest: false });
+        // TO DO: implement getting user data from DB by the UID to set the name
+        signIn({ id: user.uid, name: user.displayName || 'Invitado', isGuest: false });
       } else {
         signOut();
       }
@@ -30,7 +30,7 @@ function AppNavigator() {
   if (initializing)
     return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;
 
-  return <NavigationContainer>{user ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
+  return <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
 }
 
 export default AppNavigator;

@@ -18,9 +18,6 @@ const Welcome: React.FC = () => {
   const signInAsGuest = useAuth((state) => state.signInAsGuest);
   // const user = await auth().signInAnonymously();
 
-  const signIn = useAuth((state) => state.signIn);
-  // const user = await auth().signInWithEmailAndPassword(email, password);
-
   const handleSignInAsGuest = () => {
     signInAsGuest();
   };
@@ -30,14 +27,7 @@ const Welcome: React.FC = () => {
   };
 
   const handlePressSignIn = () => {
-    // TO DO: replace this later by firebase auth
-    const dummyUser = {
-      id: '1234',
-      name: 'Rev',
-      isGuest: false,
-    };
-
-    signIn(dummyUser);
+    navigation.navigate('SignIn');
   };
 
   const handleGoToForgotPassword = () => {
@@ -76,12 +66,11 @@ const Welcome: React.FC = () => {
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
-          {/* TO DO: this button should route or change state to Welcome Input */}
           <PrimaryButton size="$5" mt="$6" mb="$2" onPress={handlePressSignIn}>
             Iniciar Sesión
           </PrimaryButton>
           <SizableText
-            disabled // TO DO: remove this when the register screen is ready
+            disabled // TO DO: remove this when the forgot screen is ready
             fontFamily={'$heading'}
             fontSize="$5"
             textAlign="right"
@@ -93,7 +82,7 @@ const Welcome: React.FC = () => {
             Olvidó su contraseña?
           </SizableText>
         </Container>
-        <Container justifyContent="flex-end">
+        <Container justifyContent="flex-end" pb={'$4'}>
           <SizableText
             fontFamily={'$body'}
             fontSize="$5"
