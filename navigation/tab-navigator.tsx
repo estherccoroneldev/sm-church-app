@@ -69,7 +69,7 @@ const ConnectStack = createNativeStackNavigator<ConnectParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const headerTitleStyle = {
-  fontSize: 28,
+  fontSize: 24,
   fontFamily: 'Outfit_600SemiBold',
 } as const;
 

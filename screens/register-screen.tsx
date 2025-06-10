@@ -21,7 +21,7 @@ import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
 import TextField from '../components/TextField';
 
-const SignUpSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, 'Too Short!')
     .max(25, 'Too Long!')
@@ -127,7 +127,7 @@ const Register: React.FC = () => {
       edges={['left', 'right', 'bottom']}>
       <Formik
         initialValues={initialValues}
-        validationSchema={SignUpSchema}
+        validationSchema={RegisterSchema}
         onSubmit={handleSubmitForm}>
         {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
           <KeyboardAvoidingView

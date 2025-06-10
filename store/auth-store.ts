@@ -20,7 +20,7 @@ const useAuthStore = create<AuthState>((set) => ({
   signInAsGuest: () => {
     const guestUser: User = {
       id: `guest-${Date.now()}`,
-      name: 'Guest User',
+      name: 'Usuario',
       isGuest: true,
     };
     set({ user: guestUser, isAuthenticated: true });
