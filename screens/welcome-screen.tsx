@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { auth } from 'config/firebase';
 import { StatusBar } from 'expo-status-bar';
+import { signInAnonymously } from 'firebase/auth';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
@@ -14,12 +16,15 @@ type WelcomeScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList,
 const Welcome: React.FC = () => {
   const navigation = useNavigation<WelcomeScreenNavigationProp>();
 
-  // TO DO: replace this later by firebase auth
   const signInAsGuest = useAuth((state) => state.signInAsGuest);
-  // const user = await auth().signInAnonymously();
-
-  const handleSignInAsGuest = () => {
-    signInAsGuest();
+  const handleSignInAsGuest = async () => {
+    try {
+      await signInAnonymously(auth);
+      signInAsGuest();
+    } catch (error) {
+      // Handle each firebase auth error
+      console.error(error);
+    }
   };
 
   const handlePressRegister = () => {
