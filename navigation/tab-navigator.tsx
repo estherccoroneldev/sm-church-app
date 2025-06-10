@@ -1,5 +1,5 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StackScreenProps } from '@react-navigation/stack';
+import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/bottom-tabs';
+// import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,6 +8,8 @@ import { Event } from '../@types/event';
 import { Sermon } from '../@types/sermon';
 import { Serving } from '../@types/serving';
 // import { HeaderButton } from '../components/HeaderButton';
+import { Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ConnectDetailsScreen from 'screens/connect-details-screen';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
@@ -19,9 +21,10 @@ import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
 import ServingDetails from '../screens/serving-details-screen';
-import { RootStackParamList } from './root-stack-navigator';
+// import { RootStackParamList } from './root-stack-navigator';
 
-type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
+const { width } = Dimensions.get('screen');
+// type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
@@ -203,16 +206,15 @@ export function ConnectStackScreen() {
   );
 }
 
-export default function TabLayout({ navigation }: Props) {
+export default function TabLayout() {
+  const { bottom } = useSafeAreaInsets();
   const tabOptions = {
     tabBarActiveTintColor: '#C6233F',
     tabBarShowLabel: false,
     tabBarStyle: {
       backgroundColor: 'white',
       position: 'absolute',
-      bottom: 16,
-      left: 16,
-      right: 16,
+      bottom: 12 + bottom,
       borderRadius: 16,
       shadowColor: '#000',
       shadowOffset: {
@@ -221,14 +223,15 @@ export default function TabLayout({ navigation }: Props) {
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.5,
-      elevation: 4,
-      height: 65,
-      margin: 'auto',
+      elevation: 5,
+      width: width * 0.918,
+      height: 70,
+      marginHorizontal: 16,
     },
     tabBarAllowFontScaling: true,
     tabBarHideOnKeyboard: true,
     tabBarIconStyle: {
-      margin: 'auto',
+      margin: 12,
     },
   } as const;
 
@@ -236,6 +239,7 @@ export default function TabLayout({ navigation }: Props) {
     <Tab.Navigator
       screenOptions={{
         ...tabOptions,
+        ...TransitionPresets.ShiftTransition,
       }}>
       <Tab.Screen
         name="HomeStack"

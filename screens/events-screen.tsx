@@ -138,7 +138,7 @@ const EventsScreen: React.FC = () => {
           }}
           contentContainerStyle={{
             paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
-            paddingHorizontal: 24,
+            paddingHorizontal: 16,
             paddingTop: 16,
           }}
           ListHeaderComponent={renderHeader}

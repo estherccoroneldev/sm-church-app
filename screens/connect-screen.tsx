@@ -63,7 +63,7 @@ const Connect: React.FC = () => {
   };
   return (
     <Container>
-      <YStack px="$2" mt="$2">
+      <YStack mt="$2">
         {connectItems.map((item) => (
           <CardItem
             key={item.id}
