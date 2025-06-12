@@ -71,7 +71,7 @@ const Welcome: React.FC = () => {
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
-          <PrimaryButton size="$5" mt="$6" mb="$2" onPress={handlePressSignIn}>
+          <PrimaryButton size="$5" mt="$4" mb="$2" onPress={handlePressSignIn}>
             Iniciar Sesión
           </PrimaryButton>
           <SizableText
@@ -87,7 +87,7 @@ const Welcome: React.FC = () => {
             Olvidó su contraseña?
           </SizableText>
         </Container>
-        <Container justifyContent="flex-end" pb={'$4'}>
+        <Container justifyContent="flex-end" pb={'$8'}>
           <SizableText
             fontFamily={'$body'}
             fontSize="$5"
