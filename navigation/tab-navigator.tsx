@@ -224,7 +224,7 @@ export default function TabLayout() {
       shadowOpacity: 0.25,
       shadowRadius: 3.5,
       elevation: 5,
-      width: width * 0.918,
+      width: width * 0.915,
       height: 70,
       marginHorizontal: 16,
     },

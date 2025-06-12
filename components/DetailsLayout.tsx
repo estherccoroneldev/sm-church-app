@@ -50,7 +50,7 @@ const DetailsLayout = <T extends Event>({
       {/* Contact Section */}
       {hasContactSection ? (
         <YStack mt="$8" gap="$4">
-          <SizableText size="$4">{'Event Contact'.toUpperCase()}</SizableText>
+          <SizableText size="$4">{'Contacto'.toUpperCase()}</SizableText>
 
           {/* Avatar Section */}
           {contactName ? (
@@ -68,7 +68,7 @@ const DetailsLayout = <T extends Event>({
               <SizableText size="$6">{contactName}</SizableText>
             </XStack>
           ) : (
-            <SizableText size="$6">Unknown Contact</SizableText>
+            <SizableText size="$6">Miembro desconocido</SizableText>
           )}
         </YStack>
       ) : null}
@@ -76,7 +76,7 @@ const DetailsLayout = <T extends Event>({
       {/* Location Section */}
       {hasLocationSection ? (
         <YStack marginVertical="$4" gap="$4">
-          <SizableText size="$4">{'Location'.toUpperCase()}</SizableText>
+          <SizableText size="$4">{'Lugar'.toUpperCase()}</SizableText>
           <SizableText size="$6">Houston</SizableText>
         </YStack>
       ) : null}
