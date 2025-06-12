@@ -1,8 +1,12 @@
-import React from 'react';
-// import { useAuth } from 'store/auth-store';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { auth } from 'config/firebase';
+import { signOut } from 'firebase/auth';
+import React from 'react';
+import { Alert } from 'react-native';
+import { useAuth } from 'store/auth-store';
 import { YStack } from 'tamagui';
+import { PrimaryButton } from 'tamagui.config';
 import CardItem from '../components/CardItem';
 import { Container } from '../components/Container';
 import { ConnectParamList } from '../navigation/tab-navigator';
@@ -40,11 +44,17 @@ const connectItems = [
 type ConnectScreenNavigationProp = NativeStackNavigationProp<ConnectParamList, 'ConnectTab'>;
 
 const Connect: React.FC = () => {
-  // TO DO: REMOVE THIS BUTTON and replace this later by firebase auth
-  // const signOut = useAuth((state) => state.signOut);
-  // const handlePress = () => {
-  //   signOut();
-  // };
+  const signOutAuth = useAuth((state) => state.signOut);
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      signOutAuth();
+      Alert.alert('Signed Out', 'You have been successfully signed out.');
+    } catch (error) {
+      console.error('Error signing out:', JSON.stringify(error));
+      // Alert.alert('Sign Out Error', JSON.stringify(error));
+    }
+  };
 
   const { navigate } = useNavigation<ConnectScreenNavigationProp>();
 
@@ -75,6 +85,15 @@ const Connect: React.FC = () => {
           />
         ))}
       </YStack>
+      <PrimaryButton
+        size="$5"
+        mt="$6"
+        mb="$2"
+        onPress={handleSignOut}
+        backgroundColor={'#C6233F'}
+        pressStyle={{ opacity: 0.9 }}>
+        {`Cerrar Sesión`}
+      </PrimaryButton>
     </Container>
   );
 };

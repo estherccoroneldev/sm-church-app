@@ -16,7 +16,7 @@ const ZelleDonateButton: React.FC = () => {
       const supported = await Linking.canOpenURL(ZELLE_WEBSITE_URL);
 
       if (supported) {
-        // TO DO: should copy the email to clipboard instead of going to website?
+        // TO DO: should copy the email to clipboard instead of going to the website?
         Alert.alert(
           'Donate with Zelle',
           `To donate, please open your banking app, find Zelle, and send money to [Zelle email of Church]. \n\nThis button will take you to the Zelle website for more info.`,
