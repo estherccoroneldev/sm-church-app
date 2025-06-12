@@ -2,6 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { Linking, Pressable, StyleSheet } from 'react-native';
 import { H3, H4, H5, XStack, YStack } from 'tamagui';
+import ZelleDonateButton from '../../components/DonateButton';
 import { SocialMediaButton } from '../../components/SocialMediaButton';
 
 const FACEBOOK_URL = 'https://www.facebook.com/sanmateohouston';
@@ -14,26 +15,34 @@ const openExternalUrl = (url: string) => {
   Linking.openURL(url);
 };
 
+const handlePressPaypalBtn = () => openExternalUrl(PAYPAL_URL);
+
+// TO DO: refactor this later to check for available URL as Zelle button does
+const PaypalDonateButton = () => (
+  <Pressable onPress={handlePressPaypalBtn}>
+    {({ pressed }) => (
+      <XStack
+        mt={'$4'}
+        gap={'$4'}
+        style={[
+          styles.button,
+          {
+            opacity: pressed ? 0.5 : 1,
+          },
+        ]}>
+        <FontAwesome name="paypal" size={32} color="#2A3A7C" />
+        <H5 color={'#076CB5'}>Donar con Paypal</H5>
+      </XStack>
+    )}
+  </Pressable>
+);
+
 const Footer: React.FC = () => (
   <YStack my="$2">
     <YStack my="$6">
       <H4 textAlign="center">Tu donación nos ayuda a llevar este mensaje al mundo.</H4>
-      <Pressable onPress={() => openExternalUrl(PAYPAL_URL)}>
-        {({ pressed }) => (
-          <XStack
-            mt={'$4'}
-            gap={'$4'}
-            style={[
-              styles.button,
-              {
-                opacity: pressed ? 0.5 : 1,
-              },
-            ]}>
-            <FontAwesome name="paypal" size={32} color="#2A3A7C" />
-            <H5 color={'#076CB5'}>Donar con Paypal</H5>
-          </XStack>
-        )}
-      </Pressable>
+      <PaypalDonateButton />
+      <ZelleDonateButton />
     </YStack>
     <YStack my="$4">
       <H3 aria-label="Follow Us" my="$6">
