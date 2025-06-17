@@ -55,7 +55,11 @@ const SignInScreen: React.FC = () => {
     setMessage('');
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        values.email.trim(),
+        values.password.trim()
+      );
       const user = userCredential.user;
 
       setMessage('User signed in successfully!');
