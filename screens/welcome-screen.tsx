@@ -75,7 +75,6 @@ const Welcome: React.FC = () => {
             Iniciar Sesión
           </PrimaryButton>
           <SizableText
-            disabled // TO DO: remove this when the forgot screen is ready
             fontFamily={'$heading'}
             fontSize="$5"
             textAlign="right"

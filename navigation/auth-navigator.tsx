@@ -47,7 +47,20 @@ export default function AuthNavigator() {
           },
         }}
       />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen
+        name="ForgotPassword"
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerTitleAlign: 'center',
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            fontSize: 24,
+            fontFamily: 'Outfit_600SemiBold',
+          },
+        }}
+        component={ForgotPassword}
+      />
     </Stack.Navigator>
   );
 }
