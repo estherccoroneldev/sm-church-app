@@ -23,7 +23,7 @@ const DetailsLayout = <T extends Event>({
   hasLocationSection = true,
   children,
 }: Props<T>) => {
-  const { imageUrl, title, date, contactName, description } = currentDetail;
+  const { imageUrl, name, date, contactName, description } = currentDetail;
 
   return (
     <Container>
@@ -33,11 +33,11 @@ const DetailsLayout = <T extends Event>({
         height={height * 0.35}
         borderRadius="$6"
         marginBottom="$2"
-        alt={title}
-        aria-label={title}
+        alt={name}
+        aria-label={name}
       />
       <YStack marginVertical="$4">
-        <H3>{title}</H3>
+        <H3>{name}</H3>
         {hasDateSection && date ? (
           <SizableText>{formatDate(date).toUpperCase()}</SizableText>
         ) : null}
