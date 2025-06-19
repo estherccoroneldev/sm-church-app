@@ -9,7 +9,6 @@ export type Serving = {
   email?: string;
   address?: string;
   contactAvatarUrl?: string;
-  department?: string;
   contactName?: string;
   imageUrl?: string;
   downloadUrl?: string;
