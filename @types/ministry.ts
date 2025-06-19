@@ -1,4 +1,4 @@
-export type Serving = {
+export type Ministry = {
   id: string;
   name: string;
   description: string;

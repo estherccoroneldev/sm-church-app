@@ -3,14 +3,15 @@ import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/b
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ServingListScreen from 'screens/serving-list-screen';
+import ServingListScreen from 'screens/ministries-list-screen';
 import { Event } from '../@types/event';
+import { Ministry } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
-import { Serving } from '../@types/serving';
 // import { HeaderButton } from '../components/HeaderButton';
 import { Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ConnectDetailsScreen from 'screens/connect-details-screen';
+import MinistryDetails from 'screens/ministry-details-screen';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -20,7 +21,6 @@ import Giving from '../screens/giving-screen';
 import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
-import ServingDetails from '../screens/serving-details-screen';
 // import { RootStackParamList } from './root-stack-navigator';
 
 const { width } = Dimensions.get('screen');
@@ -28,7 +28,7 @@ const { width } = Dimensions.get('screen');
 
 export type HomeParamList = {
   Home: undefined;
-  ServingDetails: Serving;
+  MinistryDetails: Ministry;
   EventDetails: Event;
 };
 
@@ -49,7 +49,7 @@ export type GivingParamList = {
 export type ConnectParamList = {
   ConnectTab: undefined;
   AboutUs: undefined;
-  ServingDetails: Serving;
+  MinistryDetails: Ministry;
   ConnectDetails: undefined;
   ServingList: undefined;
 };
@@ -87,14 +87,14 @@ export function HomeStackScreen() {
         component={Home}
       />
       <HomeStack.Screen
-        name="ServingDetails"
+        name="MinistryDetails"
         options={{
           title: 'Detalles',
           headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
-        component={ServingDetails}
+        component={MinistryDetails}
       />
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
       <HomeStack.Screen
@@ -173,14 +173,14 @@ export function ConnectStackScreen() {
         component={ConnectDetailsScreen}
       />
       <ConnectStack.Screen
-        name="ServingDetails"
+        name="MinistryDetails"
         options={{
           title: 'Detalles',
           headerTitleStyle,
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
-        component={ServingDetails}
+        component={MinistryDetails}
       />
       <ConnectStack.Screen
         name="ServingList"

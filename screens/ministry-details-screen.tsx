@@ -4,10 +4,10 @@ import DetailsLayout from '../components/DetailsLayout';
 import StaticInfo from '../components/StaticInfo';
 import { HomeParamList } from '../navigation/tab-navigator';
 
-type ServingDetailsRouteProp = RouteProp<HomeParamList, 'ServingDetails'>;
+type MinistryDetailsRouteProp = RouteProp<HomeParamList, 'MinistryDetails'>;
 
-const ServingDetails: React.FC = () => {
-  const { params } = useRoute<ServingDetailsRouteProp>();
+const MinistryDetails: React.FC = () => {
+  const { params } = useRoute<MinistryDetailsRouteProp>();
   const { imageUrl, contactName = 'Gary Oldman' } = params || {};
 
   return (
@@ -21,4 +21,4 @@ const ServingDetails: React.FC = () => {
   );
 };
 
-export default ServingDetails;
+export default MinistryDetails;

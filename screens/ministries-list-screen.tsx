@@ -1,30 +1,30 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import useMinistries from 'hooks/use-ministries';
 import React from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SizableText, Spinner, Theme } from 'tamagui';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
-import useServings from '../hooks/use-servings';
 import { ConnectParamList } from '../navigation/tab-navigator';
 
-type ServingListScreenNavigationProp = NativeStackNavigationProp<
+type MinistriesListScreenNavigationProp = NativeStackNavigationProp<
   ConnectParamList,
-  'ServingDetails'
+  'MinistryDetails'
 >;
 
 function keyExtractor<T extends { id: string }>(item: T) {
   return item.id.toString();
 }
 
-const ServingListScreen: React.FC = () => {
+const MinistriesListScreen: React.FC = () => {
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
-  const { navigate } = useNavigation<ServingListScreenNavigationProp>();
-  const { servings, loading } = useServings();
+  const { navigate } = useNavigation<MinistriesListScreenNavigationProp>();
+  const { ministries, loading } = useMinistries();
 
-  const handlePressItem = (item: Event) => navigate('ServingDetails', item);
+  const handlePressItem = (item: Event) => navigate('MinistryDetails', item);
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
     <CardItem
       fullmode
@@ -40,7 +40,7 @@ const ServingListScreen: React.FC = () => {
       <Spinner size="large" color={'#076CB5'} />
     ) : (
       <SizableText size={'$6'} alignSelf="center">
-        No servings.
+        No ministries.
       </SizableText>
     );
 
@@ -62,7 +62,7 @@ const ServingListScreen: React.FC = () => {
             marginTop: 24,
           }}
           ListEmptyComponent={renderEmptyComponent}
-          data={servings}
+          data={ministries}
           renderItem={renderEventItem}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator
@@ -72,4 +72,4 @@ const ServingListScreen: React.FC = () => {
   );
 };
 
-export default ServingListScreen;
+export default MinistriesListScreen;
