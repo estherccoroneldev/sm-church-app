@@ -1,6 +1,6 @@
 export type Serving = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   date: string;
   place?: string;
