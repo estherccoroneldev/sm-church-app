@@ -1,10 +1,39 @@
+import { db } from 'config/firebase';
 import { getMonth } from 'date-fns';
+import { collection, getDocs } from 'firebase/firestore';
 import React from 'react';
 import { Event } from '../@types/event';
 import fetchEvents from '../services/events';
 import months from '../utils/months';
 import { parseDate } from '../utils/parseDate';
 import sortByDate from '../utils/sortBydate';
+
+async function getEventsFromFirestore(): Promise<Event[]> {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'events'));
+    const eventsList = querySnapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Event
+    );
+    return eventsList;
+  } catch (error) {
+    console.error('[Firestore] Error fetching events:', error);
+    throw error;
+  }
+}
+
+function fetchEventsByEnvironment() {
+  if (__DEV__) {
+    return fetchEvents;
+  } else {
+    return getEventsFromFirestore;
+  }
+}
+
+const getData = fetchEventsByEnvironment();
 
 export default function useEvents() {
   const [events, setEvents] = React.useState<Event[]>([]);
@@ -15,7 +44,7 @@ export default function useEvents() {
   const getEvents = React.useCallback(async () => {
     try {
       setLoading(true);
-      const data = await fetchEvents();
+      const data = await getData();
       setEvents(data);
     } catch (error) {
       setError('Error fetching events');
