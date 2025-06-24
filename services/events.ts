@@ -6,7 +6,7 @@ const fetchEvents = async (): Promise<Event[]> => {
     const response = await api.get('/events');
     return response.data;
   } catch (error) {
-    console.error('Error fetching events:', error);
+    console.error('[API] Error fetching events:', error);
     throw error;
   }
 };
