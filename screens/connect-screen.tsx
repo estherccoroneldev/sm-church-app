@@ -14,26 +14,26 @@ import { ConnectParamList } from '../navigation/tab-navigator';
 const connectItems = [
   {
     id: 'item-1',
-    title: 'Conéctate con nosotros',
+    name: 'Conéctate con nosotros',
     description: 'Haznos saber cómo podemos apoyarte.',
     imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-4296_orig.jpg',
   },
   {
     id: 'item-2',
-    title: 'Encuentra un grupo',
+    name: 'Encuentra un grupo',
     description: 'Encuentra tu lugar uniéndote a uno de nuestros grupos',
     imageUrl:
       'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/conferencia-lideres-hispanos-2023-2_1.jpg',
   },
   {
     id: 'item-3',
-    title: 'Oportunidades de Servicio',
+    name: 'Oportunidades de Servicio',
     description: 'Encuentra tu lugar sirviendo en la iglesia, en la ciudad o en el mundo',
     imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-8256_orig.jpg',
   },
   {
     id: 'item-4',
-    title: 'Sobre nosotros',
+    name: 'Sobre nosotros',
     description: '',
     // TO DO: replace this image by the actual church front
     imageUrl:
