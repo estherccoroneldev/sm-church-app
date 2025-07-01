@@ -25,15 +25,7 @@ async function getEventsFromFirestore(): Promise<Event[]> {
   }
 }
 
-function fetchEventsByEnvironment() {
-  if (__DEV__) {
-    return fetchEvents;
-  } else {
-    return getEventsFromFirestore;
-  }
-}
-
-const getData = fetchEventsByEnvironment();
+const getData = __DEV__ ? fetchEvents : getEventsFromFirestore;
 
 export default function useEvents() {
   const [events, setEvents] = React.useState<Event[]>([]);
