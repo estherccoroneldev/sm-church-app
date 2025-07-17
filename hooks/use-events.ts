@@ -1,31 +1,10 @@
-import { db } from 'config/firebase';
 import { getMonth } from 'date-fns';
-import { collection, getDocs } from 'firebase/firestore';
 import React from 'react';
+import { getData } from 'services/events';
 import { Event } from '../@types/event';
-import fetchEvents from '../services/events';
 import months from '../utils/months';
 import { parseDate } from '../utils/parseDate';
 import sortByDate from '../utils/sortBydate';
-
-async function getEventsFromFirestore(): Promise<Event[]> {
-  try {
-    const querySnapshot = await getDocs(collection(db, 'events'));
-    const eventsList = querySnapshot.docs.map(
-      (doc) =>
-        ({
-          id: doc.id,
-          ...doc.data(),
-        }) as Event
-    );
-    return eventsList;
-  } catch (error) {
-    console.error('[Firestore] Error fetching events:', error);
-    throw error;
-  }
-}
-
-const getData = __DEV__ ? fetchEvents : getEventsFromFirestore;
 
 export default function useEvents() {
   const [events, setEvents] = React.useState<Event[]>([]);
