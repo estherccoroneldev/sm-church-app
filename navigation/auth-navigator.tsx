@@ -27,6 +27,7 @@ export default function AuthNavigator() {
           headerTitle: 'Ingreso',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle: {
             fontSize: 24,
             fontFamily: 'Outfit_600SemiBold',
@@ -41,6 +42,7 @@ export default function AuthNavigator() {
           headerTitle: 'Registro',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle: {
             fontSize: 24,
             fontFamily: 'Outfit_600SemiBold',
@@ -54,6 +56,7 @@ export default function AuthNavigator() {
           headerTitle: '',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle: {
             fontSize: 24,
             fontFamily: 'Outfit_600SemiBold',
