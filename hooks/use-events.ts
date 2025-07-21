@@ -42,8 +42,13 @@ export default function useEvents() {
     // TO DO: remove this entire logic when implementing the intl month picker, pleeeeease. It's a mess
 
     const monthIndex = getMonth(parseDate(`${monthLabelEN} 1, 2000`));
+
     setEventsByMonth(
-      [...events].filter((eventItem) => new Date(eventItem.date).getMonth() === monthIndex)
+      [...events].filter((eventItem) => {
+        const eventDate = parseDate(eventItem.date);
+        console.log('eventDate', eventDate.getMonth(), monthIndex);
+        return eventDate.getMonth() === monthIndex;
+      })
     );
   };
 
