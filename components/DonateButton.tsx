@@ -27,8 +27,6 @@ const ZelleDonateButton: React.FC = () => {
             },
           ]
         );
-
-        console.log('Successfully opened Zelle website.');
       } else {
         // Fallback for when the URL can't be opened (very rare on modern devices)
         Alert.alert(

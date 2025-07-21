@@ -31,5 +31,6 @@ export async function fetchMinistriesGCP(): Promise<Ministry[]> {
 }
 
 // Function to determine which fetch function to use based on the environment
+// const getMinistries = fetchMinistriesGCP;
 const getMinistries = __DEV__ ? fetchMinistries : fetchMinistriesGCP;
 export { getMinistries };

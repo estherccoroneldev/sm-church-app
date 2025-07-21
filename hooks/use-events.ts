@@ -46,7 +46,6 @@ export default function useEvents() {
     setEventsByMonth(
       [...events].filter((eventItem) => {
         const eventDate = parseDate(eventItem.date);
-        console.log('eventDate', eventDate.getMonth(), monthIndex);
         return eventDate.getMonth() === monthIndex;
       })
     );
