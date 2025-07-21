@@ -1,4 +1,5 @@
 import { db } from 'config/firebase';
+import { format } from 'date-fns';
 import { collection, getDocs } from 'firebase/firestore';
 import { Event } from '../@types/event';
 import api from './api';
@@ -13,6 +14,19 @@ const fetchEvents = async (): Promise<Event[]> => {
   }
 };
 
+const setFormattedDate = (docData: any): string => {
+  const firebaseTimestamp = docData.date;
+  console.log('firebaseTimestamp', firebaseTimestamp);
+
+  let formattedDate = 'N/A';
+  if (firebaseTimestamp && typeof firebaseTimestamp.toDate === 'function') {
+    const jsDate = firebaseTimestamp.toDate();
+    formattedDate = format(jsDate, 'MMMM d, yyyy');
+  }
+
+  return formattedDate;
+};
+
 async function getEventsFromFirestore(): Promise<Event[]> {
   try {
     const querySnapshot = await getDocs(collection(db, 'events'));
@@ -21,8 +35,10 @@ async function getEventsFromFirestore(): Promise<Event[]> {
         ({
           id: doc.id,
           ...doc.data(),
+          date: setFormattedDate(doc.data()),
         }) as Event
     );
+
     return eventsList;
   } catch (error) {
     console.error('[Firestore] Error fetching events:', error);
@@ -30,6 +46,7 @@ async function getEventsFromFirestore(): Promise<Event[]> {
   }
 }
 
+// const getData = getEventsFromFirestore;
 const getData = __DEV__ ? fetchEvents : getEventsFromFirestore;
 
 export { getData };
