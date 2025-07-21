@@ -16,7 +16,6 @@ const fetchEvents = async (): Promise<Event[]> => {
 
 const setFormattedDate = (docData: any): string => {
   const firebaseTimestamp = docData.date;
-  console.log('firebaseTimestamp', firebaseTimestamp);
 
   let formattedDate = 'N/A';
   if (firebaseTimestamp && typeof firebaseTimestamp.toDate === 'function') {
