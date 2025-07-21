@@ -2,7 +2,6 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { Avatar, H3, Image, SizableText, XStack, YStack } from 'tamagui';
 import { Event } from '../@types/event';
-import { formatDate } from '../utils/formatDate';
 import { Container } from './Container';
 
 interface Props<T extends Event> {
@@ -38,9 +37,7 @@ const DetailsLayout = <T extends Event>({
       />
       <YStack marginVertical="$4">
         <H3>{name}</H3>
-        {hasDateSection && date ? (
-          <SizableText>{formatDate(date).toUpperCase()}</SizableText>
-        ) : null}
+        {hasDateSection && date ? <SizableText>{date.toUpperCase()}</SizableText> : null}
       </YStack>
 
       <SizableText fontFamily={'$body'} fontSize="$7">

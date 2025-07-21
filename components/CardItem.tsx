@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dimensions, Pressable } from 'react-native';
 import { H3, H5, Image, SizableText, YStack } from 'tamagui';
-import { formatDate } from '../utils/formatDate';
 
 const { width } = Dimensions.get('window');
 
@@ -82,7 +81,7 @@ const CardItem = <T extends BaseItem>({
               <YStack padding={'$4'} gap="$2" overflow="hidden">
                 <YStack>
                   <Title numberOfLines={1}>{item.name}</Title>
-                  {hasDateSection && item.date ? <Subtitle text={formatDate(item.date)} /> : null}
+                  {hasDateSection && item.date ? <Subtitle text={item.date} /> : null}
                 </YStack>
                 {hasDescription && item.description ? (
                   <SizableText fontSize={'$6'} numberOfLines={3}>
