@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from 'store/auth-store';
-import { SizableText, YStack } from 'tamagui';
+import { SizableText, Spinner, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
@@ -237,6 +237,7 @@ const Register: React.FC = () => {
                   <PrimaryButton
                     onPress={() => handleSubmit()}
                     disabled={loading}
+                    icon={loading ? <Spinner size="small" color="$background" /> : undefined}
                     mt={'$8'}
                     mb={'$2'}
                     size={'$5'}>
