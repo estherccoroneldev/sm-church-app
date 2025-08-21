@@ -31,6 +31,9 @@ const RegisterSchema = Yup.object().shape({
     .max(25, 'Too Long!')
     .required('Last Name is required'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
+  phoneNumber: Yup.string()
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Invalid contact number format')
+    .optional(),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .required('Password is required'),
@@ -43,6 +46,7 @@ const initialValues = {
   email: '',
   firstName: '',
   lastName: '',
+  phoneNumber: '',
   password: '',
   confirmPassword: '',
 };
@@ -57,6 +61,7 @@ const Register: React.FC = () => {
   const firstNameInputRef = React.useRef<TextInput>(null);
   const lastNameInputRef = React.useRef<TextInput>(null);
   const emailInputRef = React.useRef<TextInput>(null);
+  const phoneNumberInputRef = React.useRef<TextInput>(null);
   const passwordInputRef = React.useRef<TextInput>(null);
   const confirmPasswordInputRef = React.useRef<TextInput>(null);
 
@@ -87,6 +92,7 @@ const Register: React.FC = () => {
       const initialUserProfile: UserProfile = {
         uid: user.uid,
         email: user.email || '',
+        phoneNumber: values.phoneNumber || '',
         role: 'member', // Default role
         firstName: values.firstName,
         lastName: values.lastName,
@@ -178,7 +184,7 @@ const Register: React.FC = () => {
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     returnKeyType="next"
-                    onSubmitEditing={() => passwordInputRef.current?.focus()}
+                    onSubmitEditing={() => phoneNumberInputRef.current?.focus()}
                     ref={emailInputRef}
                     value={values.email}
                     variant="primary"
@@ -186,6 +192,22 @@ const Register: React.FC = () => {
                   {touched.email && errors.email ? (
                     <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
                       {errors.email}
+                    </SizableText>
+                  ) : null}
+
+                  <TextField
+                    label="Phone Number"
+                    onChangeText={handleChange('phoneNumber')}
+                    onBlur={handleBlur('phoneNumber')}
+                    returnKeyType="next"
+                    onSubmitEditing={() => passwordInputRef.current?.focus()}
+                    ref={phoneNumberInputRef}
+                    value={values.phoneNumber}
+                    variant="primary"
+                  />
+                  {touched.phoneNumber && errors.phoneNumber ? (
+                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
+                      {errors.phoneNumber}
                     </SizableText>
                   ) : null}
 
