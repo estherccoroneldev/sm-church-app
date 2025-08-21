@@ -1,4 +1,4 @@
-// import * as Linking from 'expo-linking';
+import * as Clipboard from 'expo-clipboard';
 import React from 'react';
 import { Alert, Image, Linking, Pressable, StyleSheet } from 'react-native';
 import { H5, XStack } from 'tamagui';
@@ -6,41 +6,35 @@ import { H5, XStack } from 'tamagui';
 // This is the official Zelle website. It explains Zelle, but doesn't
 // allow direct payments from the browser. For actual donations, you'd
 // need to provide your Zelle-registered email or phone number.
-const ZELLE_WEBSITE_URL = 'https://www.zellepay.com/';
+// const ZELLE_WEBSITE_URL = 'https://www.zellepay.com/';
+
 const DEFAULT_IMAGE = require('../assets/zelle-logo.png');
+const CHURCH_ZELLE_EMAIL = 'oficina.iesm@gmail.com';
 
 // TO DO: intl and accessibility
 const ZelleDonateButton: React.FC = () => {
+  const [copiedEmail, setCopiedEmail] = React.useState('');
+
+  const copyToClipboard = async (text: string) => {
+    await Clipboard.setStringAsync(text);
+    setCopiedEmail(text);
+    Alert.alert('Copied to Clipboard', `Email ${text} copied to clipboard.`);
+  };
+
   const handlePress = async () => {
     try {
-      const supported = await Linking.canOpenURL(ZELLE_WEBSITE_URL);
-
-      if (supported) {
-        // TO DO: should copy the email to clipboard instead of going to the website?
-        Alert.alert(
-          'Donate with Zelle',
-          `To donate, please open your banking app, find Zelle, and send money to [Zelle email of Church]. \n\nThis button will take you to the Zelle website for more info.`,
-          [
-            {
-              text: 'OK',
-              onPress: async () => await Linking.openURL(ZELLE_WEBSITE_URL),
-            },
-          ]
-        );
-      } else {
-        // Fallback for when the URL can't be opened (very rare on modern devices)
-        Alert.alert(
-          'Cannot Open Link',
-          `Unable to open the Zelle website: ${ZELLE_WEBSITE_URL}. Please try again later or visit manually.`
-        );
-        console.error(`Cannot open Zelle website: ${ZELLE_WEBSITE_URL}`);
-      }
+      Alert.alert(
+        'Donar con Zelle',
+        `To donate, please open your banking app, find Zelle, and send money to ${CHURCH_ZELLE_EMAIL}. \n\nThis button will copy the email to your clipboard for easy pasting.\n\nYou can also visit the Zelle website for more information.`,
+        [
+          {
+            text: 'Copy Email',
+            onPress: async () => await copyToClipboard(CHURCH_ZELLE_EMAIL),
+          },
+        ]
+      );
     } catch (error) {
       // Catch any unexpected errors during the linking process
-      Alert.alert(
-        'Error',
-        'An unexpected error occurred while trying to open the link. Please try again.'
-      );
       console.error('Error opening Zelle link:', error);
     }
   };
