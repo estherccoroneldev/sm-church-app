@@ -49,7 +49,7 @@ const Connect: React.FC = () => {
     try {
       await signOut(auth);
       signOutAuth();
-      Alert.alert('Signed Out', 'You have been successfully signed out.');
+      Alert.alert('Cierre de Sesión', 'Ha cerrado sesión exitosamente.');
     } catch (error) {
       console.error('Error signing out:', JSON.stringify(error));
       // Alert.alert('Sign Out Error', JSON.stringify(error));
