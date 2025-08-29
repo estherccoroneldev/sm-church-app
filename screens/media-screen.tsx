@@ -1,72 +1,97 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import useSermons from 'hooks/use-sermons';
+import { YouTubeVideo } from '@types/ytvideo';
 import React from 'react';
-import { FlatList, Linking, ListRenderItem } from 'react-native';
+import { FlatList, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ListItem, Separator, SizableText, Spinner, Theme } from 'tamagui';
-import { Sermon } from '../@types/sermon';
+import { H5, Image, SizableText, Spinner, Theme } from 'tamagui';
+import useSermons from '../hooks/use-sermons';
 
+const handlePressVideo = (videoId: string) => {
+  const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  Linking.openURL(youtubeUrl).catch((err) => console.error("Couldn't open URL:", err));
+};
+
+const renderVideoItem = ({ item }: { item: YouTubeVideo }) => (
+  <TouchableOpacity onPress={() => handlePressVideo(item.id.videoId)} style={styles.videoItem}>
+    <Image style={styles.thumbnail} source={{ uri: item.snippet.thumbnails.high.url }} />
+    <View style={styles.videoDetails}>
+      <H5 numberOfLines={2}>{item.snippet.title}</H5>
+      <SizableText fontFamily="$body" fontSize="$5" numberOfLines={3}>
+        {item.snippet.description}
+      </SizableText>
+    </View>
+  </TouchableOpacity>
+);
 const Media: React.FC = () => {
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
-  // TO DO: Get videos from this API: GET https://www.googleapis.com/youtube/v3/videos, need API_KEY
-  const { sermons, loading } = useSermons();
-  const renderItem: ListRenderItem<Sermon> = ({ item }) => {
-    return (
-      <ListItem
-        hoverTheme
-        pressTheme
-        title={item.title}
-        size={'$7'}
-        fontFamily={'$heading'}
-        padding={0}
-        paddingVertical={'$4'}
-        paddingHorizontal={'$3'}
-        subTitle={item.description}
-        icon={<FontAwesome name="film" size={28} color="#C6233F" />}
-        iconAfter={<FontAwesome name="chevron-right" size={16} color="gray" />}
-        borderRadius={'$4'}
-        onPress={() => Linking.openURL(item.videoUrl)}
-      />
-    );
-  };
+  const { sermons, loading, getSermons } = useSermons();
 
   const renderEmptyComponent = () =>
-    loading ? (
-      <Spinner size="large" color="#076CB5" />
-    ) : (
+    !loading && (
       <SizableText size={'$6'} alignSelf="center">
         No videos.
       </SizableText>
     );
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}
-      edges={['left', 'right']}>
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <Theme name="light">
-        <FlatList<Sermon>
-          style={{
-            flex: 1,
+        <FlatList<YouTubeVideo>
+          style={styles.container}
+          contentContainerStyle={{
+            paddingTop: 24,
+            paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
+            paddingHorizontal: 16,
           }}
-          contentContainerStyle={{ paddingBottom: 24 + BOTTOM_TAB_HEIGHT, paddingHorizontal: 24 }}
           ListEmptyComponent={renderEmptyComponent}
           data={sermons}
-          renderItem={renderItem}
+          renderItem={renderVideoItem}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator
-          ItemSeparatorComponent={() => <Separator />}
+          // Load more when reaching the end of the list
+          onEndReached={getSermons}
+          onEndReachedThreshold={0.6}
+          ListFooterComponent={sermons.length > 9 && loading ? <Spinner size="large" /> : null}
         />
       </Theme>
     </SafeAreaView>
   );
 };
 
-function keyExtractor<T extends { id: string }>(item: T) {
-  return item.id.toString();
+function keyExtractor(item: YouTubeVideo, index: number): string {
+  if (item.id && item.id.videoId) {
+    return item.id.videoId;
+  }
+  if (item.etag) {
+    return item.etag;
+  }
+  return index.toString();
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  videoItem: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 10,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  thumbnail: {
+    width: 100,
+  },
+  videoDetails: {
+    flex: 1,
+    padding: 12,
+  },
+});
 
 export default Media;
