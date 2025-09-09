@@ -20,11 +20,22 @@ export default function RootStack() {
       </Stack.Group>
       <Stack.Group
         screenOptions={{
-          presentation: 'modal',
+          presentation: 'formSheet',
           headerBackButtonDisplayMode: 'minimal',
           headerBackTitle: '',
         }}>
-        <Stack.Screen name="Modal" component={Modal} />
+        <Stack.Screen
+          name="Modal"
+          component={Modal}
+          options={{
+            title: 'Settings',
+            headerTitleStyle: {
+              fontSize: 24,
+              fontFamily: 'Outfit_600SemiBold',
+            },
+            headerShadowVisible: false,
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
