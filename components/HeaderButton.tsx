@@ -8,7 +8,7 @@ export const HeaderButton = forwardRef<typeof Pressable, { onPress?: () => void 
       <Pressable onPress={onPress}>
         {({ pressed }) => (
           <FontAwesome
-            name="user-o"
+            name="gear"
             size={26}
             color="gray"
             style={[
