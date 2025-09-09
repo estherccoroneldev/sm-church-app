@@ -21,9 +21,11 @@ const Welcome: React.FC = () => {
     try {
       await signInAnonymously(auth);
       signInAsGuest();
-    } catch (error) {
+    } catch (error: Error | any) {
       // Handle each firebase auth error
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
     }
   };
 
