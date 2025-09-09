@@ -50,7 +50,7 @@ const Media: React.FC = () => {
           showsVerticalScrollIndicator
           // Load more when reaching the end of the list
           onEndReached={getSermons}
-          onEndReachedThreshold={0.6}
+          onEndReachedThreshold={0.7}
           ListFooterComponent={sermons.length > 9 && loading ? <Spinner size="large" /> : null}
         />
       </Theme>
