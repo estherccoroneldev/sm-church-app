@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Platform } from 'react-native';
 import Modal from '../screens/modal';
 import TabNavigator, { TabParamList } from './tab-navigator';
 
@@ -20,7 +21,7 @@ export default function RootStack() {
       </Stack.Group>
       <Stack.Group
         screenOptions={{
-          presentation: 'formSheet',
+          presentation: Platform.OS === 'ios' ? 'modal' : 'formSheet',
           headerBackButtonDisplayMode: 'minimal',
           headerBackTitle: '',
         }}>

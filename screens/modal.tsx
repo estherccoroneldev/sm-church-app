@@ -1,4 +1,3 @@
-import { Container } from 'components/Container';
 import { auth } from 'config/firebase';
 import { StatusBar } from 'expo-status-bar';
 import { signOut } from 'firebase/auth';
@@ -85,18 +84,16 @@ export default function Modal() {
         backgroundColor: 'white',
         padding: 24,
       }}>
-      <Theme name="light">
-        <StatusBar style="auto" />
-        <YStack flex={1} mt="$2" justifyContent="flex-end">
-          <SizableText
-            fontFamily="$body"
-            fontSize="$6"
-            color={'#C6233F'}
-            textAlign="center"
-            onPress={handlePressDeleteAccount}>
-            Borrar Cuenta
-          </SizableText>
-        </YStack>
+      <StatusBar style="auto" />
+      <YStack flex={1} mt="$2" justifyContent="flex-end">
+        <SizableText
+          fontFamily="$body"
+          fontSize="$6"
+          color={'#C6233F'}
+          textAlign="center"
+          onPress={handlePressDeleteAccount}>
+          Borrar Cuenta
+        </SizableText>
         <PrimaryButton
           size="$5"
           mt="$6"
@@ -106,7 +103,7 @@ export default function Modal() {
           pressStyle={{ opacity: 0.9 }}>
           Cerrar Sesión
         </PrimaryButton>
-      </Theme>
+      </YStack>
     </SafeAreaView>
   );
 }
