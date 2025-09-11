@@ -1,8 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import { HeaderButton } from 'components/HeaderButton';
+import { auth } from 'config/firebase';
+import { signOut } from 'firebase/auth';
 import React from 'react';
-import { YStack } from 'tamagui';
+import { Alert } from 'react-native';
+import { useAuth } from 'store/auth-store';
+import { Sheet, SizableText, XStack, YStack } from 'tamagui';
+import { PrimaryButton } from 'tamagui.config';
 import CardItem from '../components/CardItem';
 import { Container } from '../components/Container';
 import { ConnectParamList } from '../navigation/tab-navigator';
@@ -41,6 +47,8 @@ type ConnectScreenNavigationProp = NativeStackNavigationProp<ConnectParamList, '
 
 const Connect: React.FC = () => {
   const { navigate } = useNavigation<ConnectScreenNavigationProp>();
+  const [open, setOpen] = React.useState(false);
+  const [position, setPosition] = React.useState(0);
 
   const handlePress = (itemId: string) => () => {
     switch (itemId) {
@@ -55,9 +63,75 @@ const Connect: React.FC = () => {
         undefined;
     }
   };
+
+  const signOutAuth = useAuth((state) => state.signOut);
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      signOutAuth();
+      Alert.alert('Cierre de Sesión', 'Ha cerrado sesión exitosamente.');
+    } catch (error) {
+      Alert.alert('Error signing out:', JSON.stringify(error));
+      console.error('Error signing out:', JSON.stringify(error));
+    }
+  };
+
+  const deleteAccount = async () => {
+    try {
+      if (auth.currentUser) {
+        await auth.currentUser.delete();
+        handleSignOut();
+        Alert.alert('Cuenta Borrada', 'Su cuenta ha sido borrada exitosamente.');
+      } else {
+        Alert.alert(
+          'Acción requerida',
+          'Por favor, inicie sesión nuevamente para borrar su cuenta.'
+        );
+        handleSignOut();
+      }
+    } catch (error: Error | any) {
+      if (error.code === 'auth/requires-recent-login') {
+        // Handle the re-authentication flow here
+        Alert.alert(
+          'Re-authentication Required',
+          'Por favor, inicie sesión nuevamente para borrar su cuenta.'
+        );
+        handleSignOut();
+      } else {
+        Alert.alert(
+          'Error',
+          'Hubo un error al borrar su cuenta. Por favor, intente nuevamente más tarde.'
+        );
+        console.error('Error deleting account:', JSON.stringify(error));
+      }
+    }
+  };
+
+  const handlePressDeleteAccount = () => {
+    Alert.alert(
+      'Borrar Cuenta',
+      '¿Estás seguro de que deseas borrar tu cuenta? Esta acción no se puede deshacer.',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Borrar',
+          style: 'destructive',
+          onPress: deleteAccount,
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <Container>
       <YStack mt="$2">
+        <XStack flex={1} justifyContent="space-between" py="$4" mb="$2">
+          <SizableText fontFamily={'$heading'} fontSize={'$8'}>
+            Conéctate
+          </SizableText>
+          <HeaderButton onPress={() => setOpen((prev) => !prev)} />
+        </XStack>
         {connectItems.map((item) => (
           <CardItem
             key={item.id}
@@ -69,6 +143,49 @@ const Connect: React.FC = () => {
           />
         ))}
       </YStack>
+      <Sheet
+        modal
+        forceRemoveScrollEnabled={open}
+        open={open}
+        onOpenChange={setOpen}
+        snapPointsMode={'fit'}
+        dismissOnSnapToBottom
+        position={position}
+        onPositionChange={setPosition}
+        zIndex={100_000}
+        animation="lazy">
+        <Sheet.Overlay />
+        <YStack flex={1} backgroundColor={'white'}>
+          <SizableText
+            fontFamily={'$heading'}
+            fontSize={'$8'}
+            alignSelf="center"
+            px="$4"
+            py="$4"
+            mb="$8">
+            Settings
+          </SizableText>
+          <YStack flex={1} mt="$2" p="$8" justifyContent="flex-end">
+            <SizableText
+              fontFamily="$body"
+              fontSize="$6"
+              color={'#C6233F'}
+              textAlign="center"
+              onPress={handlePressDeleteAccount}>
+              Borrar Cuenta
+            </SizableText>
+            <PrimaryButton
+              size="$5"
+              mt="$6"
+              mb="$2"
+              onPress={handleSignOut}
+              backgroundColor={'#C6233F'}
+              pressStyle={{ opacity: 0.9 }}>
+              Cerrar Sesión
+            </PrimaryButton>
+          </YStack>
+        </YStack>
+      </Sheet>
     </Container>
   );
 };
