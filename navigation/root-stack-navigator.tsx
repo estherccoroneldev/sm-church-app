@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Platform } from 'react-native';
-import Modal from '../screens/modal';
+// import { Platform } from 'react-native';
+// import Modal from '../screens/modal';
 import TabNavigator, { TabParamList } from './tab-navigator';
 
 export type RootStackParamList = {
@@ -19,7 +19,7 @@ export default function RootStack() {
         }}>
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Group>
-      <Stack.Group
+      {/* <Stack.Group
         screenOptions={{
           presentation: Platform.OS === 'ios' ? 'modal' : 'formSheet',
           headerBackButtonDisplayMode: 'minimal',
@@ -37,7 +37,7 @@ export default function RootStack() {
             headerShadowVisible: false,
           }}
         />
-      </Stack.Group>
+      </Stack.Group> */}
     </Stack.Navigator>
   );
 }

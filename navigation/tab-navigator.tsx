@@ -1,5 +1,6 @@
 import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/bottom-tabs';
-import { StackScreenProps } from '@react-navigation/stack';
+// import { RootStackParamList } from './root-stack-navigator';
+// import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,7 +12,7 @@ import MinistryDetails from 'screens/ministry-details-screen';
 import { Event } from '../@types/event';
 import { Ministry } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
-import { HeaderButton } from '../components/HeaderButton';
+// import { HeaderButton } from '../components/HeaderButton';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -21,10 +22,9 @@ import Giving from '../screens/giving-screen';
 import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
-import { RootStackParamList } from './root-stack-navigator';
 
 const { width } = Dimensions.get('screen');
-type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
+// type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
@@ -157,8 +157,6 @@ export function ConnectStackScreen() {
         options={{
           title: '',
           headerShown: false,
-          // headerTitleStyle,
-          // headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
         }}
         name="ConnectTab"
         component={Connect}
@@ -207,7 +205,7 @@ export function ConnectStackScreen() {
   );
 }
 
-export default function TabLayout({ navigation }: Props) {
+export default function TabLayout() {
   const { bottom } = useSafeAreaInsets();
   const tabOptions = {
     tabBarActiveTintColor: '#C6233F',
@@ -284,11 +282,10 @@ export default function TabLayout({ navigation }: Props) {
         name="ConnectStack"
         component={ConnectStackScreen}
         options={{
-          title: 'Conéctate',
-          headerShown: true,
-          headerTitleStyle,
+          title: '',
+          headerShown: false,
           headerShadowVisible: false,
-          headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
+          // headerRight: () => <HeaderButton onPress={() => navigation.navigate('Modal')} />,
           tabBarIcon: ({ color }) => <TabBarIcon name="code-of-conduct" color={color} />,
         }}
       />
