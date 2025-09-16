@@ -13,6 +13,8 @@ import { Event } from '../@types/event';
 import { Ministry } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
+import AnnouncementDetails from 'screens/announcement-details-screen';
+import { Announcement } from '../@types/announcement';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -30,11 +32,17 @@ export type HomeParamList = {
   Home: undefined;
   MinistryDetails: Ministry;
   EventDetails: Event;
+  AnnouncementDetails: Announcement;
 };
 
 export type EventsParamList = {
   Events: undefined;
   EventDetails: Event;
+};
+
+export type AnnouncementsParamList = {
+  Announcements: undefined;
+  AnnouncementDetails: Announcement;
 };
 
 export type MediaParamList = {
@@ -107,9 +115,20 @@ export function HomeStackScreen() {
         }}
         component={EventDetails}
       />
+      <HomeStack.Screen
+        name="AnnouncementDetails"
+        options={{
+          title: 'Detalles del anúncio',
+          headerTitleStyle,
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={AnnouncementDetails}
+      />
     </HomeStack.Navigator>
   );
 }
+
 export function EventsStackScreen() {
   return (
     <EventsStack.Navigator>
