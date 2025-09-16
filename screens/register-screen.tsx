@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { CheckboxWithLabel } from 'components/CheckboxWithLabel';
 import { auth, db } from 'config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
@@ -15,31 +16,33 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from 'store/auth-store';
-import { SizableText, Spinner, YStack } from 'tamagui';
+import { RadioGroup, SizableText, Spinner, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
+import { SwitchWithLabel } from '../components/SwitchWithLabel';
 import TextField from '../components/TextField';
 
 const RegisterSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(25, 'Too Long!')
-    .required('First Name is required'),
+  firstName: Yup.string().min(2, 'Too Short!').max(25, 'Too Long!').required('Nombre es requerido'),
   lastName: Yup.string()
     .min(2, 'Too Short!')
     .max(25, 'Too Long!')
-    .required('Last Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
+    .required('Apellido es requerido'),
+  email: Yup.string().email('Invalid email address').required('Email es requerido'),
   phoneNumber: Yup.string()
-    .matches(/^\+?[1-9]\d{1,14}$/, 'Invalid contact number format')
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Telefono no es válido')
     .optional(),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .required('Contraseña es requerida'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), ''], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .required('Confirmar contraseña es requerida'),
+  role: Yup.string().oneOf(['admin', 'member', 'apprentice', 'guest']).optional(),
+  olderThan13Years: Yup.string().oneOf(['yes', 'no']).optional(),
+  knowMoreAboutMinistries: Yup.string().oneOf(['yes', 'no']).optional(),
+  gender: Yup.string().oneOf(['male', 'female']).optional(),
 });
 
 const initialValues = {
@@ -49,6 +52,10 @@ const initialValues = {
   phoneNumber: '',
   password: '',
   confirmPassword: '',
+  role: 'guest',
+  olderThan13Years: undefined,
+  knowMoreAboutMinistries: undefined,
+  gender: undefined,
 };
 
 // TO DO: accessibility: add labels to inputs, aria-labels
@@ -68,6 +75,12 @@ const Register: React.FC = () => {
   const signIn = useAuth((state) => state.signIn);
 
   const handleSubmitForm = async (values: typeof initialValues, actions: any) => {
+    // Client-side validation for olderThan13Years
+    if (values.olderThan13Years !== 'yes') {
+      setError('You must be older than 13 years to register.');
+      return;
+    }
+
     // Ensure Firebase Auth and Firestore are initialized
     if (!auth || !db) {
       setError('Firebase services are not initialized. Please wait');
@@ -93,9 +106,13 @@ const Register: React.FC = () => {
         uid: user.uid,
         email: user.email || '',
         phoneNumber: values.phoneNumber || '',
-        role: 'member', // Default role
+        role: values.role as 'admin' | 'member' | 'apprentice' | 'guest',
         firstName: values.firstName,
         lastName: values.lastName,
+        acceptedTermsCond: 'yes',
+        olderThan13Years: values.olderThan13Years,
+        knowMoreAboutMinistries: values.knowMoreAboutMinistries,
+        gender: values.gender,
         createdAt: now,
         updatedAt: now,
       };
@@ -129,62 +146,29 @@ const Register: React.FC = () => {
       style={{
         flex: 1,
         backgroundColor: 'white',
-      }}
-      edges={['left', 'right', 'bottom']}>
+      }}>
       <Formik
         initialValues={initialValues}
         validationSchema={RegisterSchema}
         onSubmit={handleSubmitForm}>
         {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
           <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <ScrollView
                 contentContainerStyle={styles.scrollViewContent}
                 keyboardShouldPersistTaps="handled">
                 <SizableText fontSize="$6" textAlign="center" marginBottom="$4">
-                  Crea una cuenta para comenzar.
+                  Por favor, llena este formulario para crear una cuenta en nuestro sistema.
                 </SizableText>
                 <YStack flex={1} width="100%">
-                  <TextField
-                    label="First Name"
-                    onChangeText={handleChange('firstName')}
-                    onBlur={handleBlur('firstName')}
-                    returnKeyType="next"
-                    onSubmitEditing={() => lastNameInputRef.current?.focus()}
-                    ref={firstNameInputRef}
-                    value={values.firstName}
-                    variant="primary"
-                  />
-                  {touched.firstName && errors.firstName ? (
-                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
-                      {errors.firstName}
-                    </SizableText>
-                  ) : null}
-
-                  <TextField
-                    label="Last Name"
-                    onChangeText={handleChange('lastName')}
-                    onBlur={handleBlur('lastName')}
-                    returnKeyType="next"
-                    onSubmitEditing={() => emailInputRef.current?.focus()}
-                    ref={lastNameInputRef}
-                    value={values.lastName}
-                    variant="primary"
-                  />
-                  {touched.lastName && errors.lastName ? (
-                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
-                      {errors.lastName}
-                    </SizableText>
-                  ) : null}
-
                   <TextField
                     label="Email"
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     returnKeyType="next"
-                    onSubmitEditing={() => phoneNumberInputRef.current?.focus()}
+                    onSubmitEditing={() => passwordInputRef.current?.focus()}
                     ref={emailInputRef}
                     value={values.email}
                     variant="primary"
@@ -196,23 +180,7 @@ const Register: React.FC = () => {
                   ) : null}
 
                   <TextField
-                    label="Phone Number"
-                    onChangeText={handleChange('phoneNumber')}
-                    onBlur={handleBlur('phoneNumber')}
-                    returnKeyType="next"
-                    onSubmitEditing={() => passwordInputRef.current?.focus()}
-                    ref={phoneNumberInputRef}
-                    value={values.phoneNumber}
-                    variant="primary"
-                  />
-                  {touched.phoneNumber && errors.phoneNumber ? (
-                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
-                      {errors.phoneNumber}
-                    </SizableText>
-                  ) : null}
-
-                  <TextField
-                    label="Password"
+                    label="Contraseña"
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
                     returnKeyType="next"
@@ -229,11 +197,11 @@ const Register: React.FC = () => {
                   ) : null}
 
                   <TextField
-                    label="Confirm Password"
+                    label="Confirme su contraseña"
                     onChangeText={handleChange('confirmPassword')}
                     onBlur={handleBlur('confirmPassword')}
                     returnKeyType="done"
-                    onSubmitEditing={() => handleSubmit()}
+                    onSubmitEditing={() => firstNameInputRef.current?.focus()}
                     ref={confirmPasswordInputRef}
                     value={values.confirmPassword}
                     secureTextEntry
@@ -244,6 +212,90 @@ const Register: React.FC = () => {
                       {errors.confirmPassword}
                     </SizableText>
                   ) : null}
+
+                  <TextField
+                    label="Nombre"
+                    onChangeText={handleChange('firstName')}
+                    onBlur={handleBlur('firstName')}
+                    returnKeyType="next"
+                    onSubmitEditing={() => lastNameInputRef.current?.focus()}
+                    ref={firstNameInputRef}
+                    value={values.firstName}
+                    variant="primary"
+                  />
+                  {touched.firstName && errors.firstName ? (
+                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
+                      {errors.firstName}
+                    </SizableText>
+                  ) : null}
+
+                  <TextField
+                    label="Apellido"
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    returnKeyType="next"
+                    onSubmitEditing={() => phoneNumberInputRef.current?.focus()}
+                    ref={lastNameInputRef}
+                    value={values.lastName}
+                    variant="primary"
+                  />
+                  {touched.lastName && errors.lastName ? (
+                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
+                      {errors.lastName}
+                    </SizableText>
+                  ) : null}
+
+                  <TextField
+                    label="Phone Number (opcional)"
+                    onChangeText={handleChange('phoneNumber')}
+                    onBlur={handleBlur('phoneNumber')}
+                    returnKeyType="next"
+                    onSubmitEditing={() => handleSubmit()}
+                    ref={phoneNumberInputRef}
+                    value={values.phoneNumber}
+                    variant="primary"
+                  />
+                  {touched.phoneNumber && errors.phoneNumber ? (
+                    <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
+                      {errors.phoneNumber}
+                    </SizableText>
+                  ) : null}
+                  <YStack>
+                    <SizableText fontSize="$6" marginBottom="$2" mt="$6">
+                      Seleccione su género (opcional)
+                    </SizableText>
+                    <RadioGroup aria-labelledby="Select a gender" name="Genero (opcional)">
+                      <YStack gap="$2">
+                        <CheckboxWithLabel size="$4" value="male" label="Masculino" />
+                        <CheckboxWithLabel size="$4" value="female" label="Femenino" />
+                      </YStack>
+                    </RadioGroup>
+                  </YStack>
+
+                  <SwitchWithLabel
+                    label="Es miembro activo(a) de la Iglesia?"
+                    size="$2"
+                    onCheckedChange={(value) => {
+                      handleChange('role')(value ? 'member' : 'guest');
+                    }}
+                  />
+                  {/* TO DO: Adds conditional based on role */}
+                  {/* ministryId field (select max. 4) => ref - string */}
+
+                  <SwitchWithLabel
+                    label="Le gustaría saber más sobre los ministerios?"
+                    size="$2"
+                    onCheckedChange={(value) => {
+                      handleChange('knowMoreAboutMinistries')(value ? 'yes' : 'no');
+                    }}
+                  />
+                  <SwitchWithLabel
+                    label="Es mayor de 13 años?"
+                    size="$2"
+                    onCheckedChange={(value) => {
+                      handleChange('olderThan13Years')(value ? 'yes' : 'no');
+                    }}
+                  />
 
                   {error ? (
                     <SizableText color="red" fontFamily={'$body'} fontSize="$5" mt={4}>
@@ -256,12 +308,21 @@ const Register: React.FC = () => {
                       {message}
                     </SizableText>
                   ) : null}
+
+                  {/* TO DO: Adds here the terms and conditions policies website link */}
+                  <SizableText fontSize="$4" textAlign="center" marginBottom="$4" mt="$6">
+                    Presionando en el botón "Crear Cuenta", usted acepta nuestros Términos de
+                    Servicio y Políticas de Privacidad.
+                  </SizableText>
                   <PrimaryButton
                     onPress={() => handleSubmit()}
-                    disabled={loading}
+                    disabled={values.olderThan13Years !== 'yes' || loading}
                     icon={loading ? <Spinner size="small" color="$background" /> : undefined}
-                    mt={'$8'}
-                    mb={'$2'}
+                    mt={'$6'}
+                    mb={'$4'}
+                    backgroundColor={
+                      values.olderThan13Years !== 'yes' || loading ? '$gray500' : '#076CB5'
+                    }
                     size={'$5'}>
                     Crear Cuenta
                   </PrimaryButton>
@@ -288,8 +349,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-// {/* TO DO: Adds here the terms and conditions policies website link */}
-// {/* <SizableText fontSize="$4" textAlign="center" marginBottom="$4">
-//       By signing in, you agree to our Terms of Service and Privacy Policy.
-//     </SizableText> */}
