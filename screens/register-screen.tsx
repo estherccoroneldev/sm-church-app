@@ -282,17 +282,6 @@ const Register: React.FC = () => {
                       handleChange('role')(value ? 'member' : 'guest');
                     }}
                   />
-                  {/* TO DO: Adds select component and multi items depends on selected or deselectedm
-                      It should have the ability to select max. 4 ministries from the list. 
-                      It should be disabled if the role is not 'member'
-                      It should be able to delete items from the selected list (ListItem/Chip with delete icon)
-                  */}
-                  {values.role === 'member' ? (
-                    <SizableText fontSize="$5" marginBottom="$2" mt="$2">
-                      Gracias por ser un miembro activo de nuestra iglesia!
-                    </SizableText>
-                  ) : null}
-                  {/* ministryId field (select max. 4) => ref - string */}
 
                   <SwitchWithLabel
                     label="Le gustaría saber más sobre los ministerios?"
