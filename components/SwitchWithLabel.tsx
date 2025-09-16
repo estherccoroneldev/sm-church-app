@@ -8,7 +8,6 @@ interface SwitchWithLabelProps extends SwitchProps {
 }
 
 export function SwitchWithLabel(props: SwitchWithLabelProps) {
-  const id = `switch-${props.size.toString().slice(1)}-${props.defaultChecked ?? ''}}`;
   return (
     <XStack alignItems="center" justifyContent="space-between" gap="$4" mt="$6">
       <Label
@@ -19,11 +18,10 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
         size={props.size}
         fontFamily={'$body'}
         fontSize="$6"
-        color="$text"
-        htmlFor={id}>
+        color="$text">
         {props.label}
       </Label>
-      <Switch id={id} defaultChecked={props.defaultChecked} {...props}>
+      <Switch defaultChecked={props.defaultChecked} {...props}>
         <Switch.Thumb animation="quick" />
       </Switch>
     </XStack>

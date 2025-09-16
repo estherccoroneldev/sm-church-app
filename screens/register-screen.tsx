@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import {
   Keyboard,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   StyleSheet,
@@ -58,6 +59,8 @@ const initialValues = {
   gender: undefined,
 };
 
+const TERMS_LINK = 'https://www.iglesiasanmateo.org/app-terms-and-privacy-policy.html';
+const PRIVACY_LINK = 'https://www.iglesiasanmateo.org/pp-de-la-app-de-san-mateo.html';
 // TO DO: accessibility: add labels to inputs, aria-labels
 // TO DO: localization: translate strings to different languages
 const Register: React.FC = () => {
@@ -273,13 +276,22 @@ const Register: React.FC = () => {
                   </YStack>
 
                   <SwitchWithLabel
-                    label="Es miembro activo(a) de la Iglesia?"
+                    label="Es miembro activo de la Iglesia?"
                     size="$2"
                     onCheckedChange={(value) => {
                       handleChange('role')(value ? 'member' : 'guest');
                     }}
                   />
-                  {/* TO DO: Adds conditional based on role */}
+                  {/* TO DO: Adds select component and multi items depends on selected or deselectedm
+                      It should have the ability to select max. 4 ministries from the list. 
+                      It should be disabled if the role is not 'member'
+                      It should be able to delete items from the selected list (ListItem/Chip with delete icon)
+                  */}
+                  {values.role === 'member' ? (
+                    <SizableText fontSize="$5" marginBottom="$2" mt="$2">
+                      Gracias por ser un miembro activo de nuestra iglesia!
+                    </SizableText>
+                  ) : null}
                   {/* ministryId field (select max. 4) => ref - string */}
 
                   <SwitchWithLabel
@@ -289,6 +301,7 @@ const Register: React.FC = () => {
                       handleChange('knowMoreAboutMinistries')(value ? 'yes' : 'no');
                     }}
                   />
+
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
                     size="$2"
@@ -311,8 +324,30 @@ const Register: React.FC = () => {
 
                   {/* TO DO: Adds here the terms and conditions policies website link */}
                   <SizableText fontSize="$4" textAlign="center" marginBottom="$4" mt="$6">
-                    Presionando en el botón "Crear Cuenta", usted acepta nuestros Términos de
-                    Servicio y Políticas de Privacidad.
+                    Presionando en el botón "Crear Cuenta", usted acepta nuestros{' '}
+                    <SizableText
+                      fontFamily={'$heading'}
+                      fontSize="$4"
+                      color="#5EA1CA"
+                      textDecorationLine="underline"
+                      onPress={() => {
+                        // Open terms of service link
+                        Linking.openURL(TERMS_LINK);
+                      }}>
+                      Términos de Servicio
+                    </SizableText>{' '}
+                    y{' '}
+                    <SizableText
+                      fontFamily={'$heading'}
+                      fontSize="$4"
+                      color="#5EA1CA"
+                      textDecorationLine="underline"
+                      onPress={() => {
+                        // Open privacy policy link
+                        Linking.openURL(PRIVACY_LINK);
+                      }}>
+                      Políticas de Privacidad.
+                    </SizableText>
                   </SizableText>
                   <PrimaryButton
                     onPress={() => handleSubmit()}
