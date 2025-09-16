@@ -5,7 +5,7 @@ import { HeaderButton } from 'components/HeaderButton';
 import { auth } from 'config/firebase';
 import { signOut } from 'firebase/auth';
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import { useAuth } from 'store/auth-store';
 import { Sheet, SizableText, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
@@ -45,6 +45,8 @@ const connectItems = [
 
 type ConnectScreenNavigationProp = NativeStackNavigationProp<ConnectParamList, 'ConnectTab'>;
 
+const TERMS_LINK = 'https://www.iglesiasanmateo.org/app-terms-and-privacy-policy.html';
+const PRIVACY_LINK = 'https://www.iglesiasanmateo.org/pp-de-la-app-de-san-mateo.html';
 const Connect: React.FC = () => {
   const { navigate } = useNavigation<ConnectScreenNavigationProp>();
   const [open, setOpen] = React.useState(false);
@@ -165,21 +167,47 @@ const Connect: React.FC = () => {
             mb="$8">
             Settings
           </SizableText>
+          <XStack my="$6" mx="$6" justifyContent="space-between" alignItems="center">
+            <SizableText
+              fontFamily={'$heading'}
+              fontSize="$5"
+              color="#076CB5"
+              textDecorationLine="underline"
+              onPress={() => {
+                // Open terms of service link
+                Linking.openURL(TERMS_LINK);
+              }}>
+              Términos de Servicio
+            </SizableText>
+            {/* <Separator mx="$2" vertical /> */}
+            <SizableText
+              fontFamily={'$heading'}
+              fontSize="$5"
+              color="#076CB5"
+              textDecorationLine="underline"
+              onPress={() => {
+                // Open privacy policy link
+                Linking.openURL(PRIVACY_LINK);
+              }}>
+              Políticas de Privacidad
+            </SizableText>
+          </XStack>
           <YStack flex={1} mt="$2" p="$8" justifyContent="flex-end">
             <SizableText
-              fontFamily="$body"
+              fontFamily="$heading"
               fontSize="$6"
               color={'#C6233F'}
               textAlign="center"
               onPress={handlePressDeleteAccount}>
-              Borrar Cuenta
+              Eliminar Cuenta
             </SizableText>
             <PrimaryButton
               size="$5"
               mt="$6"
               mb="$2"
+              fontSize={'$6'}
               onPress={handleSignOut}
-              backgroundColor={'#C6233F'}
+              backgroundColor={'#076CB5'}
               pressStyle={{ opacity: 0.9 }}>
               Cerrar Sesión
             </PrimaryButton>
