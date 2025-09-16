@@ -246,7 +246,7 @@ const Register: React.FC = () => {
                   ) : null}
 
                   <TextField
-                    label="Phone Number (opcional)"
+                    label="Teléfono (opcional)"
                     onChangeText={handleChange('phoneNumber')}
                     onBlur={handleBlur('phoneNumber')}
                     returnKeyType="next"
