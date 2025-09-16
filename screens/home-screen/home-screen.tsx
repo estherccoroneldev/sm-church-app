@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { H3, SizableText } from 'tamagui';
+import { SizableText } from 'tamagui';
 import { useAuth } from '../../store/auth-store';
 
+import useAnnouncements from 'hooks/use-announcements';
 import { ListRenderItem } from 'react-native';
 import Footer from 'screens/home-screen/footer';
 import Header from 'screens/home-screen/header';
+import { Announcement } from '../../@types/announcement';
 import { Event } from '../../@types/event';
 import { Ministry } from '../../@types/ministry';
 import CardItem from '../../components/CardItem';
@@ -25,9 +27,13 @@ function keyExtractor<T extends { id: string }>(item: T) {
 const Home: React.FC = () => {
   const { navigate } = useNavigation<HomeScreenNavigationProp>();
   const user = useAuth((state) => state.user);
-  // TO DO: need to be in the store, when working on the calendar tab
   const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
   const { ministries, loading, error } = useMinistries();
+  const {
+    announcements,
+    loading: loadingAnnouncements,
+    error: announcementsError,
+  } = useAnnouncements();
 
   const renderMinistryItem: ListRenderItem<Ministry> = ({ item }) => (
     <CardItem item={item} onPress={() => navigate('MinistryDetails', item)} />
@@ -36,15 +42,25 @@ const Home: React.FC = () => {
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
     <CardItem item={item} onPress={() => navigate('EventDetails', item)} />
   );
+  const renderAnnouncementItem: ListRenderItem<Announcement> = ({ item }) => (
+    <CardItem item={item} onPress={() => navigate('AnnouncementDetails', item)} />
+  );
 
   return (
     <Container>
       {/* Header section */}
       <Header user={user} />
+
       {/* Announcements */}
-      <H3 aria-label="Announcements" mb="$8">
-        Anúncios
-      </H3>
+      <HorizontalListSection<Announcement>
+        title="Anúncios"
+        data={announcements}
+        renderItem={renderAnnouncementItem}
+        loading={loadingAnnouncements}
+        error={announcementsError}
+        ListEmptyComponent={() => <SizableText size="$4">Aún no hay anúncios.</SizableText>}
+        keyExtractor={keyExtractor}
+      />
 
       {/* Upcoming Events section */}
       <HorizontalListSection<Event>
@@ -54,7 +70,7 @@ const Home: React.FC = () => {
         renderItem={renderEventItem}
         loading={loadingEvents}
         error={eventsError}
-        ListEmptyComponent={() => <SizableText size="$4">Aún no hay anúncios.</SizableText>}
+        ListEmptyComponent={() => <SizableText size="$4">Aún no hay eventos.</SizableText>}
         keyExtractor={keyExtractor}
       />
 
