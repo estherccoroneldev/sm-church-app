@@ -12,10 +12,15 @@ const StyledTextInput = styled(TextInput, {
       },
       primary: {
         borderColor: '#3E464B',
+        borderBottomWidth: 1,
+        borderTopWidth: 0,
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
         backgroundColor: '$primaryBackground',
         color: '$text',
         fontFamily: '$body',
         fontSize: '$6',
+        paddingVertical: 4,
       },
     },
   },
@@ -29,23 +34,11 @@ export type TextFieldProps = PropsWithChildren<TextInputProps> & {
 
 const TextField: React.FC<TextFieldProps> = ({ variant = 'default', label, ref, ...props }) => {
   return (
-    <YStack>
-      <SizableText my={'$2'} fontFamily={'$body'} color="#3E464B" fontSize={'$5'}>
+    <YStack mt="$4">
+      <SizableText my="$2" fontFamily={'$body'} color="#3E464B" fontSize={'$6'}>
         {label}
       </SizableText>
-      <StyledTextInput
-        ref={ref}
-        {...props}
-        style={[
-          {
-            borderWidth: 1,
-            borderRadius: 8,
-            padding: 12,
-          },
-          props.style,
-        ]}
-        variant={variant}
-      />
+      <StyledTextInput ref={ref} {...props} style={[{}, props.style]} variant={variant} />
     </YStack>
   );
 };
