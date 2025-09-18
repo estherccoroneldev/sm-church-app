@@ -1,10 +1,8 @@
-import React from 'react';
-
-import { CheckboxWithLabel } from 'components/CheckboxWithLabel';
 import { auth, db } from 'config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { Formik } from 'formik';
+import React from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -21,6 +19,7 @@ import { RadioGroup, SizableText, Spinner, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
+import { CheckboxWithLabel } from '../components/CheckboxWithLabel';
 import { SwitchWithLabel } from '../components/SwitchWithLabel';
 import TextField from '../components/TextField';
 
@@ -42,7 +41,6 @@ const RegisterSchema = Yup.object().shape({
     .required('Confirmar contraseña es requerida'),
   role: Yup.string().oneOf(['admin', 'member', 'apprentice', 'guest']).optional(),
   olderThan13Years: Yup.string().oneOf(['yes', 'no']).optional(),
-  knowMoreAboutMinistries: Yup.string().oneOf(['yes', 'no']).optional(),
   gender: Yup.string().oneOf(['male', 'female']).optional(),
 });
 
@@ -55,7 +53,6 @@ const initialValues = {
   confirmPassword: '',
   role: 'guest',
   olderThan13Years: undefined,
-  knowMoreAboutMinistries: undefined,
   gender: undefined,
 };
 
@@ -109,20 +106,25 @@ const Register: React.FC = () => {
         uid: user.uid,
         email: user.email || '',
         phoneNumber: values.phoneNumber || '',
-        role: values.role as 'admin' | 'member' | 'apprentice' | 'guest',
+        role: values.role as 'admin' | 'member' | 'guest',
         firstName: values.firstName,
         lastName: values.lastName,
         acceptedTermsCond: 'yes',
         olderThan13Years: values.olderThan13Years,
-        knowMoreAboutMinistries: values.knowMoreAboutMinistries,
-        gender: values.gender,
+        gender: values.gender ?? 'no information',
+        hasSelectedMinistries: 'no',
         createdAt: now,
         updatedAt: now,
       };
 
       await setDoc(userDocRef, initialUserProfile);
-      setMessage('User created and profile saved successfully!');
-      signIn({ id: user.uid, name: `${values.firstName}`, isGuest: false });
+      setMessage('User created successfully!');
+      signIn({
+        id: user.uid,
+        name: `${values.firstName}`,
+        role: values.role as 'admin' | 'member' | 'guest',
+        isGuest: false,
+      });
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -181,7 +183,6 @@ const Register: React.FC = () => {
                       {errors.email}
                     </SizableText>
                   ) : null}
-
                   <TextField
                     label="Contraseña"
                     onChangeText={handleChange('password')}
@@ -198,7 +199,6 @@ const Register: React.FC = () => {
                       {errors.password}
                     </SizableText>
                   ) : null}
-
                   <TextField
                     label="Confirme su contraseña"
                     onChangeText={handleChange('confirmPassword')}
@@ -215,7 +215,6 @@ const Register: React.FC = () => {
                       {errors.confirmPassword}
                     </SizableText>
                   ) : null}
-
                   <TextField
                     label="Nombre"
                     onChangeText={handleChange('firstName')}
@@ -231,7 +230,6 @@ const Register: React.FC = () => {
                       {errors.firstName}
                     </SizableText>
                   ) : null}
-
                   <TextField
                     label="Apellido"
                     onChangeText={handleChange('lastName')}
@@ -247,7 +245,6 @@ const Register: React.FC = () => {
                       {errors.lastName}
                     </SizableText>
                   ) : null}
-
                   <TextField
                     label="Teléfono (opcional)"
                     onChangeText={handleChange('phoneNumber')}
@@ -263,6 +260,7 @@ const Register: React.FC = () => {
                       {errors.phoneNumber}
                     </SizableText>
                   ) : null}
+
                   <YStack>
                     <SizableText fontSize="$6" marginBottom="$2" mt="$6">
                       Seleccione su género (opcional)
@@ -276,20 +274,20 @@ const Register: React.FC = () => {
                   </YStack>
 
                   <SwitchWithLabel
-                    label="Es miembro activo de la Iglesia?"
+                    label="Pertenece a algún ministerio?"
                     size="$2"
                     onCheckedChange={(value) => {
                       handleChange('role')(value ? 'member' : 'guest');
                     }}
                   />
 
-                  <SwitchWithLabel
+                  {/* <SwitchWithLabel
                     label="Le gustaría saber más sobre los ministerios?"
                     size="$2"
                     onCheckedChange={(value) => {
                       handleChange('knowMoreAboutMinistries')(value ? 'yes' : 'no');
                     }}
-                  />
+                  /> */}
 
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
