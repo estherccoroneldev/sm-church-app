@@ -9,6 +9,7 @@ import { TamaguiProvider } from 'tamagui';
 
 import { StatusBar } from 'expo-status-bar';
 import AppNavigator from 'navigation';
+import { useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import config from './tamagui.config';
 
@@ -20,6 +21,9 @@ SplashScreen.setOptions({
 });
 
 export default function App() {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? 'dark' : 'light';
+
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
@@ -39,7 +43,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <TamaguiProvider config={config}>
+      <TamaguiProvider config={config} defaultTheme={theme}>
         <StatusBar style={'light'} translucent={false} />
         <AppNavigator />
       </TamaguiProvider>
