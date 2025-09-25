@@ -17,6 +17,7 @@ import HorizontalListSection from '../../components/HorizontalListSection';
 import useEvents from '../../hooks/use-events';
 import useMinistries from '../../hooks/use-ministries';
 import { HomeParamList } from '../../navigation/tab-navigator';
+import { registerForPushNotificationsAsync } from '../../services/notifications';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<HomeParamList, 'Home'>;
 
@@ -27,6 +28,13 @@ function keyExtractor<T extends { id: string }>(item: T) {
 const Home: React.FC = () => {
   const { navigate } = useNavigation<HomeScreenNavigationProp>();
   const user = useAuth((state) => state.user);
+
+  React.useEffect(() => {
+    if (user) {
+      registerForPushNotificationsAsync(user.id);
+    }
+  }, [user]);
+
   const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
   const { ministries, loading, error } = useMinistries();
   const {
