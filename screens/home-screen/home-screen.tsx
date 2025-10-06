@@ -30,7 +30,7 @@ const Home: React.FC = () => {
   const user = useAuth((state) => state.user);
 
   React.useEffect(() => {
-    if (user) {
+    if (user && !user.isGuest && user.id) {
       registerForPushNotificationsAsync(user.id);
     }
   }, [user]);
