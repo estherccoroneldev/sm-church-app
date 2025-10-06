@@ -7,4 +7,5 @@ export const TagFilter = styled(Button, {
   borderColor: '#5EA1CA',
   color: '#5EA1CA',
   borderRadius: 30,
+  fontFamily: '$body',
 });

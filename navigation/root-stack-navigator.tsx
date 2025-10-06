@@ -15,14 +15,17 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
   const authUser = useAuth((state) => state.user);
+  const shouldShowMinistriesSelection =
+    authUser?.hasSelectedMinistries === 'no' && authUser?.role === 'member';
 
   return (
-    <Stack.Navigator initialRouteName={'TabNavigator'}>
+    <Stack.Navigator
+      initialRouteName={shouldShowMinistriesSelection ? 'MinistriesSelection' : 'TabNavigator'}>
       <Stack.Group
         screenOptions={{
           headerShown: false,
         }}>
-        {authUser?.hasSelectedMinistries === 'no' && authUser?.role === 'member' ? (
+        {shouldShowMinistriesSelection ? (
           <Stack.Screen
             name="MinistriesSelection"
             component={MinistriesSelectionScreen}

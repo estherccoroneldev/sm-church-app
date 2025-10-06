@@ -194,7 +194,7 @@ const Connect: React.FC = () => {
           </XStack>
           <YStack flex={1} mt="$2" p="$8" justifyContent="flex-end">
             <SizableText
-              fontFamily="$heading"
+              fontFamily="$body"
               fontSize="$6"
               color={'#C6233F'}
               textAlign="center"
