@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Register from 'screens/register-screen';
 import SignInScreen from 'screens/signin-screen';
 import Welcome from 'screens/welcome-screen';
+import { useTheme } from 'tamagui';
 import ForgotPassword from '../screens/forgot-password-screen';
 
 export type AuthStackParamList = {
@@ -16,8 +17,21 @@ export type AuthStackParamList = {
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 export default function AuthNavigator() {
+  const theme = useTheme();
+  const headerTitleStyle = {
+    fontSize: 24,
+    fontFamily: 'Outfit_600SemiBold',
+    color: theme.text.get() as string,
+  };
   return (
-    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="Welcome"
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: theme.background.get() as string,
+        },
+      }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen
         name="SignIn"
@@ -28,10 +42,7 @@ export default function AuthNavigator() {
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
-          headerTitleStyle: {
-            fontSize: 24,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
         }}
       />
       <Stack.Screen
@@ -43,10 +54,7 @@ export default function AuthNavigator() {
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
-          headerTitleStyle: {
-            fontSize: 24,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
         }}
       />
       <Stack.Screen
@@ -57,10 +65,7 @@ export default function AuthNavigator() {
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
-          headerTitleStyle: {
-            fontSize: 24,
-            fontFamily: 'Outfit_600SemiBold',
-          },
+          headerTitleStyle,
         }}
         component={ForgotPassword}
       />
