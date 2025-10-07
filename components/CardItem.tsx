@@ -56,7 +56,7 @@ const CardItem = <T extends BaseItem>({
           borderColor={fullmode ? '$borderColor' : undefined}
           elevation={fullmode ? 4 : undefined}
           marginBottom={fullmode ? '$4' : undefined}
-          backgroundColor={fullmode ? '#fff' : undefined}
+          backgroundColor={fullmode ? '$background' : undefined}
           opacity={pressed ? 0.5 : 1}>
           <YStack flex={1}>
             <Image
