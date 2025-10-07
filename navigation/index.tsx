@@ -13,10 +13,9 @@ function AppNavigator() {
   const signIn = useAuth((state) => state.signIn);
   const signOut = useAuth((state) => state.signOut);
 
+  // DEV MODE: skip auth flow
   React.useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-      if (initializing) setInitializing(false);
-
       if (user) {
         const userDocRef = doc(db, 'users', user.uid);
         const userData = {
@@ -40,6 +39,8 @@ function AppNavigator() {
       } else {
         signOut();
       }
+
+      if (initializing) setInitializing(false);
     });
 
     return () => unsubscribeAuth();
@@ -48,7 +49,16 @@ function AppNavigator() {
   if (initializing)
     return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;
 
-  return <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
+  // return <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
+
+  // DEV MODE: always show RootStack
+  return __DEV__ ? (
+    <NavigationContainer>
+      <RootStack />
+    </NavigationContainer>
+  ) : (
+    <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>
+  );
 }
 
 export default AppNavigator;
