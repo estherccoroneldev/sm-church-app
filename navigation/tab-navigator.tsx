@@ -14,6 +14,7 @@ import { Ministry } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
+import { useTheme } from 'tamagui';
 import { Announcement } from '../@types/announcement';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
@@ -85,8 +86,14 @@ const headerTitleStyle = {
 } as const;
 
 export function HomeStackScreen() {
+  const theme = useTheme();
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.background.get() as string,
+        },
+      }}>
       <HomeStack.Screen
         name="Home"
         options={{
@@ -98,7 +105,10 @@ export function HomeStackScreen() {
         name="MinistryDetails"
         options={{
           title: 'Detalles',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -109,7 +119,10 @@ export function HomeStackScreen() {
         name="EventDetails"
         options={{
           title: 'Detalles del evento',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -119,7 +132,10 @@ export function HomeStackScreen() {
         name="AnnouncementDetails"
         options={{
           title: 'Detalles del anúncio',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -130,13 +146,22 @@ export function HomeStackScreen() {
 }
 
 export function EventsStackScreen() {
+  const theme = useTheme();
   return (
-    <EventsStack.Navigator>
+    <EventsStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.background.get() as string,
+        },
+      }}>
       <EventsStack.Screen
         name="Events"
         options={{
           title: 'Calendario',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
         }}
         component={Events}
@@ -145,7 +170,10 @@ export function EventsStackScreen() {
         name="EventDetails"
         options={{
           title: 'Evento',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -170,8 +198,14 @@ export function GivingStackScreen() {
   );
 }
 export function ConnectStackScreen() {
+  const theme = useTheme();
   return (
-    <ConnectStack.Navigator>
+    <ConnectStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.background.get() as string,
+        },
+      }}>
       <ConnectStack.Screen
         options={{
           title: '',
@@ -183,7 +217,10 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         options={{
           title: 'Conéctate',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -194,7 +231,10 @@ export function ConnectStackScreen() {
         name="MinistryDetails"
         options={{
           title: 'Detalles',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -204,7 +244,10 @@ export function ConnectStackScreen() {
         name="ServingList"
         options={{
           headerTitle: 'Ministerios',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerBackButtonDisplayMode: 'minimal',
           headerShadowVisible: false,
         }}
@@ -214,7 +257,10 @@ export function ConnectStackScreen() {
         name="AboutUs"
         options={{
           headerTitle: 'Sobre nosotros',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
@@ -226,11 +272,12 @@ export function ConnectStackScreen() {
 
 export default function TabLayout() {
   const { bottom } = useSafeAreaInsets();
+  const theme = useTheme();
   const tabOptions = {
-    tabBarActiveTintColor: '#C6233F',
+    tabBarActiveTintColor: theme.primary.get() as string,
     tabBarShowLabel: false,
     tabBarStyle: {
-      backgroundColor: 'white',
+      backgroundColor: theme.tertiary.get() as string,
       position: 'absolute',
       bottom: 12 + bottom,
       borderRadius: 16,
@@ -265,6 +312,9 @@ export default function TabLayout() {
         options={{
           title: '',
           headerShown: false,
+          headerStyle: {
+            backgroundColor: theme.background.get() as string,
+          },
           // TO DO: this button should be splitted out into a composed component, handle typos
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
@@ -274,7 +324,13 @@ export default function TabLayout() {
         component={MediaStackScreen}
         options={{
           title: 'Media',
-          headerTitleStyle,
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerStyle: {
+            backgroundColor: theme.background.get() as string,
+          },
           headerShadowVisible: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
         }}
