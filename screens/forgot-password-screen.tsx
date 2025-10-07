@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SizableText, YStack } from 'tamagui';
+import { SizableText, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import TextField from '../components/TextField';
@@ -29,6 +29,7 @@ const initialValues = {
 // TO DO: accessibility, add labels to inputs, aria-labels
 // TO DO: localization, translate strings to different languages
 const ForgotScreenScreen: React.FC = () => {
+  const theme = useTheme();
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [error, setError] = React.useState('');
@@ -66,7 +67,7 @@ const ForgotScreenScreen: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
         paddingTop: 100,
       }}
       edges={['left', 'right', 'bottom']}>
@@ -110,7 +111,7 @@ const ForgotScreenScreen: React.FC = () => {
                   ) : null}
 
                   {message ? (
-                    <SizableText color="$green500" mt={4}>
+                    <SizableText color="green" mt={4}>
                       {message}
                     </SizableText>
                   ) : null}
@@ -136,10 +137,6 @@ const ForgotScreenScreen: React.FC = () => {
 export default ForgotScreenScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 24,

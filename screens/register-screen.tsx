@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from 'store/auth-store';
-import { RadioGroup, SizableText, Spinner, YStack } from 'tamagui';
+import { RadioGroup, SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
@@ -61,6 +61,7 @@ const PRIVACY_LINK = 'https://www.iglesiasanmateo.org/pp-de-la-app-de-san-mateo.
 // TO DO: accessibility: add labels to inputs, aria-labels
 // TO DO: localization: translate strings to different languages
 const Register: React.FC = () => {
+  const theme = useTheme();
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [error, setError] = React.useState('');
@@ -150,7 +151,7 @@ const Register: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
       }}>
       <Formik
         initialValues={initialValues}
@@ -276,6 +277,7 @@ const Register: React.FC = () => {
                   <SwitchWithLabel
                     label="Pertenece a algún ministerio?"
                     size="$2"
+                    backgroundColor={'$tertiary'}
                     onCheckedChange={(value) => {
                       handleChange('role')(value ? 'member' : 'guest');
                     }}
@@ -292,6 +294,7 @@ const Register: React.FC = () => {
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
                     size="$2"
+                    backgroundColor={'$tertiary'}
                     onCheckedChange={(value) => {
                       handleChange('olderThan13Years')(value ? 'yes' : 'no');
                     }}
@@ -304,7 +307,7 @@ const Register: React.FC = () => {
                   ) : null}
 
                   {message ? (
-                    <SizableText color="$green500" mt={4}>
+                    <SizableText color="green" mt={4}>
                       {message}
                     </SizableText>
                   ) : null}
@@ -343,7 +346,7 @@ const Register: React.FC = () => {
                     mt={'$6'}
                     mb={'$4'}
                     backgroundColor={
-                      values.olderThan13Years !== 'yes' || loading ? '$gray500' : '#076CB5'
+                      values.olderThan13Years !== 'yes' || loading ? '$tertiary' : '#076CB5'
                     }
                     size={'$5'}>
                     Crear Cuenta
@@ -361,10 +364,6 @@ const Register: React.FC = () => {
 export default Register;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 24,

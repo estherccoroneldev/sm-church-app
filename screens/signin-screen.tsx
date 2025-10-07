@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from 'store/auth-store';
-import { SizableText, Spinner, YStack } from 'tamagui';
+import { SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
 import TextField from '../components/TextField';
@@ -34,6 +34,7 @@ const initialValues = {
 // TO DO: accessibility: add labels to inputs, aria-labels
 // TO DO: localization: translate strings to different languages
 const SignInScreen: React.FC = () => {
+  const theme = useTheme();
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [error, setError] = React.useState('');
@@ -65,7 +66,13 @@ const SignInScreen: React.FC = () => {
       setMessage('User signed in successfully!');
 
       // TO DO: sets the actual name from DB source
-      signIn({ id: user.uid, name: `${user.displayName ?? ''}`, isGuest: false });
+      signIn({
+        id: user.uid,
+        name: `${user.displayName ?? ''}`,
+        isGuest: false,
+        // role: 'guest',
+        // hasSelectedMinistries: 'no',
+      });
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -89,7 +96,7 @@ const SignInScreen: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
       }}
       edges={['left', 'right', 'bottom']}>
       <Formik
@@ -148,7 +155,7 @@ const SignInScreen: React.FC = () => {
                   ) : null}
 
                   {message ? (
-                    <SizableText color="$green500" mt={4}>
+                    <SizableText color="green" mt={4}>
                       {message}
                     </SizableText>
                   ) : null}
@@ -175,10 +182,6 @@ const SignInScreen: React.FC = () => {
 export default SignInScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
