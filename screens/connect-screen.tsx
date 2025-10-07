@@ -7,7 +7,7 @@ import { signOut } from 'firebase/auth';
 import React from 'react';
 import { Alert, Linking } from 'react-native';
 import { useAuth } from 'store/auth-store';
-import { Sheet, SizableText, XStack, YStack } from 'tamagui';
+import { Sheet, SizableText, useTheme, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import CardItem from '../components/CardItem';
 import { Container } from '../components/Container';
@@ -48,6 +48,7 @@ type ConnectScreenNavigationProp = NativeStackNavigationProp<ConnectParamList, '
 const TERMS_LINK = 'https://www.iglesiasanmateo.org/app-terms-and-privacy-policy.html';
 const PRIVACY_LINK = 'https://www.iglesiasanmateo.org/pp-de-la-app-de-san-mateo.html';
 const Connect: React.FC = () => {
+  const theme = useTheme();
   const { navigate } = useNavigation<ConnectScreenNavigationProp>();
   const [open, setOpen] = React.useState(false);
   const [position, setPosition] = React.useState(0);
@@ -157,7 +158,7 @@ const Connect: React.FC = () => {
         zIndex={100_000}
         animation="lazy">
         <Sheet.Overlay />
-        <YStack flex={1} backgroundColor={'white'}>
+        <YStack flex={1} backgroundColor={theme.background.get() as string}>
           <SizableText
             fontFamily={'$heading'}
             fontSize={'$8'}
