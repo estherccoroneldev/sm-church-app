@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       {/* Header section */}
-      <Header user={user} />
+      <Header />
 
       {/* Announcements */}
       <HorizontalListSection<Announcement>

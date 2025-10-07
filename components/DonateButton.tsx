@@ -1,7 +1,7 @@
 import * as Clipboard from 'expo-clipboard';
 import React from 'react';
 import { Alert, Image, Linking, Pressable, StyleSheet } from 'react-native';
-import { H5, XStack } from 'tamagui';
+import { H5, useTheme, XStack } from 'tamagui';
 
 // This is the official Zelle website. It explains Zelle, but doesn't
 // allow direct payments from the browser. For actual donations, you'd
@@ -13,6 +13,7 @@ const CHURCH_ZELLE_EMAIL = 'oficina.iesm@gmail.com';
 
 // TO DO: intl and accessibility
 const ZelleDonateButton: React.FC = () => {
+  const theme = useTheme();
   const [copiedEmail, setCopiedEmail] = React.useState('');
 
   const copyToClipboard = async (text: string) => {
@@ -49,6 +50,7 @@ const ZelleDonateButton: React.FC = () => {
             styles.button,
             {
               opacity: pressed ? 0.6 : 1,
+              backgroundColor: theme.tertiary.get() as string,
             },
           ]}>
           <H5 mr={-8} color={'#673ab7'}>
@@ -75,11 +77,11 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     paddingVertical: 2,
     paddingHorizontal: 32,
     marginHorizontal: 'auto',
-    borderRadius: 50,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },

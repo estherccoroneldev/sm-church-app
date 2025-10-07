@@ -4,22 +4,21 @@ import { User } from 'store/auth-store';
 import { H3, Image, YStack } from 'tamagui';
 const { width } = Dimensions.get('window');
 
-interface Props {
-  user: User | null;
-}
-
-const Header: React.FC<Props> = ({ user }) => (
+const Header = () => (
   <YStack mt="$4" mb="$8" gap="$1">
-    <Image
-      source={require('../../assets/logo-sm-w-shadow.png')}
-      style={{
-        objectFit: 'contain',
-        width: width * 0.65,
-        height: 140,
-        alignSelf: 'center',
-      }}
-      alt="Logo"
-    />
+    <YStack backgroundColor={'$white'} py="$2" px="$6" my="$2" borderRadius={18} alignSelf="center">
+      <Image
+        source={require('../../assets/logo-sm-w-shadow.png')}
+        style={{
+          objectFit: 'contain',
+          width: width * 0.5,
+          height: 120,
+          alignSelf: 'center',
+        }}
+        alt="Logo"
+      />
+    </YStack>
+
     <H3 aria-label="Welcome">{`Le damos la bienvenida!`}</H3>
   </YStack>
 );

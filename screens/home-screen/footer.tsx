@@ -24,6 +24,7 @@ const PaypalDonateButton = () => (
       <XStack
         mt={'$4'}
         gap={'$4'}
+        backgroundColor={'$tertiary'}
         style={[
           styles.button,
           {
@@ -82,11 +83,10 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    backgroundColor: 'white',
     paddingVertical: 12,
     paddingHorizontal: 32,
     marginHorizontal: 'auto',
-    borderRadius: 50,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },

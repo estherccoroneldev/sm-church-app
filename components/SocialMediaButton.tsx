@@ -1,6 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { forwardRef } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
+import { useTheme } from 'tamagui';
 
 interface SocialMediaButtonProps extends React.ComponentProps<typeof FontAwesome> {
   onPress?: () => void;
@@ -8,6 +9,7 @@ interface SocialMediaButtonProps extends React.ComponentProps<typeof FontAwesome
 
 export const SocialMediaButton = forwardRef<typeof Pressable, SocialMediaButtonProps>(
   ({ onPress, name, size = 28, color }, _ref) => {
+    const theme = useTheme();
     return (
       <Pressable onPress={onPress}>
         {({ pressed }) => (
@@ -19,6 +21,7 @@ export const SocialMediaButton = forwardRef<typeof Pressable, SocialMediaButtonP
               styles.button,
               {
                 opacity: pressed ? 0.5 : 1,
+                backgroundColor: theme.tertiary.get() as string,
               },
             ]}
           />
@@ -38,8 +41,7 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 50,
+    padding: 24,
+    borderRadius: 18,
   },
 });
