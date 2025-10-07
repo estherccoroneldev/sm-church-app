@@ -1,8 +1,16 @@
 import { createAnimations } from '@tamagui/animations-react-native';
 import { createInterFont } from '@tamagui/font-inter';
 import { shorthands } from '@tamagui/shorthands';
-import { themes, tokens } from '@tamagui/themes';
-import { Button as ButtonTamagui, createTamagui, H1, SizableText, styled, YStack } from 'tamagui';
+import { themes, tokens as tokensTMG } from '@tamagui/themes';
+import {
+  Button as ButtonTamagui,
+  createTamagui,
+  createTokens,
+  H1,
+  SizableText,
+  styled,
+  YStack,
+} from 'tamagui';
 
 const animations = createAnimations({
   bouncy: {
@@ -79,6 +87,46 @@ export const PrimaryButton = styled(ButtonTamagui, {
   fontSize: '$6',
 });
 
+const colorPalette = {
+  white: '#FFFFFF',
+  black: '#000000',
+  primary: '#076CB5',
+  secondary: '#C6233F',
+  gray1: '#F8F8F8', // Lighter gray for light theme backgrounds
+  gray2: '#EFEFEF',
+  gray3: '#D1D1D1',
+  gray4: '#B4B4B4',
+  gray5: '#979797',
+  gray6: '#333333', // Darker gray for text on light theme
+  gray7: '#222222', // Even darker gray
+};
+
+const tokens = createTokens({
+  ...tokensTMG,
+  color: {
+    ...colorPalette,
+  },
+});
+
+const appThemes = {
+  light: {
+    ...themes.light,
+    background: tokens.color.white,
+    text: tokens.color.gray6,
+    primary: tokens.color.primary,
+    secondary: tokens.color.secondary,
+    tertiary: tokens.color.gray1,
+  },
+  dark: {
+    ...themes.dark,
+    background: tokens.color.black,
+    text: tokens.color.gray2,
+    primary: tokens.color.primary,
+    secondary: tokens.color.secondary,
+    tertiary: tokens.color.gray6,
+  },
+};
+
 const config = createTamagui({
   light: {
     color: {
@@ -97,7 +145,7 @@ const config = createTamagui({
     body: bodyFont,
     heading: headingFont,
   },
-  themes,
+  themes: appThemes,
   tokens,
   media: {
     xs: { maxWidth: 660 },
