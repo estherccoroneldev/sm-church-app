@@ -3,7 +3,7 @@ import { YouTubeVideo } from '@types/ytvideo';
 import React from 'react';
 import { FlatList, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { H5, Image, SizableText, Spinner, Theme } from 'tamagui';
+import { H5, Image, SizableText, Spinner, useTheme } from 'tamagui';
 import useSermons from '../hooks/use-sermons';
 
 const handlePressVideo = (videoId: string) => {
@@ -23,6 +23,7 @@ const renderVideoItem = ({ item }: { item: YouTubeVideo }) => (
   </TouchableOpacity>
 );
 const Media: React.FC = () => {
+  const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { sermons, loading, getSermons } = useSermons();
 
@@ -34,26 +35,32 @@ const Media: React.FC = () => {
     );
 
   return (
-    <SafeAreaView style={styles.container} edges={['left', 'right']}>
-      <Theme name="light">
-        <FlatList<YouTubeVideo>
-          style={styles.container}
-          contentContainerStyle={{
-            paddingTop: 24,
-            paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
-            paddingHorizontal: 16,
-          }}
-          ListEmptyComponent={renderEmptyComponent}
-          data={sermons}
-          renderItem={renderVideoItem}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator
-          // Load more when reaching the end of the list
-          onEndReached={getSermons}
-          onEndReachedThreshold={0.7}
-          ListFooterComponent={sermons.length > 9 && loading ? <Spinner size="large" /> : null}
-        />
-      </Theme>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: theme.background.get() as string,
+      }}
+      edges={['left', 'right']}>
+      <FlatList<YouTubeVideo>
+        style={{
+          flex: 1,
+          backgroundColor: theme.background.get() as string,
+        }}
+        contentContainerStyle={{
+          paddingTop: 24,
+          paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
+          paddingHorizontal: 16,
+        }}
+        ListEmptyComponent={renderEmptyComponent}
+        data={sermons}
+        renderItem={renderVideoItem}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator
+        // Load more when reaching the end of the list
+        onEndReached={getSermons}
+        onEndReachedThreshold={0.7}
+        ListFooterComponent={sermons.length > 9 && loading ? <Spinner size="large" /> : null}
+      />
     </SafeAreaView>
   );
 };
@@ -69,13 +76,8 @@ function keyExtractor(item: YouTubeVideo, index: number): string {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   videoItem: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
     borderRadius: 8,
     marginBottom: 10,
     overflow: 'hidden',
