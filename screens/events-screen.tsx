@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, H3, Separator, SizableText, Spinner, Theme, XStack, YStack } from 'tamagui';
+import { Button, H3, Separator, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
@@ -29,6 +29,7 @@ const renderEmptyComponent = (loading: boolean) => () =>
   );
 
 const EventsScreen: React.FC = () => {
+  const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { navigate } = useNavigation<EventsScreenNavigationProp>();
   const { events, loading, eventsByMonth, getEventsByMonth } = useEvents();
@@ -69,7 +70,7 @@ const EventsScreen: React.FC = () => {
   const renderModalItem: ListRenderItem<string> = ({ item, index }) => (
     <>
       <Button
-        backgroundColor={'white'}
+        backgroundColor={'$background'}
         size="$6"
         fontFamily={'$heading'}
         onPress={handlePressMonth(index, item)}
@@ -99,11 +100,11 @@ const EventsScreen: React.FC = () => {
             flex={1}
             justifyContent="flex-end"
             alignItems="center"
-            backgroundColor={'rgba(0,0,0,0.5)'}>
+            backgroundColor={'$background'}>
             <YStack
               width="100%"
               height="70%"
-              backgroundColor="white"
+              backgroundColor={'$background'}
               borderTopLeftRadius={20}
               borderTopRightRadius={20}
               padding={20}
@@ -128,27 +129,25 @@ const EventsScreen: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
       }}
       edges={['left', 'right', 'bottom']}>
-      <Theme name="light">
-        <FlatList<Event>
-          style={{
-            flex: 1,
-          }}
-          contentContainerStyle={{
-            paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
-            paddingHorizontal: 16,
-            paddingTop: 16,
-          }}
-          ListHeaderComponent={renderHeader}
-          ListEmptyComponent={renderEmptyComponent(loading)}
-          data={data[listStatus]}
-          renderItem={renderEventItem}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator
-        />
-      </Theme>
+      <FlatList<Event>
+        style={{
+          flex: 1,
+        }}
+        contentContainerStyle={{
+          paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
+          paddingHorizontal: 16,
+          paddingTop: 16,
+        }}
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderEmptyComponent(loading)}
+        data={data[listStatus]}
+        renderItem={renderEventItem}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator
+      />
     </SafeAreaView>
   );
 };
