@@ -5,7 +5,7 @@ import useMinistries from 'hooks/use-ministries';
 import React from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SizableText, Spinner, Theme } from 'tamagui';
+import { SizableText, Spinner, Theme, useTheme } from 'tamagui';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
 import { ConnectParamList } from '../navigation/tab-navigator';
@@ -20,6 +20,7 @@ function keyExtractor<T extends { id: string }>(item: T) {
 }
 
 const MinistriesListScreen: React.FC = () => {
+  const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { navigate } = useNavigation<MinistriesListScreenNavigationProp>();
   const { ministries, loading } = useMinistries();
@@ -48,26 +49,24 @@ const MinistriesListScreen: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
       }}
       edges={['left', 'right']}>
-      <Theme name="light">
-        <FlatList<Event>
-          style={{
-            flex: 1,
-          }}
-          contentContainerStyle={{
-            paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
-            paddingHorizontal: 24,
-            marginTop: 24,
-          }}
-          ListEmptyComponent={renderEmptyComponent}
-          data={ministries}
-          renderItem={renderEventItem}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator
-        />
-      </Theme>
+      <FlatList<Event>
+        style={{
+          flex: 1,
+        }}
+        contentContainerStyle={{
+          paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
+          paddingHorizontal: 24,
+          marginTop: 24,
+        }}
+        ListEmptyComponent={renderEmptyComponent}
+        data={ministries}
+        renderItem={renderEventItem}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator
+      />
     </SafeAreaView>
   );
 };

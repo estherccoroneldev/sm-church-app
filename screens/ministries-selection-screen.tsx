@@ -5,7 +5,7 @@ import { FlatList, ListRenderItem } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { assignUserToMultipleMinistries } from 'services/assign-user-to-ministries';
 import { useAuth } from 'store/auth-store';
-import { Separator, SizableText, Spinner, XStack } from 'tamagui';
+import { Separator, SizableText, Spinner, useTheme, XStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { Ministry } from '../@types/ministry';
 
@@ -14,6 +14,7 @@ function keyExtractor<T extends { id: string }>(item: T) {
 }
 
 const MinistriesSelectionScreen: React.FC = () => {
+  const theme = useTheme();
   const user = useAuth((state) => state.user);
   const signIn = useAuth((state) => state.signIn);
   const { ministries, loading } = useMinistries();
@@ -81,7 +82,7 @@ const MinistriesSelectionScreen: React.FC = () => {
         }
         mt={'$6'}
         mb={'$4'}
-        backgroundColor={'#076CB5'}
+        backgroundColor={theme.primary.get() as string}
         size={'$5'}>
         Guardar
       </PrimaryButton>
@@ -92,7 +93,7 @@ const MinistriesSelectionScreen: React.FC = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: theme.background.get() as string,
       }}>
       <FlatList<Ministry>
         style={{
