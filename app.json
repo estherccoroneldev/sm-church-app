@@ -2,7 +2,7 @@
   "expo": {
     "name": "SanMateoIglesiaEpiscopal",
     "slug": "sm-church-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "web": {
       "favicon": "./assets/icon.png"
     },
@@ -11,14 +11,9 @@
     },
     "plugins": [
       "expo-localization",
-      [
-        "expo-dev-launcher",
-        {
-          "launchMode": "most-recent"
-        }
-      ],
       "expo-secure-store",
       "expo-font",
+      "expo-notifications",
       [
         "expo-splash-screen",
         {
@@ -27,17 +22,32 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200
         }
+      ],
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
       ]
     ],
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "1",
       "icon": "./assets/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": ["remote-notification"]
+      },
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "entitlements": {
+        "aps-environment": "production"
       }
     },
     "android": {
@@ -46,7 +56,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lestherccoroneldev.smchurchapp"
+      "package": "com.lestherccoroneldev.smchurchapp",
+      "googleServicesFile": "./google-services.json"
     },
     "extra": {
       "eas": {

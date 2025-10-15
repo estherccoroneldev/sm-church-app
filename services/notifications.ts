@@ -1,4 +1,4 @@
-// src/services/notifications.ts
+import messaging from '@react-native-firebase/messaging';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { doc, setDoc } from 'firebase/firestore';
@@ -21,11 +21,14 @@ export async function registerForPushNotificationsAsync(userId: string) {
         return;
       }
 
-      token = (await Notifications.getDevicePushTokenAsync()).data;
-      //   token = (await Notifications.getExpoPushTokenAsync()).data;
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+
+      // token = (await Notifications.getDevicePushTokenAsync()).data;
+      // token = (await Notifications.getExpoPushTokenAsync()).data;
       // TO DO: remove this out
       // console.log(token);
-      console.log('Expo Push Token:', token);
+      console.log('FCM Token:', token);
 
       const userRef = doc(db, 'users', userId);
       await setDoc(userRef, { pushToken: token }, { merge: true });

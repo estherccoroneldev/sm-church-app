@@ -3,15 +3,19 @@ import './translation';
 import 'react-native-gesture-handler';
 
 import { Outfit_300Light, Outfit_600SemiBold, useFonts } from '@expo-google-fonts/outfit';
+import messaging from '@react-native-firebase/messaging';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { TamaguiProvider } from 'tamagui';
-
 import { StatusBar } from 'expo-status-bar';
 import AppNavigator from 'navigation';
+import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { TamaguiProvider } from 'tamagui';
 import config from './tamagui.config';
+
+messaging().setBackgroundMessageHandler(async (remoteMessage: string) => {
+  console.log('Message handled in the background!', remoteMessage);
+});
 
 SplashScreen.preventAutoHideAsync();
 
