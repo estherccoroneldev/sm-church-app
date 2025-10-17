@@ -1,8 +1,8 @@
 export type Event = {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  date: string;
+  date: string; // timestamp in ISO format
   contactName?: string;
   place?: string;
   imageUrl?: string;

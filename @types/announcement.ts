@@ -1,6 +1,6 @@
 export type Announcement = {
   id: string;
-  name: string;
+  title: string;
   description: string;
   date: string; // timestamp in ISO format
   contactName?: string;

@@ -1,8 +1,8 @@
 export type Ministry = {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  date: string;
+  date?: string;
   place?: string;
   schedules?: string;
   phone?: string;
