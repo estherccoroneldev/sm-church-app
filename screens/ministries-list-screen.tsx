@@ -5,8 +5,8 @@ import useMinistries from 'hooks/use-ministries';
 import React from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SizableText, Spinner, Theme, useTheme } from 'tamagui';
-import { Event } from '../@types/event';
+import { SizableText, Spinner, useTheme } from 'tamagui';
+import { Ministry } from '../@types/ministry';
 import CardItem from '../components/CardItem';
 import { ConnectParamList } from '../navigation/tab-navigator';
 
@@ -25,8 +25,8 @@ const MinistriesListScreen: React.FC = () => {
   const { navigate } = useNavigation<MinistriesListScreenNavigationProp>();
   const { ministries, loading } = useMinistries();
 
-  const handlePressItem = (item: Event) => navigate('MinistryDetails', item);
-  const renderEventItem: ListRenderItem<Event> = ({ item }) => (
+  const handlePressItem = (item: Ministry) => navigate('MinistryDetails', item);
+  const renderEventItem: ListRenderItem<Ministry> = ({ item }) => (
     <CardItem
       fullmode
       item={item}
@@ -52,7 +52,7 @@ const MinistriesListScreen: React.FC = () => {
         backgroundColor: theme.background.get() as string,
       }}
       edges={['left', 'right']}>
-      <FlatList<Event>
+      <FlatList<Ministry>
         style={{
           flex: 1,
         }}
