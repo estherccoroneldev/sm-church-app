@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { Announcement } from '@types/announcement';
 import { getData } from 'services/announcements';
-import { Ministry } from '../@types/ministry';
 
 export default function useAnnouncements() {
-  const [announcements, setAnnouncements] = React.useState<Ministry[]>([]);
+  const [announcements, setAnnouncements] = React.useState<Announcement[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 

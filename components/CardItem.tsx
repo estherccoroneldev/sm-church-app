@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 
 interface BaseItem {
   id: string;
-  name: string;
+  title: string;
   description?: string;
   date?: string;
   imageUrl?: string;
@@ -66,8 +66,8 @@ const CardItem = <T extends BaseItem>({
               height={fullmode ? 220 : 180}
               borderRadius="$6"
               marginBottom="$1"
-              alt={item.name}
-              aria-label={item.name}
+              alt={item.title}
+              aria-label={item.title}
               onError={(event) => {
                 if (event.nativeEvent.error) {
                   console.error('Error loading image', event.nativeEvent.error);
@@ -80,7 +80,7 @@ const CardItem = <T extends BaseItem>({
             {fullmode ? (
               <YStack padding={'$4'} gap="$2" overflow="hidden">
                 <YStack>
-                  <Title numberOfLines={1}>{item.name}</Title>
+                  <Title numberOfLines={1}>{item.title}</Title>
                   {hasDateSection && item.date ? <Subtitle text={item.date} /> : null}
                 </YStack>
                 {hasDescription && item.description ? (
@@ -90,7 +90,7 @@ const CardItem = <T extends BaseItem>({
                 ) : null}
               </YStack>
             ) : (
-              <Title numberOfLines={1}>{item.name}</Title>
+              <Title numberOfLines={1}>{item.title}</Title>
             )}
           </YStack>
         </YStack>
