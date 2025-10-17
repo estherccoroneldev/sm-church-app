@@ -66,6 +66,7 @@ const Home: React.FC = () => {
         renderItem={renderAnnouncementItem}
         loading={loadingAnnouncements}
         error={announcementsError}
+        ListEmptyComponent={() => <SizableText size="$4">Aún no hay anúncios.</SizableText>}
         keyExtractor={keyExtractor}
       />
 
