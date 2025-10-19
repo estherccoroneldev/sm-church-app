@@ -24,12 +24,6 @@ export async function registerForPushNotificationsAsync(userId: string) {
       await messaging().registerDeviceForRemoteMessages();
       const token = await messaging().getToken();
 
-      // token = (await Notifications.getDevicePushTokenAsync()).data;
-      // token = (await Notifications.getExpoPushTokenAsync()).data;
-      // TO DO: remove this out
-      // console.log(token);
-      console.log('FCM Token:', token);
-
       const userRef = doc(db, 'users', userId);
       await setDoc(userRef, { pushToken: token }, { merge: true });
     } else {
