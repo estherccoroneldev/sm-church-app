@@ -70,8 +70,6 @@ const SignInScreen: React.FC = () => {
         id: user.uid,
         name: `${user.displayName ?? ''}`,
         isGuest: false,
-        // role: 'guest',
-        // hasSelectedMinistries: 'no',
       });
 
       actions.resetForm();

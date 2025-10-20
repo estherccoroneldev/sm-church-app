@@ -3,8 +3,7 @@ import { create } from 'zustand';
 export type User = {
   id: string;
   name: string;
-  role: 'member' | 'admin' | 'guest';
-  hasSelectedMinistries?: 'yes' | 'no';
+  role?: 'member' | 'admin' | 'guest';
   isGuest: boolean;
 };
 
@@ -22,7 +21,7 @@ const useAuthStore = create<AuthState>((set) => ({
   signInAsGuest: () => {
     const guestUser: User = {
       id: `guest-${Date.now()}`,
-      name: 'Usuario',
+      name: 'Invitado',
       role: 'guest',
       isGuest: true,
     };

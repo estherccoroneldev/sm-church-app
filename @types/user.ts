@@ -15,7 +15,7 @@ export type UserProfile = {
   // isActive?: boolean;
   isVerified?: boolean;
   // knowMoreAboutMinistries?: 'yes' | 'no';
-  hasSelectedMinistries?: 'yes' | 'no';
+  // hasSelectedMinistries?: 'yes' | 'no';
   createdAt: Timestamp;
   updatedAt?: Timestamp;
 };

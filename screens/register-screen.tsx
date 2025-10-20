@@ -113,7 +113,6 @@ const Register: React.FC = () => {
         acceptedTermsCond: 'yes',
         olderThan13Years: values.olderThan13Years,
         gender: values.gender ?? 'no information',
-        hasSelectedMinistries: 'no',
         createdAt: now,
         updatedAt: now,
       };

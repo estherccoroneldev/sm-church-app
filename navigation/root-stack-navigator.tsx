@@ -1,8 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { Platform } from 'react-native';
 // import Modal from '../screens/modal';
-import MinistriesSelectionScreen from 'screens/ministries-selection-screen';
-import { useAuth } from 'store/auth-store';
 import TabNavigator from './tab-navigator';
 
 export type RootStackParamList = {
@@ -14,36 +12,13 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
-  const authUser = useAuth((state) => state.user);
-  const shouldShowMinistriesSelection =
-    authUser?.hasSelectedMinistries === 'no' && authUser?.role === 'member';
-
   return (
-    <Stack.Navigator
-      initialRouteName={shouldShowMinistriesSelection ? 'MinistriesSelection' : 'TabNavigator'}>
+    <Stack.Navigator initialRouteName={'TabNavigator'}>
       <Stack.Group
         screenOptions={{
           headerShown: false,
         }}>
-        {shouldShowMinistriesSelection ? (
-          <Stack.Screen
-            name="MinistriesSelection"
-            component={MinistriesSelectionScreen}
-            options={{
-              headerShown: true,
-              headerTitle: 'Registro',
-              headerTitleAlign: 'center',
-              headerShadowVisible: false,
-              headerBackButtonDisplayMode: 'minimal',
-              headerTitleStyle: {
-                fontSize: 24,
-                fontFamily: 'Outfit_600SemiBold',
-              },
-            }}
-          />
-        ) : (
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-        )}
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Group>
       {/* <Stack.Group
         screenOptions={{

@@ -20,7 +20,6 @@ function AppNavigator() {
         const userData = {
           id: user.uid,
           name: user.displayName || 'Invitado',
-          hasSelectedMinistries: 'no' as const,
           role: 'guest' as const,
         };
 
@@ -29,7 +28,6 @@ function AppNavigator() {
           const data = userDataFromDB.data();
           userData.name = data.firstName || 'Invitado';
           userData.role = data.role || 'guest';
-          userData.hasSelectedMinistries = data.hasSelectedMinistries;
         }
         signIn({
           ...userData,
@@ -49,15 +47,6 @@ function AppNavigator() {
     return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;
 
   return <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
-
-  // DEV MODE: always show RootStack
-  // return __DEV__ ? (
-  //   <NavigationContainer>
-  //     <RootStack />
-  //   </NavigationContainer>
-  // ) : (
-  //   <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>
-  // );
 }
 
 export default AppNavigator;
