@@ -14,6 +14,7 @@ import { Ministry } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
+import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
 import { useTheme } from 'tamagui';
 import { Announcement } from '../@types/announcement';
 import { TabBarIcon } from '../components/TabBarIcon';
@@ -32,6 +33,11 @@ const { width } = Dimensions.get('screen');
 export type HomeParamList = {
   Home: undefined;
   MinistryDetails: Ministry;
+  SignupMinistryConfirm: {
+    userId: string;
+    ministryId: string;
+    ministryName: string;
+  };
   EventDetails: Event;
   AnnouncementDetails: Announcement;
 };
@@ -59,6 +65,11 @@ export type ConnectParamList = {
   ConnectTab: undefined;
   AboutUs: undefined;
   MinistryDetails: Ministry;
+  SignupMinistryConfirm: {
+    userId: string;
+    ministryId: string;
+    ministryName: string;
+  };
   ConnectDetails: undefined;
   ServingList: undefined;
 };
@@ -113,6 +124,19 @@ export function HomeStackScreen() {
           headerBackButtonDisplayMode: 'minimal',
         }}
         component={MinistryDetails}
+      />
+      <HomeStack.Screen
+        name="SignupMinistryConfirm"
+        options={{
+          title: 'Confirmar',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={SignupMinistryConfirmScreen}
       />
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
       <HomeStack.Screen
@@ -239,6 +263,19 @@ export function ConnectStackScreen() {
           headerBackButtonDisplayMode: 'minimal',
         }}
         component={MinistryDetails}
+      />
+      <ConnectStack.Screen
+        name="SignupMinistryConfirm"
+        options={{
+          title: 'Confirmar',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={SignupMinistryConfirmScreen}
       />
       <ConnectStack.Screen
         name="ServingList"
