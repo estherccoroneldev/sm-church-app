@@ -1,5 +1,5 @@
 import React from 'react';
-import { H4, H5, SizableText, styled, YStack } from 'tamagui';
+import { H4, SizableText, styled, YStack } from 'tamagui';
 
 const info = {
   churchName: 'Iglesia Episcopal San Mateo',
