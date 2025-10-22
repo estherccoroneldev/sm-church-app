@@ -25,10 +25,11 @@ export async function signupUserToPendingMemberArray(userId: string, ministryId:
         throw new Error(`ministry with ID ${ministryId} does not exist!`);
       }
 
-      // Update the user's document
+      // Update the user's document - optional when accepting pending members
       // transaction.update(userRef, {
       //   ministries: arrayUnion(ministryRef),
       // });
+      // TO DO: consider delete pendingMembers/memberId when accepted and push to the "members" array
 
       // Update each ministry's document
       transaction.update(ministryRef, {
