@@ -274,23 +274,6 @@ const Register: React.FC = () => {
                   </YStack>
 
                   <SwitchWithLabel
-                    label="Pertenece a algún ministerio?"
-                    size="$2"
-                    backgroundColor={'$tertiary'}
-                    onCheckedChange={(value) => {
-                      handleChange('role')(value ? 'member' : 'guest');
-                    }}
-                  />
-
-                  {/* <SwitchWithLabel
-                    label="Le gustaría saber más sobre los ministerios?"
-                    size="$2"
-                    onCheckedChange={(value) => {
-                      handleChange('knowMoreAboutMinistries')(value ? 'yes' : 'no');
-                    }}
-                  /> */}
-
-                  <SwitchWithLabel
                     label="Es mayor de 13 años?"
                     size="$2"
                     backgroundColor={'$tertiary'}
