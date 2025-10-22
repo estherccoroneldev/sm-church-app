@@ -311,7 +311,7 @@ export default function TabLayout() {
   const { bottom } = useSafeAreaInsets();
   const theme = useTheme();
   const tabOptions = {
-    tabBarActiveTintColor: theme.primary.get() as string,
+    tabBarActiveTintColor: theme.secondary.get() as string,
     tabBarShowLabel: false,
     tabBarStyle: {
       backgroundColor: theme.tertiary.get() as string,
