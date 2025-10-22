@@ -1,6 +1,9 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import {onDocumentCreated} from "firebase-functions/v2/firestore";
+import {
+  onDocumentCreated,
+  onDocumentUpdated,
+} from "firebase-functions/v2/firestore";
 
 if (admin.apps.length === 0) {
   admin.initializeApp();
@@ -45,6 +48,78 @@ exports.onNewEventCreated = onDocumentCreated("events/{eventId}",
       return null;
     } catch (error) {
       console.log("Error sending message:", error);
+      return null;
+    }
+  });
+
+exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
+  "ministries/{ministryId}",
+  async (event) => {
+    const snap = event.data;
+    if (!snap) {
+      console.log("No data associated with the ministry!");
+      return null;
+    }
+
+    const beforeData = snap.before.data();
+    const afterData = snap.after.data();
+    const ministryData = afterData;
+    const ministryId = event.params.ministryId;
+
+    const coordinatorId = ministryData.coordinatorId;
+    const beforeMembers = beforeData.pendingMembers || [];
+    const afterMembers = afterData.pendingMembers || [];
+
+    const membersChanged = (
+      beforeMembers.length !== afterMembers.length ||
+      JSON.stringify(beforeMembers.sort()) !==
+      JSON.stringify(afterMembers.sort())
+    );
+
+    if (!membersChanged) {
+      console.log("The \"pendingMembers\" array did not change. Exiting.");
+      return null;
+    }
+
+    if (!coordinatorId) {
+      console.log("No coordinatorId found for this ministry.");
+      return null;
+    }
+
+    const coordinatorRef = db.collection("users").doc(coordinatorId);
+    const coordinatorDoc = await coordinatorRef.get();
+
+    if (!coordinatorDoc.exists) {
+      console.log("Coordinator document does not exist.");
+      return null;
+    }
+    const coordinatorData = coordinatorDoc.data();
+
+    if (!coordinatorData || !coordinatorData.pushToken) {
+      console.log("No push token found for the coordinator.");
+      return null;
+    }
+
+    const message = {
+      notification: {
+        title: "📢 Nuevo miembro interesado!",
+        body: `Hay un nuevo miembro pendiente de aprobación en el ministerio 
+        ${ministryData.name}.`,
+      },
+      data: {
+        ministryId: ministryId,
+        changeType: "PENDING_MEMBER_ARRAY_UPDATED",
+        newPendingMemberCount: String(afterMembers.length),
+      },
+      token: coordinatorData.pushToken,
+    };
+
+    try {
+      const response = await admin.messaging().send(message);
+      console.log("Successfully sent message to coordinator:", response);
+      return null;
+    } catch (error) {
+      console.log("Error sending message to coordinator:", error);
       return null;
     }
   });
