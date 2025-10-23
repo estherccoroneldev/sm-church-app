@@ -17,3 +17,8 @@ export type Ministry = {
   imageUrl?: string;
   downloadUrl?: string;
 };
+
+export type MinistryChangeType =
+  | 'PENDING_MEMBER_ARRAY_UPDATED'
+  | 'NEW_MEMBER_ADDED'
+  | 'MEMBER_REMOVED';
