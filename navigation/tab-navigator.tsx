@@ -10,7 +10,7 @@ import ConnectDetailsScreen from 'screens/connect-details-screen';
 import ServingListScreen from 'screens/ministries-list-screen';
 import MinistryDetails from 'screens/ministry-details-screen';
 import { Event } from '../@types/event';
-import { Ministry } from '../@types/ministry';
+import { Ministry, MinistryChangeType } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
@@ -32,7 +32,7 @@ const { width } = Dimensions.get('screen');
 
 export type HomeParamList = {
   Home: undefined;
-  MinistryDetails: Ministry;
+  MinistryDetails: Ministry & { changeType?: MinistryChangeType };
   SignupMinistryConfirm: {
     userId: string;
     ministryId: string;
@@ -64,7 +64,7 @@ export type GivingParamList = {
 export type ConnectParamList = {
   ConnectTab: undefined;
   AboutUs: undefined;
-  MinistryDetails: Ministry;
+  MinistryDetails: Ministry & { changeType?: MinistryChangeType };
   SignupMinistryConfirm: {
     userId: string;
     ministryId: string;
