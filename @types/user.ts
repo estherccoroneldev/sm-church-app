@@ -6,7 +6,7 @@ export type UserProfile = {
   phoneNumber?: string;
   firstName: string;
   lastName: string;
-  role: 'admin' | 'member' | 'guest';
+  role: 'admin' | 'member' | 'coordinator' | 'guest';
   gender?: 'male' | 'female' | 'no information';
   olderThan13Years?: 'yes' | 'no';
   acceptedTermsCond?: 'yes' | 'no';
