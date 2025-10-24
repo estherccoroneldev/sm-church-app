@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { signOut } from '@firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Container } from 'components/Container';
-import { auth } from 'config/firebase';
 import { Alert } from 'react-native';
 import { useAuth } from 'store/auth-store';
 import { SizableText, useTheme } from 'tamagui';
@@ -23,6 +21,7 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
   const theme = useTheme();
   const { userId, ministryId, ministryName } = route.params;
   const user = useAuth((state) => state.user);
+  const signOutAuth = useAuth((state) => state.signOut);
 
   const handleConfirmSignup = async () => {
     try {
@@ -45,10 +44,8 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
     }
   };
 
-  const signOutAuth = useAuth((state) => state.signOut);
   const handleRedirectToLogin = async () => {
     try {
-      await signOut(auth);
       signOutAuth();
     } catch (error) {
       console.error('Error signing out:', JSON.stringify(error));
