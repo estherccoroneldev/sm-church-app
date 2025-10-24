@@ -1,3 +1,5 @@
+import auth from '@react-native-firebase/auth';
+
 import { create } from 'zustand';
 
 export type User = {
@@ -30,7 +32,8 @@ const useAuthStore = create<AuthState>((set) => ({
   signIn: (user: User) => {
     set({ user, isAuthenticated: true });
   },
-  signOut: () => {
+  signOut: async () => {
+    await auth().signOut();
     set({ user: null, isAuthenticated: false });
   },
 }));

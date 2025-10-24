@@ -1,8 +1,7 @@
+import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { auth } from 'config/firebase';
 import { StatusBar } from 'expo-status-bar';
-import { signInAnonymously } from 'firebase/auth';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
@@ -19,7 +18,7 @@ const Welcome: React.FC = () => {
   const signInAsGuest = useAuth((state) => state.signInAsGuest);
   const handleSignInAsGuest = async () => {
     try {
-      await signInAnonymously(auth);
+      await auth().signInAnonymously();
       signInAsGuest();
     } catch (error: Error | any) {
       // Handle each firebase auth error

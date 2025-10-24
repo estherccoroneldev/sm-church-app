@@ -1,7 +1,6 @@
+import auth from '@react-native-firebase/auth';
 import React from 'react';
 
-import { auth } from 'config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Formik } from 'formik';
 import {
   Keyboard,
@@ -56,8 +55,7 @@ const SignInScreen: React.FC = () => {
     setMessage('');
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
+      const userCredential = await auth().signInWithEmailAndPassword(
         values.email.trim(),
         values.password.trim()
       );

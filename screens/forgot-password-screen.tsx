@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { sendPasswordResetEmail } from '@firebase/auth';
-import { auth } from 'config/firebase';
+import auth from '@react-native-firebase/auth';
 import { Formik } from 'formik';
 import {
   Keyboard,
@@ -48,8 +47,7 @@ const ForgotScreenScreen: React.FC = () => {
     setMessage('');
 
     try {
-      await sendPasswordResetEmail(auth, values.email.trim());
-
+      await auth().sendPasswordResetEmail(values.email.trim());
       setMessage('Link enviado exitosamente!');
 
       actions.resetForm();
