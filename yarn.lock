@@ -2555,6 +2555,20 @@
   dependencies:
     firebase "12.4.0"
 
+"@react-native-firebase/auth@^23.4.1":
+  version "23.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-23.4.1.tgz#fda4e6e2064589009e2971689e5825cc39e1d7e4"
+  integrity sha512-V+XNfCtlhXLOuhBAcz4STOADzs+W3U5tL3vyaHqnKIY9z8/l8wO0snx8jMTPa497dNFL9IzMVFU/POHfU/2kBA==
+  dependencies:
+    plist "^3.1.0"
+
+"@react-native-firebase/firestore@^23.4.1":
+  version "23.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-23.4.1.tgz#b2c2453abbbac97aaa15e40e1b33d229f0e9e9bd"
+  integrity sha512-UehRzD5/D/6PlnxEyGchVzmQ9H22myU/7avlYXEiQX2Mky9+tDynwlQi4VFIF1ZVQgvCzsA24UlX55b0ZcGEkQ==
+  dependencies:
+    react-native-url-polyfill "2.0.0"
+
 "@react-native-firebase/messaging@^23.4.0":
   version "23.4.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-23.4.1.tgz#08b83eed9e2c5353e18851cd0ad0a19cd92c42ce"
@@ -9145,7 +9159,7 @@ pkg-dir@^4.1.0, pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-plist@^3.0.5:
+plist@^3.0.5, plist@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.1.0.tgz#797a516a93e62f5bde55e0b9cc9c967f860893c9"
   integrity sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==
@@ -9457,6 +9471,13 @@ react-native-svg@15.12.1:
     css-select "^5.1.0"
     css-tree "^1.1.3"
     warn-once "0.1.1"
+
+react-native-url-polyfill@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-url-polyfill/-/react-native-url-polyfill-2.0.0.tgz#db714520a2985cff1d50ab2e66279b9f91ffd589"
+  integrity sha512-My330Do7/DvKnEvwQc0WdcBnFPploYKp9CYlefDXzIdEaA+PAhDYllkvGeEroEzvc4Kzzj2O4yVdz8v6fjRvhA==
+  dependencies:
+    whatwg-url-without-unicode "8.0.0-3"
 
 react-native-web@^0.20.0:
   version "0.20.0"
