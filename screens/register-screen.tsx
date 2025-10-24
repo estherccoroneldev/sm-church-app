@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import { db } from 'config/firebase';
-import { Timestamp } from 'firebase/firestore';
+import { db, firestore } from 'config/firebase';
 import { Formik } from 'formik';
 import React from 'react';
 import {
@@ -101,7 +100,7 @@ const Register: React.FC = () => {
 
       const userDocRef = db.collection('users').doc(user.uid);
 
-      const now = Timestamp.now();
+      const now = firestore.Timestamp.now();
 
       const initialUserProfile: UserProfile = {
         uid: user.uid,

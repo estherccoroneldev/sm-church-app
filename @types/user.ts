@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 export type UserProfile = {
   uid: string;
@@ -16,6 +16,6 @@ export type UserProfile = {
   isVerified?: boolean;
   // knowMoreAboutMinistries?: 'yes' | 'no';
   // hasSelectedMinistries?: 'yes' | 'no';
-  createdAt: Timestamp;
-  updatedAt?: Timestamp;
+  createdAt: FirebaseFirestoreTypes.Timestamp;
+  updatedAt?: FirebaseFirestoreTypes.Timestamp;
 };
