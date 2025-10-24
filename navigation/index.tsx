@@ -1,9 +1,9 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { doc, getDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import auth from '@react-native-firebase/auth';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import { useAuth } from 'store/auth-store';
 import { Spinner } from 'tamagui';
-import { auth, db } from '../config/firebase';
+import { db } from '../config/firebase';
 import AuthNavigator from './auth-navigator';
 import RootStack from './root-stack-navigator';
 
@@ -14,20 +14,21 @@ function AppNavigator() {
   const signOut = useAuth((state) => state.signOut);
 
   React.useEffect(() => {
-    const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
+    const unsubscribeAuth = auth().onAuthStateChanged(async (user) => {
       if (user) {
-        const userDocRef = doc(db, 'users', user.uid);
+        const userDocRef = db.collection('users').doc(user.uid);
         const userData = {
           id: user.uid,
           name: user.displayName || 'Invitado',
           role: 'guest' as const,
         };
 
-        const userDataFromDB = await getDoc(userDocRef);
-        if (userDataFromDB.exists()) {
-          const data = userDataFromDB.data();
+        const docSnap = await userDocRef.get();
+        if (docSnap.exists()) {
+          const data = docSnap.data()!;
+
           userData.name = data.firstName || 'Invitado';
-          userData.role = data.role || 'guest';
+          userData.role = data.role || 'member';
         }
         signIn({
           ...userData,

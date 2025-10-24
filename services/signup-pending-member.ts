@@ -1,5 +1,4 @@
-import { db } from 'config/firebase';
-import { arrayUnion, doc, runTransaction } from 'firebase/firestore';
+import { db, firestore } from 'config/firebase';
 
 export async function signupUserToPendingMemberArray(userId: string, ministryId: string) {
   if (!userId || !ministryId) {
@@ -7,11 +6,11 @@ export async function signupUserToPendingMemberArray(userId: string, ministryId:
     return { success: false, error: 'Invalid input' };
   }
 
-  const userRef = doc(db, 'users', userId);
-  const ministryRef = doc(db, 'ministries', ministryId);
+  const userRef = db.collection('users').doc(userId);
+  const ministryRef = db.collection('ministries').doc(ministryId);
 
   try {
-    await runTransaction(db, async (transaction) => {
+    await db.runTransaction(async (transaction) => {
       // Read documents
       const userDoc = await transaction.get(userRef);
       const ministryDoc = await transaction.get(ministryRef);
@@ -33,7 +32,7 @@ export async function signupUserToPendingMemberArray(userId: string, ministryId:
 
       // Update each ministry's document
       transaction.update(ministryRef, {
-        pendingMembers: arrayUnion(userRef),
+        pendingMembers: firestore.FieldValue.arrayUnion(userRef),
       });
     });
 

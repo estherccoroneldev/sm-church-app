@@ -1,6 +1,5 @@
 import { db } from 'config/firebase';
 import { format } from 'date-fns';
-import { collection, getDocs } from 'firebase/firestore';
 import { Event } from '../@types/event';
 import api from './api';
 
@@ -28,7 +27,7 @@ const setFormattedDate = (docData: any): string => {
 
 async function getEventsFromFirestore(): Promise<Event[]> {
   try {
-    const querySnapshot = await getDocs(collection(db, 'events'));
+    const querySnapshot = await db.collection('events').get();
     const eventsList = querySnapshot.docs.map(
       (doc) =>
         ({

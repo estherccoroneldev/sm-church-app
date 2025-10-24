@@ -1,6 +1,6 @@
-import { auth, db } from 'config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import { db } from 'config/firebase';
+import { Timestamp } from 'firebase/firestore';
 import { Formik } from 'formik';
 import React from 'react';
 import {
@@ -83,7 +83,7 @@ const Register: React.FC = () => {
     }
 
     // Ensure Firebase Auth and Firestore are initialized
-    if (!auth || !db) {
+    if (!auth) {
       setError('Firebase services are not initialized. Please wait');
       return;
     }
@@ -93,14 +93,14 @@ const Register: React.FC = () => {
     setMessage('');
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
+      const userCredential = await auth().createUserWithEmailAndPassword(
         values.email,
         values.password
       );
       const user = userCredential.user;
 
-      const userDocRef = doc(db, 'users', user.uid);
+      const userDocRef = db.collection('users').doc(user.uid);
+
       const now = Timestamp.now();
 
       const initialUserProfile: UserProfile = {
@@ -117,7 +117,7 @@ const Register: React.FC = () => {
         updatedAt: now,
       };
 
-      await setDoc(userDocRef, initialUserProfile);
+      await userDocRef.set(initialUserProfile, { merge: true });
       setMessage('User created successfully!');
       signIn({
         id: user.uid,

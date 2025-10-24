@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import auth from '@react-native-firebase/auth';
 import { HeaderButton } from 'components/HeaderButton';
-import { auth } from 'config/firebase';
-import { signOut } from 'firebase/auth';
 import React from 'react';
 import { Alert, Linking } from 'react-native';
 import { useAuth } from 'store/auth-store';
@@ -70,7 +69,6 @@ const Connect: React.FC = () => {
   const signOutAuth = useAuth((state) => state.signOut);
   const handleSignOut = async () => {
     try {
-      await signOut(auth);
       signOutAuth();
       Alert.alert('Cierre de Sesión', 'Ha cerrado sesión exitosamente.');
     } catch (error) {
@@ -81,8 +79,9 @@ const Connect: React.FC = () => {
 
   const deleteAccount = async () => {
     try {
-      if (auth.currentUser) {
-        await auth.currentUser.delete();
+      // TO DO: migrate to delete user data from Firestore
+      if (auth().currentUser) {
+        await auth().currentUser?.delete();
         handleSignOut();
         Alert.alert('Cuenta Borrada', 'Su cuenta ha sido borrada exitosamente.');
       } else {

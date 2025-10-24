@@ -1,9 +1,9 @@
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 
-export const db = firestore();
+const db = firestore();
 
-export default firebase;
+export { db, firebase, firestore };
 
 // import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 // import { getApp, getApps, initializeApp } from 'firebase/app';

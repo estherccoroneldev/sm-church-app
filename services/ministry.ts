@@ -1,5 +1,4 @@
 import { db } from 'config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
 import { Ministry } from '../@types/ministry';
 import api from './api';
 
@@ -15,7 +14,7 @@ export const fetchMinistries = async (): Promise<Ministry[]> => {
 
 export async function fetchMinistriesGCP(): Promise<Ministry[]> {
   try {
-    const querySnapshot = await getDocs(collection(db, 'ministries'));
+    const querySnapshot = await db.collection('ministries').get();
     const ministriesList = querySnapshot.docs.map(
       (doc) =>
         ({
