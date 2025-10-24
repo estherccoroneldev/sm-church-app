@@ -51,7 +51,7 @@ const initialValues = {
   phoneNumber: '',
   password: '',
   confirmPassword: '',
-  role: 'guest',
+  role: 'member',
   olderThan13Years: undefined,
   gender: undefined,
 };
