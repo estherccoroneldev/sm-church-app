@@ -1,10 +1,12 @@
 import auth from '@react-native-firebase/auth';
-import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { initializeNotifications } from 'services/notifications';
 import { useAuth } from 'store/auth-store';
 import { Spinner } from 'tamagui';
 import { db } from '../config/firebase';
 import AuthNavigator from './auth-navigator';
+import { navigationRef } from './root-navigation';
 import RootStack from './root-stack-navigator';
 
 function AppNavigator() {
@@ -44,10 +46,20 @@ function AppNavigator() {
     return () => unsubscribeAuth();
   }, []);
 
+  React.useEffect(() => {
+    const unsubscribe = initializeNotifications();
+
+    return () => unsubscribe();
+  }, []);
+
   if (initializing)
     return <Spinner size="large" color={'#076CB5'} style={{ alignSelf: 'center' }} />;
 
-  return <NavigationContainer>{authUser ? <RootStack /> : <AuthNavigator />}</NavigationContainer>;
+  return (
+    <NavigationContainer ref={navigationRef}>
+      {authUser ? <RootStack /> : <AuthNavigator />}
+    </NavigationContainer>
+  );
 }
 
 export default AppNavigator;
