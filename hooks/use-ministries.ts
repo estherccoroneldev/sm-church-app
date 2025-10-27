@@ -11,7 +11,7 @@ export default function useMinistries() {
       (ministry): ministry is Ministry => ministry !== undefined
     )
   );
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
 
   const fetchMinistries = React.useCallback(async () => {
@@ -29,11 +29,15 @@ export default function useMinistries() {
   }, []);
 
   React.useEffect(() => {
+    if (ministries.length > 0) {
+      return;
+    }
+
     fetchMinistries();
   }, [fetchMinistries]);
 
   return React.useMemo(
-    () => ({ ministries: ministries ?? [], loading, error, fetchMinistries }),
+    () => ({ ministries, loading, error, fetchMinistries }),
     [loading, error, ministries, fetchMinistries]
   );
 }
