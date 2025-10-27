@@ -32,7 +32,10 @@ const { width } = Dimensions.get('screen');
 
 export type HomeParamList = {
   Home: undefined;
-  MinistryDetails: Ministry & { changeType?: MinistryChangeType };
+  MinistryDetails: {
+    id: Ministry['id'];
+    changeType?: MinistryChangeType;
+  };
   SignupMinistryConfirm: {
     userId: string;
     ministryId: string;
@@ -64,7 +67,10 @@ export type GivingParamList = {
 export type ConnectParamList = {
   ConnectTab: undefined;
   AboutUs: undefined;
-  MinistryDetails: Ministry & { changeType?: MinistryChangeType };
+  MinistryDetails: {
+    id: Ministry['id'];
+    changeType?: MinistryChangeType;
+  };
   SignupMinistryConfirm: {
     userId: string;
     ministryId: string;
