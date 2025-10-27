@@ -14,7 +14,7 @@ import { Ministry } from '../@types/ministry';
 
 export async function fetchMinistryDetailsByIdGCP(
   ministryId: Ministry['id']
-): Promise<Ministry | null> {
+): Promise<Ministry | undefined> {
   try {
     const docRef = db.collection('ministries').doc(ministryId);
     const docSnap = await docRef.get();
@@ -26,7 +26,7 @@ export async function fetchMinistryDetailsByIdGCP(
       } as Ministry;
     } else {
       console.warn('No such ministry with ID:', ministryId);
-      return null;
+      return undefined;
     }
   } catch (error) {
     console.error('[Firestore] Error fetching ministry details:', error);
