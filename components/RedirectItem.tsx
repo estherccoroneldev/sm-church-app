@@ -15,10 +15,9 @@ export const RedirectItemPress = forwardRef<
           justifyContent="space-between"
           alignItems="center"
           my="$2"
-          px="$4"
           py="$3"
           opacity={pressed ? 0.8 : 1}>
-          <SizableText fontFamily={'$heading'} fontSize="$5" color={'$primary'}>
+          <SizableText fontFamily={'$heading'} fontSize="$7" color={'$primary'}>
             {title}
           </SizableText>
           <FontAwesome name="arrow-right" size={20} color={theme.primary.get()} />
