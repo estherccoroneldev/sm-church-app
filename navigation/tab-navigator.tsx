@@ -45,6 +45,10 @@ export type HomeParamList = {
     ministryId: string;
     ministryName: string;
   };
+  UpdateMinistryGroupLink: {
+    ministryId: Ministry['id'];
+    currentGroupLink?: string;
+  };
   EventDetails: Event;
   AnnouncementDetails: Announcement;
 };
@@ -82,6 +86,10 @@ export type ConnectParamList = {
     userId: string;
     ministryId: string;
     ministryName: string;
+  };
+  UpdateMinistryGroupLink: {
+    ministryId: Ministry['id'];
+    currentGroupLink?: string;
   };
   ConnectDetails: undefined;
   ServingList: undefined;
@@ -156,6 +164,19 @@ export function HomeStackScreen() {
         name="MinistryMembersList"
         options={{
           title: 'Miembros',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={MinistryMembersListScreen}
+      />
+      <HomeStack.Screen
+        name="UpdateMinistryGroupLink"
+        options={{
+          title: 'Actualizar',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -297,6 +318,20 @@ export function ConnectStackScreen() {
         name="MinistryMembersList"
         options={{
           title: 'Miembros',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={MinistryMembersListScreen}
+      />
+
+      <ConnectStack.Screen
+        name="UpdateMinistryGroupLink"
+        options={{
+          title: 'Actualizar',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
