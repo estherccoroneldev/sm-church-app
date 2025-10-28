@@ -1,3 +1,5 @@
+import { UserProfile } from './user';
+
 export type Ministry = {
   id: string;
   title: string;
@@ -7,9 +9,9 @@ export type Ministry = {
   phone?: string;
   email?: string;
   coordinatorId?: string;
-  acceptedMembers?: string[];
-  pendingMembers?: string[];
-  rejectedMembers?: string[];
+  acceptedMembers?: UserProfile[];
+  pendingMembers?: UserProfile[];
+  rejectedMembers?: UserProfile[];
   createdAt?: Date;
   updatedAt?: Date;
   groupLink?: string;
