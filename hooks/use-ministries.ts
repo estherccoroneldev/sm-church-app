@@ -4,13 +4,13 @@ import { getMinistries } from 'services/ministry';
 import { useMinistryStore } from 'store/ministries-store';
 import { Ministry } from '../@types/ministry';
 
-export default function useMinistries() {
+export default function useMinistries(): {
+  ministries: Ministry[];
+  loading: boolean;
+  error: string | null;
+  fetchMinistries: () => Promise<void>;
+} {
   const setMinistries = useMinistryStore((state) => state.setMinistries);
-  const ministries = useMinistryStore((state) =>
-    Object.values(state.ministries).filter(
-      (ministry): ministry is Ministry => ministry !== undefined
-    )
-  );
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -29,15 +29,21 @@ export default function useMinistries() {
   }, []);
 
   React.useEffect(() => {
-    if (ministries.length > 0) {
-      return;
-    }
-
     fetchMinistries();
   }, [fetchMinistries]);
 
+  const ministries = useMinistryStore((state) => state.ministries);
+
   return React.useMemo(
-    () => ({ ministries, loading, error, fetchMinistries }),
+    () => ({
+      ministries:
+        Object.values(ministries).filter(
+          (ministry): ministry is Ministry => ministry !== undefined
+        ) ?? [],
+      loading,
+      error,
+      fetchMinistries,
+    }),
     [loading, error, ministries, fetchMinistries]
   );
 }
