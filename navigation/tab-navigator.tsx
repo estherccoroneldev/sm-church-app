@@ -14,6 +14,7 @@ import { Ministry, MinistryChangeType } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
+import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
 import { useTheme } from 'tamagui';
 import { Announcement } from '../@types/announcement';
@@ -35,6 +36,9 @@ export type HomeParamList = {
   MinistryDetails: {
     id: Ministry['id'];
     changeType?: MinistryChangeType;
+  };
+  MinistryMembersList: {
+    id: Ministry['id'];
   };
   SignupMinistryConfirm: {
     userId: string;
@@ -70,6 +74,9 @@ export type ConnectParamList = {
   MinistryDetails: {
     id: Ministry['id'];
     changeType?: MinistryChangeType;
+  };
+  MinistryMembersList: {
+    id: Ministry['id'];
   };
   SignupMinistryConfirm: {
     userId: string;
@@ -144,6 +151,21 @@ export function HomeStackScreen() {
         }}
         component={SignupMinistryConfirmScreen}
       />
+
+      <HomeStack.Screen
+        name="MinistryMembersList"
+        options={{
+          title: 'Miembros',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={MinistryMembersListScreen}
+      />
+
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
       <HomeStack.Screen
         name="EventDetails"
@@ -270,6 +292,21 @@ export function ConnectStackScreen() {
         }}
         component={MinistryDetails}
       />
+
+      <ConnectStack.Screen
+        name="MinistryMembersList"
+        options={{
+          title: 'Miembros',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={MinistryMembersListScreen}
+      />
+
       <ConnectStack.Screen
         name="SignupMinistryConfirm"
         options={{
