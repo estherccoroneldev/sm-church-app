@@ -1,12 +1,20 @@
 import { getMinistryDetailsById } from 'services/get-ministry-details-by-id';
 import { create } from 'zustand';
 import { Ministry } from '../@types/ministry';
+import { UserProfile } from '../@types/user';
+
+interface MemberActionPayload {
+  userId: UserProfile['uid'];
+  ministryId: Ministry['id'];
+}
 
 interface MinistryState {
   ministries: Record<string, Ministry | undefined>;
   setMinistries: (mints: Ministry[]) => void;
   fetchAndStoreMinistry: (id: string) => Promise<Ministry | undefined>;
   getMinistry: (id: string) => Ministry | undefined;
+  acceptMember: (payload: MemberActionPayload) => void;
+  rejectMember: (payload: MemberActionPayload) => void;
 }
 
 export const useMinistryStore = create<MinistryState>((set, get) => ({
@@ -57,5 +65,57 @@ export const useMinistryStore = create<MinistryState>((set, get) => ({
 
   getMinistry: (id) => {
     return get().ministries[id];
+  },
+
+  rejectMember: ({ userId, ministryId }) => {
+    set((state) => ({
+      ministries: {
+        ...state.ministries,
+        [ministryId]: {
+          ...state.ministries[ministryId],
+          pendingMembers: (() => {
+            const existing = state.ministries[ministryId]?.pendingMembers ?? [];
+            return existing.filter((m) => m.uid !== userId);
+          })(),
+        } as Ministry,
+      },
+    }));
+  },
+
+  acceptMember: ({ userId, ministryId }) => {
+    set((state) => ({
+      ministries: {
+        ...state.ministries,
+        [ministryId]: {
+          ...state.ministries[ministryId],
+          acceptedMembers: (() => {
+            const existing = state.ministries[ministryId]?.acceptedMembers ?? [];
+
+            const member = (state.ministries[ministryId]?.pendingMembers ?? []).find(
+              (m) => m.uid === userId
+            );
+
+            if (!member) {
+              console.warn(
+                `Member with ID ${userId} not found in pendingMembers of ministry ${ministryId}.`
+              );
+              return existing;
+            }
+
+            const exists = existing.some((m) => m.uid === member.uid);
+
+            if (!exists) {
+              return [...existing, member];
+            }
+
+            return existing;
+          })(),
+          pendingMembers: (() => {
+            const existing = state.ministries[ministryId]?.pendingMembers ?? [];
+            return existing.filter((m) => m.uid !== userId);
+          })(),
+        } as Ministry,
+      },
+    }));
   },
 }));
