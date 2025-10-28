@@ -25,14 +25,15 @@ const MinistriesListScreen: React.FC = () => {
   const { navigate } = useNavigation<MinistriesListScreenNavigationProp>();
   const { ministries, loading } = useMinistries();
 
-  const handlePressItem = (item: Ministry) => navigate('MinistryDetails', item);
+  const handlePressItem = (ministryId: Ministry['id']) =>
+    navigate('MinistryDetails', { id: ministryId });
   const renderEventItem: ListRenderItem<Ministry> = ({ item }) => (
     <CardItem
       fullmode
       item={item}
       hasDateSection
       hasDescription
-      onPress={() => handlePressItem(item)}
+      onPress={() => handlePressItem(item.id)}
     />
   );
 

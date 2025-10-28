@@ -5,6 +5,7 @@ import { SizableText } from 'tamagui';
 import { useAuth } from '../../store/auth-store';
 
 import useAnnouncements from 'hooks/use-announcements';
+import useMinistries from 'hooks/use-ministries';
 import { ListRenderItem } from 'react-native';
 import Footer from 'screens/home-screen/footer';
 import Header from 'screens/home-screen/header';
@@ -15,7 +16,6 @@ import CardItem from '../../components/CardItem';
 import { Container } from '../../components/Container';
 import HorizontalListSection from '../../components/HorizontalListSection';
 import useEvents from '../../hooks/use-events';
-import useMinistries from '../../hooks/use-ministries';
 import { HomeParamList } from '../../navigation/tab-navigator';
 import { registerForPushNotificationsAsync } from '../../services/notifications';
 
@@ -26,7 +26,7 @@ function keyExtractor<T extends { id: string }>(item: T) {
 }
 
 const Home: React.FC = () => {
-  const { navigate } = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   const user = useAuth((state) => state.user);
 
   React.useEffect(() => {
@@ -44,14 +44,14 @@ const Home: React.FC = () => {
   } = useAnnouncements();
 
   const renderMinistryItem: ListRenderItem<Ministry> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigate('MinistryDetails', item)} />
+    <CardItem item={item} onPress={() => navigation.navigate('MinistryDetails', { id: item.id })} />
   );
 
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigate('EventDetails', item)} />
+    <CardItem item={item} onPress={() => navigation.navigate('EventDetails', item)} />
   );
   const renderAnnouncementItem: ListRenderItem<Announcement> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigate('AnnouncementDetails', item)} />
+    <CardItem item={item} onPress={() => navigation.navigate('AnnouncementDetails', item)} />
   );
 
   return (
