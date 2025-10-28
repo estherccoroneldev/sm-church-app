@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Announcement } from '@types/announcement';
 import { getData } from 'services/announcements';
+import { Announcement } from '../@types/announcement';
 
 export default function useAnnouncements() {
   const [announcements, setAnnouncements] = React.useState<Announcement[]>([]);
