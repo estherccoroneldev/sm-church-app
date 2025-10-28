@@ -56,10 +56,10 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
     <Container>
       {user && !user.isGuest ? (
         <>
-          <SizableText fontSize="$7" marginBottom="$4" color={theme.foreground}>
+          <SizableText fontSize="$7" py="$4" color={theme.foreground} textAlign="center">
             Confirmar inscripción al ministerio
           </SizableText>
-          <SizableText fontSize="$6" marginBottom="$6" color={theme.foreground}>
+          <SizableText fontSize="$6" py="$2" color={theme.foreground} textAlign="center">
             Usted está a punto de inscribirse en el ministerio {ministryName}. Por favor confirme su
             elección.
           </SizableText>

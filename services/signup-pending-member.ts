@@ -24,6 +24,11 @@ export async function signupUserToPendingMemberArray(userId: string, ministryId:
         throw new Error(`ministry with ID ${ministryId} does not exist!`);
       }
 
+      const userData = userDoc.data();
+      if (!userData) {
+        throw new Error('User data is undefined!');
+      }
+
       // Update the user's document - optional when accepting pending members
       // transaction.update(userRef, {
       //   ministries: arrayUnion(ministryRef),
@@ -32,7 +37,7 @@ export async function signupUserToPendingMemberArray(userId: string, ministryId:
 
       // Update each ministry's document
       transaction.update(ministryRef, {
-        pendingMembers: firestore.FieldValue.arrayUnion(userRef),
+        pendingMembers: firestore.FieldValue.arrayUnion(userData),
       });
     });
 
