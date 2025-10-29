@@ -1,9 +1,9 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { YouTubeVideo } from '@types/ytvideo';
 import React from 'react';
 import { FlatList, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { H5, Image, SizableText, Spinner, useTheme } from 'tamagui';
+import { YouTubeVideo } from '../@types/ytvideo';
 import useSermons from '../hooks/use-sermons';
 
 const handlePressVideo = (videoId: string) => {
