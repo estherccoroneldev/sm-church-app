@@ -2564,6 +2564,11 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-clipboard/clipboard@^1.16.3":
+  version "1.16.3"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.16.3.tgz#7807a90fd9984bf4d3a96faf2eee20457984a9bd"
+  integrity sha512-cMIcvoZKIrShzJHEaHbTAp458R9WOv0fB6UyC7Ek4Qk561Ow/DrzmmJmH/rAZg21Z6ixJ4YSdFDC14crqIBmCQ==
+
 "@react-native-firebase/app@^23.4.1":
   version "23.4.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-23.4.1.tgz#00c836c6fc3f921de0fbe235362627ce73df8de6"
