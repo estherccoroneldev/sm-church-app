@@ -15,6 +15,7 @@ import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
+import SelectMinistryCoordinatorScreen from 'screens/select-ministry-coordinator-screen';
 import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
 import UpdateGroupLinkScreen from 'screens/update-group-link-screen';
 import { useTheme } from 'tamagui';
@@ -193,6 +194,19 @@ export function HomeStackScreen() {
         }}
         component={UpdateGroupLinkScreen}
       />
+      <HomeStack.Screen
+        name="SelectMinistryCoordinator"
+        options={{
+          title: 'Seleccionar',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={SelectMinistryCoordinatorScreen}
+      />
 
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
       <HomeStack.Screen
@@ -347,6 +361,19 @@ export function ConnectStackScreen() {
           headerBackButtonDisplayMode: 'minimal',
         }}
         component={UpdateGroupLinkScreen}
+      />
+      <ConnectStack.Screen
+        name="SelectMinistryCoordinator"
+        options={{
+          title: 'Seleccionar',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+        component={SelectMinistryCoordinatorScreen}
       />
 
       <ConnectStack.Screen
