@@ -8,6 +8,11 @@ interface MemberActionPayload {
   ministryId: Ministry['id'];
 }
 
+interface UpdateActionPayload {
+  ministryId: Ministry['id'];
+  newData: Partial<Ministry>;
+}
+
 interface MinistryState {
   ministries: Record<string, Ministry | undefined>;
   setMinistries: (mints: Ministry[]) => void;
@@ -15,6 +20,7 @@ interface MinistryState {
   getMinistry: (id: string) => Ministry | undefined;
   acceptMember: (payload: MemberActionPayload) => void;
   rejectMember: (payload: MemberActionPayload) => void;
+  updateMinistry: (payload: UpdateActionPayload) => void;
 }
 
 export const useMinistryStore = create<MinistryState>((set, get) => ({
@@ -65,6 +71,18 @@ export const useMinistryStore = create<MinistryState>((set, get) => ({
 
   getMinistry: (id) => {
     return get().ministries[id];
+  },
+
+  updateMinistry: ({ ministryId, newData }) => {
+    set((state) => ({
+      ministries: {
+        ...state.ministries,
+        [ministryId]: {
+          ...state.ministries[ministryId],
+          ...newData,
+        } as Ministry,
+      },
+    }));
   },
 
   rejectMember: ({ userId, ministryId }) => {
