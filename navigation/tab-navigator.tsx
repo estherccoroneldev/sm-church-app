@@ -16,6 +16,7 @@ import { Sermon } from '../@types/sermon';
 import AnnouncementDetails from 'screens/announcement-details-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
+import UpdateGroupLinkScreen from 'screens/update-group-link-screen';
 import { useTheme } from 'tamagui';
 import { Announcement } from '../@types/announcement';
 import { TabBarIcon } from '../components/TabBarIcon';
@@ -48,6 +49,9 @@ export type HomeParamList = {
   UpdateMinistryGroupLink: {
     ministryId: Ministry['id'];
     currentGroupLink?: string;
+  };
+  SelectMinistryCoordinator: {
+    ministryId: Ministry['id'];
   };
   EventDetails: Event;
   AnnouncementDetails: Announcement;
@@ -90,6 +94,9 @@ export type ConnectParamList = {
   UpdateMinistryGroupLink: {
     ministryId: Ministry['id'];
     currentGroupLink?: string;
+  };
+  SelectMinistryCoordinator: {
+    ministryId: Ministry['id'];
   };
   ConnectDetails: undefined;
   ServingList: undefined;
@@ -184,7 +191,7 @@ export function HomeStackScreen() {
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
-        component={MinistryMembersListScreen}
+        component={UpdateGroupLinkScreen}
       />
 
       {/* TO DO: should go to the Events Tab first (push -> A -> Tab B -> B) ? Analize later */}
@@ -339,7 +346,7 @@ export function ConnectStackScreen() {
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
         }}
-        component={MinistryMembersListScreen}
+        component={UpdateGroupLinkScreen}
       />
 
       <ConnectStack.Screen
