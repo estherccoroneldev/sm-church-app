@@ -70,11 +70,11 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
     const beforeMembers = beforeData.pendingMembers || [];
     const afterMembers = afterData.pendingMembers || [];
 
-    const membersChanged = (
+    const membersChanged =
       beforeMembers.length !== afterMembers.length ||
-      JSON.stringify(beforeMembers.sort()) !==
-      JSON.stringify(afterMembers.sort())
-    );
+      JSON.stringify(
+        beforeMembers.sort()) !== JSON.stringify(afterMembers.sort()
+      );
 
     if (!membersChanged) {
       console.log("The \"pendingMembers\" array did not change. Exiting.");
@@ -104,7 +104,7 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
       notification: {
         title: "📢 Nuevo miembro interesado!",
         body: `Hay un nuevo miembro pendiente de aprobación en el ministerio 
-        ${ministryData.name}.`,
+        ${ministryData.title}.`,
       },
       data: {
         ministryId: ministryId,
@@ -122,7 +122,8 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
       console.log("Error sending message to coordinator:", error);
       return null;
     }
-  });
+  }
+);
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
