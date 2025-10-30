@@ -1,5 +1,7 @@
 import React from 'react';
-import DetailsLayout from '../components/DetailsLayout';
+import { Dimensions } from 'react-native';
+import { H3, Image, SizableText, YStack } from 'tamagui';
+import { Container } from '../components/Container';
 import StaticInfo from '../components/StaticInfo';
 
 const CURRENT_DETAIL = {
@@ -10,16 +12,29 @@ const CURRENT_DETAIL = {
   title: `Queremos conocerte y compartir contigo un poco acerca de nuestra Fe.`,
   description: `Nuestra comunidad necesita voluntarios que estén dispuestos a ayudarnos en nuestras diferentes áreas de apoyo.`,
 };
-
+const { height } = Dimensions.get('window');
+const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
 const ConnectDetailsScreen: React.FC = () => {
   return (
-    <DetailsLayout
-      hasDateSection={false}
-      hasContactSection={false}
-      hasLocationSection={false}
-      currentDetail={CURRENT_DETAIL}>
+    <Container>
+      <Image
+        source={CURRENT_DETAIL.imageUrl ? { uri: CURRENT_DETAIL.imageUrl } : DEFAULT_IMAGE}
+        width="100%"
+        height={height * 0.35}
+        borderRadius="$6"
+        marginBottom="$2"
+        alt={CURRENT_DETAIL.title}
+        aria-label={CURRENT_DETAIL.title}
+      />
+      <YStack marginVertical="$4">
+        <H3>{CURRENT_DETAIL.title}</H3>
+      </YStack>
+
+      <SizableText fontFamily={'$body'} fontSize="$7">
+        {CURRENT_DETAIL.description}
+      </SizableText>
       <StaticInfo />
-    </DetailsLayout>
+    </Container>
   );
 };
 
