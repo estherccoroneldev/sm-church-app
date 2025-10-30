@@ -1,28 +1,28 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Avatar, H3, Image, SizableText, XStack, YStack } from 'tamagui';
-import { Event } from '../@types/event';
+import { H3, Image, SizableText, useTheme, XStack, YStack } from 'tamagui';
+import { Announcement } from '../@types/announcement';
 import { Container } from './Container';
 
-interface Props<T extends Event> {
+interface Props<T extends Announcement> {
   currentDetail: T;
   hasDateSection?: boolean;
   hasContactSection?: boolean;
-  hasLocationSection?: boolean;
   children?: React.ReactNode;
 }
 
 const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
 const { height } = Dimensions.get('window');
 
-const DetailsLayout = <T extends Event>({
+const DetailsLayout = <T extends Announcement>({
   currentDetail,
   hasDateSection = true,
   hasContactSection = true,
-  hasLocationSection = true,
   children,
 }: Props<T>) => {
-  const { imageUrl, title, date, contactName, description } = currentDetail;
+  const theme = useTheme();
+  const { imageUrl, title, startDate, contactName, description, place } = currentDetail;
 
   return (
     <Container>
@@ -37,7 +37,7 @@ const DetailsLayout = <T extends Event>({
       />
       <YStack marginVertical="$4">
         <H3>{title}</H3>
-        {hasDateSection && date ? <SizableText>{date.toUpperCase()}</SizableText> : null}
+        {hasDateSection && startDate ? <SizableText>{startDate.toUpperCase()}</SizableText> : null}
       </YStack>
 
       <SizableText fontFamily={'$body'} fontSize="$7">
@@ -49,19 +49,18 @@ const DetailsLayout = <T extends Event>({
         <YStack mt="$8" gap="$4">
           <SizableText size="$4">{'Contacto'.toUpperCase()}</SizableText>
 
-          {/* Avatar Section */}
           {contactName ? (
             <XStack flex={1} alignItems="center" gap="$4">
-              <Avatar circular size="$6">
-                {/* TO DO: replace real image later, add to the DB structure */}
+              {/* <Avatar circular size="$6">
                 <Avatar.Image
                   accessibilityLabel="Cam"
                   src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
                 />
-                {/* TO DO: change this color later according to the theme */}
+
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
-              </Avatar>
-              {/* TO DO: add contact to the DB */}
+              </Avatar> */}
+
+              <FontAwesome name="user-circle-o" size={28} color={theme.text.get()} />
               <SizableText size="$6">{contactName}</SizableText>
             </XStack>
           ) : (
@@ -71,12 +70,10 @@ const DetailsLayout = <T extends Event>({
       ) : null}
 
       {/* Location Section */}
-      {hasLocationSection ? (
-        <YStack marginVertical="$4" gap="$4">
-          <SizableText size="$4">{'Lugar'.toUpperCase()}</SizableText>
-          <SizableText size="$6">Houston</SizableText>
-        </YStack>
-      ) : null}
+      <YStack marginVertical="$4" gap="$4">
+        <SizableText size="$4">{'Lugar'.toUpperCase()}</SizableText>
+        <SizableText size="$6">{place}</SizableText>
+      </YStack>
       {children}
     </Container>
   );
