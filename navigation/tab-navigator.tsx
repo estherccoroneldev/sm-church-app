@@ -54,13 +54,17 @@ export type HomeParamList = {
   SelectMinistryCoordinator: {
     ministryId: Ministry['id'];
   };
-  EventDetails: Event;
+  EventDetails: {
+    eventId: Event['id'];
+  };
   AnnouncementDetails: Announcement;
 };
 
 export type EventsParamList = {
   Events: undefined;
-  EventDetails: Event;
+  EventDetails: {
+    eventId: Event['id'];
+  };
 };
 
 export type AnnouncementsParamList = {
