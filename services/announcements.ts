@@ -1,5 +1,6 @@
 import { db } from 'config/firebase';
-import { format } from 'date-fns';
+import { setFormattedDate } from 'utils/set-formatted-date';
+import { Announcement } from '../@types/announcement';
 import { Event } from '../@types/event';
 import api from './api';
 
@@ -13,19 +14,7 @@ const fetchAnnouncements = async (): Promise<Event[]> => {
   }
 };
 
-const setFormattedDate = (docData: any): string => {
-  const firebaseTimestamp = docData.date;
-
-  let formattedDate = 'N/A';
-  if (firebaseTimestamp && typeof firebaseTimestamp.toDate === 'function') {
-    const jsDate = firebaseTimestamp.toDate();
-    formattedDate = format(jsDate, 'MMMM d, yyyy');
-  }
-
-  return formattedDate;
-};
-
-async function getAnnouncementsFromFirestore(): Promise<Event[]> {
+async function getAnnouncementsFromFirestore(): Promise<Announcement[]> {
   try {
     const querySnapshot = await db.collection('announcements').get();
     const announcementsList = querySnapshot.docs.map(
@@ -33,8 +22,9 @@ async function getAnnouncementsFromFirestore(): Promise<Event[]> {
         ({
           id: doc.id,
           ...doc.data(),
-          date: setFormattedDate(doc.data()),
-        }) as Event
+          startDate: setFormattedDate(doc.data().startDate),
+          endDate: setFormattedDate(doc.data().endDate),
+        }) as Announcement
     );
 
     return announcementsList;
@@ -44,7 +34,7 @@ async function getAnnouncementsFromFirestore(): Promise<Event[]> {
   }
 }
 
-// const getData = getAnnouncementsFromFirestore;
-const getData = __DEV__ ? fetchAnnouncements : getAnnouncementsFromFirestore;
+const getData = getAnnouncementsFromFirestore;
+// const getData = __DEV__ ? fetchAnnouncements : getAnnouncementsFromFirestore;
 
 export { getData };

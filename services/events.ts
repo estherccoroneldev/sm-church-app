@@ -1,5 +1,5 @@
 import { db } from 'config/firebase';
-import { format } from 'date-fns';
+import { setFormattedDate } from 'utils/set-formatted-date';
 import { Event } from '../@types/event';
 import api from './api';
 
@@ -13,18 +13,6 @@ const fetchEvents = async (): Promise<Event[]> => {
   }
 };
 
-const setFormattedDate = (docData: any): string => {
-  const firebaseTimestamp = docData.date;
-
-  let formattedDate = 'N/A';
-  if (firebaseTimestamp && typeof firebaseTimestamp.toDate === 'function') {
-    const jsDate = firebaseTimestamp.toDate();
-    formattedDate = format(jsDate, 'MMMM d, yyyy');
-  }
-
-  return formattedDate;
-};
-
 async function getEventsFromFirestore(): Promise<Event[]> {
   try {
     const querySnapshot = await db.collection('events').get();
@@ -33,7 +21,8 @@ async function getEventsFromFirestore(): Promise<Event[]> {
         ({
           id: doc.id,
           ...doc.data(),
-          date: setFormattedDate(doc.data()),
+          startDate: setFormattedDate(doc.data().startDate),
+          endDate: setFormattedDate(doc.data().endDate),
         }) as Event
     );
 
