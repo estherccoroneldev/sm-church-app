@@ -1,10 +1,11 @@
 import React from 'react';
-import DetailsLayout from '../components/DetailsLayout';
+import { Dimensions } from 'react-native';
+import { H3, Image, SizableText, YStack } from 'tamagui';
+import { Container } from '../components/Container';
 import StaticInfo from '../components/StaticInfo';
 
 const CURRENT_DETAIL = {
   id: 'about-us',
-  date: new Date().toString(),
   imageUrl:
     'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/background-images/936258497.jpg',
   title: '¡La historia de San Mateo ha sido increíble!',
@@ -13,15 +14,30 @@ const CURRENT_DETAIL = {
   `,
 } as const;
 
+const { height } = Dimensions.get('window');
+const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
+
 const AboutUsScreen: React.FC = () => {
   return (
-    <DetailsLayout
-      hasDateSection={false}
-      hasContactSection={false}
-      hasLocationSection={false}
-      currentDetail={CURRENT_DETAIL}>
+    <Container>
+      <Image
+        source={CURRENT_DETAIL.imageUrl ? { uri: CURRENT_DETAIL.imageUrl } : DEFAULT_IMAGE}
+        width="100%"
+        height={height * 0.35}
+        borderRadius="$6"
+        marginBottom="$2"
+        alt={CURRENT_DETAIL.title}
+        aria-label={CURRENT_DETAIL.title}
+      />
+      <YStack marginVertical="$4">
+        <H3>{CURRENT_DETAIL.title}</H3>
+      </YStack>
+
+      <SizableText fontFamily={'$body'} fontSize="$7">
+        {CURRENT_DETAIL.description}
+      </SizableText>
       <StaticInfo />
-    </DetailsLayout>
+    </Container>
   );
 };
 
