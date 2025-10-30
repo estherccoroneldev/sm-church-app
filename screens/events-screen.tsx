@@ -1,6 +1,7 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import useUpcomingEvents from 'hooks/use-upcoming-events';
 import React, { useState } from 'react';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,7 +10,6 @@ import { PrimaryButton } from 'tamagui.config';
 import { Event } from '../@types/event';
 import CardItem from '../components/CardItem';
 import { TagFilter } from '../components/TagFilter';
-import useEvents from '../hooks/use-events';
 import { EventsParamList } from '../navigation/tab-navigator';
 import months from '../utils/months';
 
@@ -32,7 +32,7 @@ const EventsScreen: React.FC = () => {
   const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
   const { navigate } = useNavigation<EventsScreenNavigationProp>();
-  const { events, loading, eventsByMonth, getEventsByMonth } = useEvents();
+  const { events, loading, eventsByMonth, getEventsByMonth } = useUpcomingEvents();
 
   const [showMonthModal, setShowModal] = useState(false);
   // TO DO: change this typing to enum later
@@ -44,7 +44,7 @@ const EventsScreen: React.FC = () => {
     'by-month': eventsByMonth,
   };
 
-  const handlePressItem = (item: Event) => navigate('EventDetails', item);
+  const handlePressItem = (item: Event) => navigate('EventDetails', { eventId: item.id });
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
     <CardItem
       fullmode
