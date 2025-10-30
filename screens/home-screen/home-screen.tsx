@@ -15,7 +15,7 @@ import { Ministry } from '../../@types/ministry';
 import CardItem from '../../components/CardItem';
 import { Container } from '../../components/Container';
 import HorizontalListSection from '../../components/HorizontalListSection';
-import useEvents from '../../hooks/use-events';
+import { default as useUpcomingEvents } from '../../hooks/use-upcoming-events';
 import { HomeParamList } from '../../navigation/tab-navigator';
 import { registerForPushNotificationsAsync } from '../../services/notifications';
 
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     }
   }, [user]);
 
-  const { upcomingEvents, loading: loadingEvents, error: eventsError } = useEvents();
+  const { recentEvents, loading: loadingEvents, error: eventsError } = useUpcomingEvents();
   const { ministries, loading, error } = useMinistries();
   const {
     announcements,
@@ -43,15 +43,20 @@ const Home: React.FC = () => {
     error: announcementsError,
   } = useAnnouncements();
 
+  const handleGoToMinistry = (id: string) => navigation.navigate('MinistryDetails', { id });
   const renderMinistryItem: ListRenderItem<Ministry> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigation.navigate('MinistryDetails', { id: item.id })} />
+    <CardItem item={item} onPress={() => handleGoToMinistry(item.id)} />
   );
 
+  const handleGoToEvent = (eventId: string) => navigation.navigate('EventDetails', { eventId });
   const renderEventItem: ListRenderItem<Event> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigation.navigate('EventDetails', item)} />
+    <CardItem item={item} onPress={() => handleGoToEvent(item.id)} />
   );
+
+  const handleGoToAnnouncement = (item: Announcement) =>
+    navigation.navigate('AnnouncementDetails', item);
   const renderAnnouncementItem: ListRenderItem<Announcement> = ({ item }) => (
-    <CardItem item={item} onPress={() => navigation.navigate('AnnouncementDetails', item)} />
+    <CardItem item={item} onPress={() => handleGoToAnnouncement(item)} />
   );
 
   return (
@@ -74,7 +79,7 @@ const Home: React.FC = () => {
       <HorizontalListSection<Event>
         // title="Upcoming Events"
         title="Próximas Actividades"
-        data={upcomingEvents}
+        data={recentEvents}
         renderItem={renderEventItem}
         loading={loadingEvents}
         error={eventsError}
