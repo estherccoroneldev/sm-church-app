@@ -1,22 +1,23 @@
 import { getMonth } from 'date-fns';
 import React from 'react';
 import { getData } from 'services/events';
+import { useUpcomingEventsStore } from 'store/upcoming-events-store';
 import { Event } from '../@types/event';
 import months from '../utils/months';
 import { parseDate } from '../utils/parseDate';
 import sortByDate from '../utils/sortBydate';
 
-export default function useEvents() {
-  const [events, setEvents] = React.useState<Event[]>([]);
+export default function useUpcomingEvents() {
+  const setUpcomingEvents = useUpcomingEventsStore((state) => state.setUpcomingEvents);
   const [eventsByMonth, setEventsByMonth] = React.useState<Event[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>('');
 
   const getEvents = React.useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const data = await getData();
-      setEvents(data);
+      setUpcomingEvents(data);
     } catch (error) {
       setError('Error fetching events');
       console.error('Error fetching events: ', JSON.stringify(error));
@@ -28,8 +29,11 @@ export default function useEvents() {
   React.useEffect(() => {
     getEvents();
   }, [getEvents]);
+  const upcomingEvents = useUpcomingEventsStore((state) => state.upcomingEvents);
+  const events =
+    Object.values(upcomingEvents).filter((event): event is Event => event !== undefined) ?? [];
 
-  const upcomingEvents = sortByDate([...events].slice(0, 6), 'desc');
+  const recentEvents = sortByDate([...events].slice(0, 6), 'desc');
 
   const getEventsByMonth = (monthLabel: string) => {
     // TO DO: remove this entire logic when implementing the intl month picker, pleeeeease. It's a mess
@@ -45,7 +49,7 @@ export default function useEvents() {
 
     setEventsByMonth(
       [...events].filter((eventItem) => {
-        const eventDate = parseDate(eventItem.date);
+        const eventDate = parseDate(eventItem.startDate);
         return eventDate.getMonth() === monthIndex;
       })
     );
@@ -54,7 +58,7 @@ export default function useEvents() {
   return React.useMemo(
     () => ({
       events,
-      upcomingEvents,
+      recentEvents,
       eventsByMonth,
       getEventsByMonth,
       loading,
