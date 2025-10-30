@@ -72,12 +72,12 @@ const Welcome: React.FC = () => {
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
-          <PrimaryButton size="$5" mt="$4" mb="$2" onPress={handlePressSignIn}>
+          <PrimaryButton my="$4" fontSize={'$7'} onPress={handlePressSignIn}>
             Iniciar Sesión
           </PrimaryButton>
           <SizableText
             fontFamily={'$heading'}
-            fontSize="$5"
+            fontSize="$6"
             textAlign="right"
             marginBottom="$6"
             onPress={handleGoToForgotPassword}
@@ -87,10 +87,10 @@ const Welcome: React.FC = () => {
             Olvidó su contraseña?
           </SizableText>
         </Container>
-        <Container justifyContent="flex-end" pb={'$8'}>
+        <Container justifyContent="flex-end" pb={'$4'}>
           <SizableText
             fontFamily={'$body'}
-            fontSize="$5"
+            fontSize="$6"
             textAlign="center"
             marginBottom="$2"
             onPress={handleSignInAsGuest}
@@ -98,13 +98,13 @@ const Welcome: React.FC = () => {
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
             Continuar como{' '}
-            <SizableText fontFamily={'$heading'} fontSize="$5" color="$blue10">
+            <SizableText fontFamily={'$heading'} fontSize="$6" color="$blue10">
               Invitado
             </SizableText>
           </SizableText>
           <SizableText
             fontFamily={'$body'}
-            fontSize="$5"
+            fontSize="$6"
             textAlign="center"
             marginBottom="$2"
             onPress={handlePressRegister}
@@ -112,7 +112,7 @@ const Welcome: React.FC = () => {
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
             No tiene una cuenta?{' '}
-            <SizableText fontFamily={'$heading'} fontSize="$5" color="$blue10">
+            <SizableText fontFamily={'$heading'} fontSize="$6" color="$blue10">
               Crear cuenta
             </SizableText>
           </SizableText>
