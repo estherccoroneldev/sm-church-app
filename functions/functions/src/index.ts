@@ -71,7 +71,7 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
     const afterMembers = afterData.pendingMembers || [];
 
     const membersChanged =
-      beforeMembers.length !== afterMembers.length ||
+      beforeMembers.length < afterMembers.length ||
       JSON.stringify(
         beforeMembers.sort()) !== JSON.stringify(afterMembers.sort()
       );
