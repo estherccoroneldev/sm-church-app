@@ -33,6 +33,13 @@
             "forceStaticLinking": ["RNFBApp", "RNFBMessaging"]
           }
         }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "The app needs to access your calendar.",
+          "remindersPermission": "The app needs to access your reminders."
+        }
       ]
     ],
     "orientation": "portrait",
