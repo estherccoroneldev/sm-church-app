@@ -24,12 +24,10 @@ const EventDetails: React.FC = () => {
   //   }
 
   //   // setLoading(true);
-  //   // TO DO: get the actual Event, create a Event store, fix the useEvents hook
-  //   const result = await setEventReminder(eventDetails); // Use your actual data fetching
+  //   const result = await setEventReminder(eventDetails); 
   //   if (result) {
   //     Alert.alert('Reminder is set');
 
-  //     // finishLoading('isReminderSet', true);
   //   } else {
   //     // setError('Could not set reminder.');
   //   }
@@ -40,15 +38,10 @@ const EventDetails: React.FC = () => {
       return;
     }
 
-    // setLoading(true);
-    const result = await addEventToCalendar(eventDetails); // Use your actual data fetching
+    const result = await addEventToCalendar(eventDetails); 
     if (result) {
       Alert.alert('Event is added');
-      // finishLoading('isEventAdded', true);
-    } else {
-      // Error handling is inside addEventToCalendar, but we can set a generic error here if needed.
-      // setError('Could not add to calendar.');
-    }
+    } 
   };
 
   if (!eventDetails) {
