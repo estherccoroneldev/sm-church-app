@@ -33,6 +33,7 @@ export async function getDefaultCalendarSource() {
   return defaultCalendar.source;
 }
 
+// TO DO: update this to work on Android, see more: https://docs.expo.dev/versions/latest/sdk/calendar/#usage
 export async function getDefaultCalendarId() {
   const defaultCalendar = await Calendar.getDefaultCalendarAsync();
   return defaultCalendar.id;
