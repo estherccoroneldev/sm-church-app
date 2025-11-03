@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "esModuleInterop": true,
-    "moduleResolution": "nodenext",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
-    "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "module": "commonjs",              // Standard for Cloud Functions
+    "target": "es2020",                // Or a recent version like es2020/es2021
+    "esModuleInterop": true,           // Important for importing commonjs modules
+    "strict": true,                    // Keep strict mode on
+    "skipLibCheck": true,              // Helpful for ignoring declaration file issues
+    "moduleResolution": "node",        // Crucial for finding node_modules types
+    "outDir": "./lib",                 // Where compiled JS goes
+    "rootDir": "./src"                 // Where your TS files live (assuming you put them in 'src')
   },
-  "compileOnSave": true,
   "include": [
-    "src"
+    "src/index.ts"
   ]
 }

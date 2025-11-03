@@ -5,6 +5,11 @@ import {
   onDocumentUpdated,
 } from "firebase-functions/v2/firestore";
 
+interface UserProfileResponse {
+  redirect: "Home" | "Register"
+  isNewUser: boolean
+}
+
 if (admin.apps.length === 0) {
   admin.initializeApp();
 }
@@ -73,7 +78,7 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
     const membersChanged =
       beforeMembers.length < afterMembers.length ||
       JSON.stringify(
-        beforeMembers.sort()) !== JSON.stringify(afterMembers.sort()
+        beforeMembers.sort()) < JSON.stringify(afterMembers.sort()
       );
 
     if (!membersChanged) {
@@ -124,6 +129,27 @@ exports.onNotifyCoordinatorNewPendingMember = onDocumentUpdated(
     }
   }
 );
+
+exports.checkUserProfile = functions.https.onCall(
+  async (_, context: any) => {
+    if (!context?.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "The request must be authenticated via Firebase Auth."
+      );
+    }
+
+    const uid = context.auth.uid;
+
+    const userDocRef = db.collection("users").doc(uid);
+    const doc = await userDocRef.get();
+
+    if (doc.exists) {
+      return {redirect: "Home", isNewUser: false} as UserProfileResponse;
+    } else {
+      return {redirect: "Register", isNewUser: true} as UserProfileResponse;
+    }
+  });
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
