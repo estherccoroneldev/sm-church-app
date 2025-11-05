@@ -108,7 +108,7 @@ const SignInScreen: React.FC = () => {
                 contentContainerStyle={styles.scrollViewContent}
                 keyboardShouldPersistTaps="handled">
                 <SizableText fontSize="$6" textAlign="center" marginBottom="$4">
-                  Inicia sesión con tu correo y tu contraseña.
+                  Inicie sesión con su correo y su contraseña.
                 </SizableText>
                 <YStack flex={1} width="100%">
                   <TextField
