@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 
 import { Outfit_300Light, Outfit_600SemiBold, useFonts } from '@expo-google-fonts/outfit';
 import messaging from '@react-native-firebase/messaging';
+import { NavigationContainer } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -12,6 +13,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TamaguiProvider } from 'tamagui';
+import { navigationRef } from './navigation/root-navigation';
 import config from './tamagui.config';
 
 Notifications.setNotificationHandler({
@@ -60,7 +62,9 @@ export default function App() {
     <SafeAreaProvider>
       <TamaguiProvider config={config} defaultTheme={theme}>
         <StatusBar style={'light'} translucent={false} />
-        <AppNavigator />
+        <NavigationContainer ref={navigationRef}>
+          <AppNavigator />
+        </NavigationContainer>
       </TamaguiProvider>
     </SafeAreaProvider>
   );
