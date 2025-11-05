@@ -52,7 +52,7 @@
       "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": ["remote-notification"]
+        "UIBackgroundModes": ["remote-notification", "fetch"]
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "entitlements": {
