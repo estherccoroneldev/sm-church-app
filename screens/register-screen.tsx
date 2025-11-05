@@ -3,6 +3,7 @@ import { db, firestore } from 'config/firebase';
 import { Formik } from 'formik';
 import React from 'react';
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Linking,
@@ -13,9 +14,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAuth } from 'store/auth-store';
 import { RadioGroup, SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
+import { formatPhoneNumber } from 'utils/formatPhoneNumber';
 import * as Yup from 'yup';
 import { UserProfile } from '../@types/user';
 import { CheckboxWithLabel } from '../components/CheckboxWithLabel';
@@ -30,13 +31,13 @@ const RegisterSchema = Yup.object().shape({
     .required('Apellido es requerido'),
   email: Yup.string().email('Invalid email address').required('Email es requerido'),
   phoneNumber: Yup.string()
-    .matches(/^\+?[1-9]\d{1,14}$/, 'Telefono no es válido')
-    .optional(),
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Número de teléfono no es válido')
+    .required('Número de teléfono es requerido'),
   password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
+    .min(6, 'La contraseña debe tener al menos 6 caracteres')
     .required('Contraseña es requerida'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), ''], 'Passwords must match')
+    .oneOf([Yup.ref('password'), ''], 'Las contraseñas deben coincidir')
     .required('Confirmar contraseña es requerida'),
   role: Yup.string().oneOf(['admin', 'member', 'apprentice', 'guest']).optional(),
   olderThan13Years: Yup.string().oneOf(['yes', 'no']).optional(),
@@ -72,8 +73,6 @@ const Register: React.FC = () => {
   const passwordInputRef = React.useRef<TextInput>(null);
   const confirmPasswordInputRef = React.useRef<TextInput>(null);
 
-  const signIn = useAuth((state) => state.signIn);
-
   const handleSubmitForm = async (values: typeof initialValues, actions: any) => {
     // Client-side validation for olderThan13Years
     if (values.olderThan13Years !== 'yes') {
@@ -84,6 +83,12 @@ const Register: React.FC = () => {
     // Ensure Firebase Auth and Firestore are initialized
     if (!auth) {
       setError('Firebase services are not initialized. Please wait');
+      return;
+    }
+
+    const formattedNumber = formatPhoneNumber(values.phoneNumber);
+    if (!formattedNumber) {
+      Alert.alert('Error', 'Please enter a valid phone number.');
       return;
     }
 
@@ -101,11 +106,11 @@ const Register: React.FC = () => {
       const userDocRef = db.collection('users').doc(user.uid);
 
       const now = firestore.Timestamp.now();
-
       const initialUserProfile: UserProfile = {
         uid: user.uid,
         email: user.email || '',
-        phoneNumber: values.phoneNumber || '',
+        phoneNumber: formattedNumber,
+        isPhoneVerified: false, // Initially false; can be updated after phone verification
         role: values.role as 'admin' | 'member' | 'guest',
         firstName: values.firstName,
         lastName: values.lastName,
@@ -118,12 +123,12 @@ const Register: React.FC = () => {
 
       await userDocRef.set(initialUserProfile, { merge: true });
       setMessage('User created successfully!');
-      signIn({
-        id: user.uid,
-        name: `${values.firstName}`,
-        role: values.role as 'admin' | 'member' | 'guest',
-        isGuest: false,
-      });
+      // signIn({
+      //   id: user.uid,
+      //   name: `${values.firstName}`,
+      //   role: values.role as 'admin' | 'member' | 'guest',
+      //   isGuest: false,
+      // });
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -245,11 +250,10 @@ const Register: React.FC = () => {
                     </SizableText>
                   ) : null}
                   <TextField
-                    label="Teléfono (opcional)"
+                    label="Teléfono"
                     onChangeText={handleChange('phoneNumber')}
                     onBlur={handleBlur('phoneNumber')}
                     returnKeyType="next"
-                    onSubmitEditing={() => handleSubmit()}
                     ref={phoneNumberInputRef}
                     value={values.phoneNumber}
                     variant="primary"
