@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PhoneVerificationScreen from 'screens/phone-verification-screen';
+import RegisterByPhone from 'screens/register-by-phone-screen';
 import Register from 'screens/register-screen';
 import SignInScreen from 'screens/signin-screen';
+import SignInWithPhoneNumberScreen from 'screens/signin-with-phone';
 import Welcome from 'screens/welcome-screen';
 import { useTheme } from 'tamagui';
 import ForgotPassword from '../screens/forgot-password-screen';
@@ -10,8 +13,10 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
   Welcome: undefined;
   Register: undefined;
-  RegisterWithPhone: undefined;
+  RegisterByPhone: { phoneNumber: string; userId: string };
   SignIn: undefined;
+  SignInWithPhoneNumber: undefined;
+  PhoneVerificationScreen: { phoneNumber: string };
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -38,9 +43,34 @@ export default function AuthNavigator() {
         component={SignInScreen}
         options={{
           headerShown: true,
-          headerTitle: 'Ingreso',
+          headerTitle: 'Iniciar Sesión',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+          headerTitleStyle,
+        }}
+      />
+      <Stack.Screen
+        name="SignInWithPhoneNumber"
+        component={SignInWithPhoneNumberScreen}
+        options={{
+          headerShown: true,
+          headerTitle: 'Iniciar Sesión',
+          headerTitleAlign: 'center',
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+          headerTitleStyle,
+        }}
+      />
+      <Stack.Screen
+        name="PhoneVerificationScreen"
+        component={PhoneVerificationScreen}
+        options={{
+          headerShown: true,
+          headerTitle: 'Verificación',
+          headerTitleAlign: 'center',
+          headerShadowVisible: false,
+          headerBackVisible: false,
           headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle,
         }}
@@ -53,6 +83,19 @@ export default function AuthNavigator() {
           headerTitle: 'Registro',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
+          headerTitleStyle,
+        }}
+      />
+      <Stack.Screen
+        name="RegisterByPhone"
+        component={RegisterByPhone}
+        options={{
+          headerShown: true,
+          headerTitle: 'Registro',
+          headerTitleAlign: 'center',
+          headerShadowVisible: false,
+          headerBackVisible: false,
           headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle,
         }}
