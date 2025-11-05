@@ -2,12 +2,12 @@ import auth from '@react-native-firebase/auth';
 
 import { create } from 'zustand';
 
-export type User = {
+export interface User {
   id: string;
   name: string;
-  role?: 'member' | 'admin' | 'guest';
+  role?: 'member' | 'admin' | 'coordinator' | 'guest';
   isGuest: boolean;
-};
+}
 
 interface AuthState {
   user: User | null;
