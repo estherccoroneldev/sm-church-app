@@ -14,6 +14,7 @@ export type UserProfile = {
   // avatarUrl?: string;
   // isActive?: boolean;
   isVerified?: boolean;
+  isPhoneVerified?: boolean;
   // knowMoreAboutMinistries?: 'yes' | 'no';
   // hasSelectedMinistries?: 'yes' | 'no';
   createdAt: FirebaseFirestoreTypes.Timestamp;
