@@ -33,7 +33,8 @@ const Welcome: React.FC = () => {
   };
 
   const handlePressSignIn = () => {
-    navigation.navigate('SignIn');
+    // navigation.navigate('SignIn');
+    navigation.navigate('SignInWithPhoneNumber');
   };
 
   const handleGoToForgotPassword = () => {
