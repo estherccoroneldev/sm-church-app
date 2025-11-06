@@ -1,23 +1,170 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Container } from 'components/Container';
+import { RedirectItemPress } from 'components/RedirectItem';
+import { useGetMinistry } from 'hooks/use-get-ministry';
 import React from 'react';
-import DetailsLayout from '../components/DetailsLayout';
-import StaticInfo from '../components/StaticInfo';
+import { Alert, Dimensions, Linking } from 'react-native';
+import { useAuth } from 'store/auth-store';
+import { H3, Image, Separator, SizableText, Spinner, useTheme, YStack } from 'tamagui';
+import { PrimaryButton } from 'tamagui.config';
 import { HomeParamList } from '../navigation/tab-navigator';
 
+const DEFAULT_IMAGE = require('../assets/church-placeholder.png');
+const { height } = Dimensions.get('window');
+
 type MinistryDetailsRouteProp = RouteProp<HomeParamList, 'MinistryDetails'>;
+type MinistryDetailsScreenNavigationProp = NativeStackNavigationProp<
+  HomeParamList,
+  'MinistryDetails'
+>;
 
 const MinistryDetails: React.FC = () => {
+  const { navigate } = useNavigation<MinistryDetailsScreenNavigationProp>();
   const { params } = useRoute<MinistryDetailsRouteProp>();
-  const { imageUrl, contactName = 'Gary Oldman' } = params || {};
+  const theme = useTheme();
+  const user = useAuth((state) => state.user);
+  const ministryId = params.id;
+  const { ministry, isLoading } = useGetMinistry(ministryId);
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Spinner size="large" color={theme.primary.get()} style={{ alignSelf: 'center' }} />
+      </Container>
+    );
+  }
+
+  if (!ministry) {
+    return (
+      <Container>
+        <SizableText>No se encontraron detalles para este ministerio.</SizableText>
+      </Container>
+    );
+  }
+
+  const handleGoToConfirmationScreen = () => {
+    navigate('SignupMinistryConfirm', {
+      userId: user?.id || '',
+      ministryId: ministry.id,
+      ministryName: ministry.title,
+    });
+  };
+
+  const handleGoToMembersListScreen = () => {
+    navigate('MinistryMembersList', {
+      id: ministry.id,
+    });
+  };
+
+  const handleGoToUpdateGroupLinkScreen = () => {
+    navigate('UpdateMinistryGroupLink', {
+      ministryId: ministry.id,
+      currentGroupLink: ministry.groupLink,
+    });
+  };
+
+  const handleJoinWhatsAppGroup = () => {
+    const whatsappGroupLink = ministry.groupLink ?? 'https://chat.whatsapp.com/';
+    Linking.openURL(whatsappGroupLink).catch(() => {
+      Alert.alert(
+        'Error',
+        'No se pudo abrir el enlace de WhatsApp. Por favor, asegúrate de tener la aplicación instalada.'
+      );
+    });
+  };
+
+  const handleSelectCoordinator = () => {
+    navigate('SelectMinistryCoordinator', {
+      ministryId: ministry.id,
+    });
+  };
+
+  const FooterComponent = () => {
+    const memberIsAccepted = ministry.acceptedMembers?.some((member) => member.uid === user?.id);
+    const memberIsPending = ministry.pendingMembers?.some((member) => member.uid === user?.id);
+
+    if (memberIsAccepted) {
+      return (
+        <>
+          <SizableText fontSize="$5" textAlign="center" color="$green10">
+            Su solicitud ha sido aprobada! Le damos la bienvenida al ministerio. Estamos muy
+            contentos de tenerle con nosotros.
+          </SizableText>
+          {ministry.groupLink && (
+            <>
+              <SizableText fontSize="$5" textAlign="center" marginTop="$2" color="$green10">
+                Puede unirse al grupo de WhatsApp del ministerio a través del botón a continuación.
+              </SizableText>
+              <PrimaryButton
+                size="$5"
+                mt="$6"
+                mb="$2"
+                fontSize={'$6'}
+                onPress={handleJoinWhatsAppGroup}
+                pressStyle={{ opacity: 0.9 }}>
+                Unirse al Grupo de WhatsApp
+              </PrimaryButton>
+            </>
+          )}
+        </>
+      );
+    }
+
+    if (memberIsPending) {
+      return (
+        <YStack marginVertical="$4">
+          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" color="$color11">
+            Su solicitud está siendo revisada. Le contactaremos en breve. Gracias por su paciencia!
+          </SizableText>
+        </YStack>
+      );
+    }
+
+    return (
+      <YStack marginVertical="$4">
+        <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" color="$color11">
+          Gracias por su interés en formar parte de este ministerio. Por favor, pulse el botón
+          "Solicitar Inscripción" para enviar su solicitud. El coordinador del ministerio revisará
+          su solicitud y se pondrá en contacto con usted a la brevedad.
+        </SizableText>
+        <PrimaryButton
+          size="$5"
+          mt="$6"
+          mb="$2"
+          fontSize={'$6'}
+          onPress={handleGoToConfirmationScreen}
+          pressStyle={{ opacity: 0.9 }}>
+          Solicitar Inscripción
+        </PrimaryButton>
+      </YStack>
+    );
+  };
 
   return (
-    <DetailsLayout
-      currentDetail={{ imageUrl, contactName, ...params }}
-      hasDateSection={false}
-      hasContactSection={false}
-      hasLocationSection={false}>
-      <StaticInfo {...params} />
-    </DetailsLayout>
+    <Container>
+      <YStack marginBottom="$4">
+        <Image
+          source={ministry.imageUrl ? { uri: ministry.imageUrl } : DEFAULT_IMAGE}
+          width="100%"
+          height={height * 0.35}
+          borderRadius="$6"
+          marginBottom="$2"
+          alt={ministry.title}
+          aria-label={ministry.title}
+        />
+        <YStack marginVertical="$4">
+          <H3>{ministry.title}</H3>
+        </YStack>
+        <SizableText fontFamily={'$body'} fontSize="$7">
+          {ministry.description}
+        </SizableText>
+      </YStack>
+
+      <Separator borderColor={theme.text.get()} my="$6" />
+
+      <FooterComponent />
+    </Container>
   );
 };
 
