@@ -47,7 +47,7 @@ const EventDetails: React.FC = () => {
   if (!eventDetails) {
     return (
       <Container>
-        <SizableText>No se encontraron detalles para este ministerio.</SizableText>
+        <SizableText>No se encontraron detalles para este evento.</SizableText>
       </Container>
     );
   }
