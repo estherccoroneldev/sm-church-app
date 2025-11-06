@@ -83,6 +83,22 @@ const MinistryDetails: React.FC = () => {
   const FooterComponent = () => {
     const memberIsAccepted = ministry.acceptedMembers?.some((member) => member.uid === user?.id);
     const memberIsPending = ministry.pendingMembers?.some((member) => member.uid === user?.id);
+    const shouldShowCoordinatorSection = user?.id === ministry.coordinatorId;
+
+    if (shouldShowCoordinatorSection) {
+      return (
+        <>
+          <RedirectItemPress
+            title="Actualizar link del Grupo de WhatsApp"
+            onPress={handleGoToUpdateGroupLinkScreen}
+          />
+          <RedirectItemPress
+            title="Abrir lista de Miembros"
+            onPress={handleGoToMembersListScreen}
+          />
+        </>
+      );
+    }
 
     if (memberIsAccepted) {
       return (
