@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Container } from 'components/Container';
 import { Alert } from 'react-native';
 import { useAuth } from 'store/auth-store';
+import { useMinistryStore } from 'store/ministries-store';
 import { SizableText, useTheme } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { ConnectParamList } from '../navigation/tab-navigator';
@@ -22,19 +23,28 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
   const { userId, ministryId, ministryName } = route.params;
   const user = useAuth((state) => state.user);
   const signOutAuth = useAuth((state) => state.signOut);
+  const updateMinistry = useMinistryStore((state) => state.updateMinistry);
+  const getMinistry = useMinistryStore((state) => state.getMinistry);
+  const ministry = getMinistry(ministryId);
 
   const handleConfirmSignup = async () => {
     try {
       const result = await signupUserToPendingMemberArray(userId, ministryId);
       if (result.success) {
         Alert.alert(
-          `¡Gracias por tu interés en unirte al ministerio ${ministryName}! Pronto nos pondremos en contacto contigo.`
+          `¡Gracias por su interés en unirse al ministerio ${ministryName}! Pronto nos pondremos en contacto con ustedes.`
         );
 
-        // Alert.alert(
-        //   'Nos alegra que te unas a nosotros!',
-        //   `¡Te has inscrito exitosamente en el ministerio ${ministryName}! En breve nos comunicaremos contigo.`
-        // );
+        updateMinistry({
+          ministryId,
+          newData: {
+            pendingMembers: [
+              ...(ministry?.pendingMembers || []),
+              { uid: user?.id, ...user } as any,
+            ],
+          },
+        });
+
         navigation.goBack();
       } else {
         console.error('Error', 'There was an issue signing you up. Please try again later.');
