@@ -84,6 +84,19 @@ const MinistryDetails: React.FC = () => {
     const memberIsAccepted = ministry.acceptedMembers?.some((member) => member.uid === user?.id);
     const memberIsPending = ministry.pendingMembers?.some((member) => member.uid === user?.id);
     const shouldShowCoordinatorSection = user?.id === ministry.coordinatorId;
+    const shouldShowAdminSection = user?.role === 'admin' && user?.id !== ministry.coordinatorId;
+
+    if (shouldShowAdminSection) {
+      return (
+        <>
+          <RedirectItemPress
+            title="Abrir lista de Miembros"
+            onPress={handleGoToMembersListScreen}
+          />
+          <RedirectItemPress title="Seleccionar Coordinador" onPress={handleSelectCoordinator} />
+        </>
+      );
+    }
 
     if (shouldShowCoordinatorSection) {
       return (
