@@ -57,7 +57,9 @@ export type HomeParamList = {
   EventDetails: {
     eventId: Event['id'];
   };
-  AnnouncementDetails: Announcement;
+  AnnouncementDetails: {
+    announcementId: Announcement['id'];
+  };
 };
 
 export type EventsParamList = {
@@ -69,7 +71,9 @@ export type EventsParamList = {
 
 export type AnnouncementsParamList = {
   Announcements: undefined;
-  AnnouncementDetails: Announcement;
+  AnnouncementDetails: {
+    announcementId: Announcement['id'];
+  };
 };
 
 export type MediaParamList = {

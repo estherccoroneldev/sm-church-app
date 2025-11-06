@@ -53,10 +53,10 @@ const Home: React.FC = () => {
     <CardItem item={item} onPress={() => handleGoToEvent(item.id)} />
   );
 
-  const handleGoToAnnouncement = (item: Announcement) =>
-    navigation.navigate('AnnouncementDetails', item);
+  const handleGoToAnnouncement = (announcementId: string) =>
+    navigation.navigate('AnnouncementDetails', { announcementId });
   const renderAnnouncementItem: ListRenderItem<Announcement> = ({ item }) => (
-    <CardItem item={item} onPress={() => handleGoToAnnouncement(item)} />
+    <CardItem item={item} onPress={() => handleGoToAnnouncement(item.id)} />
   );
 
   return (
