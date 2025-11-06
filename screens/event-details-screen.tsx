@@ -24,7 +24,7 @@ const EventDetails: React.FC = () => {
   //   }
 
   //   // setLoading(true);
-  //   const result = await setEventReminder(eventDetails); 
+  //   const result = await setEventReminder(eventDetails);
   //   if (result) {
   //     Alert.alert('Reminder is set');
 
@@ -38,10 +38,10 @@ const EventDetails: React.FC = () => {
       return;
     }
 
-    const result = await addEventToCalendar(eventDetails); 
+    const result = await addEventToCalendar(eventDetails);
     if (result) {
       Alert.alert('Event is added');
-    } 
+    }
   };
 
   if (!eventDetails) {
