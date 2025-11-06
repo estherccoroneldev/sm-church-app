@@ -2,6 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { Container } from 'components/Container';
 import { db, firestore } from 'config/firebase';
+import * as Clipboard from 'expo-clipboard';
 import { useGetMinistry } from 'hooks/use-get-ministry';
 import React from 'react';
 import { Alert } from 'react-native';
@@ -12,6 +13,41 @@ import { UserProfile } from '../@types/user';
 import { HomeParamList } from '../navigation/tab-navigator';
 
 type MinistryMembersListRouteProp = RouteProp<HomeParamList, 'MinistryMembersList'>;
+
+const copyToClipboard = async (text: string) => {
+  try {
+    await Clipboard.setStringAsync(text);
+    Alert.alert('Copied to Clipboard', `${text} copied to clipboard.`);
+  } catch (err) {
+    console.warn('Copy failed', err);
+  }
+};
+
+const alertToCopyEmail = (email: string) => {
+  Alert.alert(
+    'Copy Email',
+    `This will copy the email ${email} to your clipboard for easy pasting.`,
+    [
+      {
+        text: 'Copy Email',
+        onPress: async () => await copyToClipboard(email),
+      },
+    ]
+  );
+};
+
+const alertToCopyPhone = (phone: string) => {
+  Alert.alert(
+    'Copy Phone Number',
+    `This will copy the phone number ${phone} to your clipboard for easy pasting.`,
+    [
+      {
+        text: 'Copy Phone Number',
+        onPress: async () => await copyToClipboard(phone),
+      },
+    ]
+  );
+};
 
 const MinistryMembersListScreen: React.FC = () => {
   const theme = useTheme();
@@ -112,14 +148,28 @@ const MinistryMembersListScreen: React.FC = () => {
                   </SizableText>
                 ) : null}
                 {member.email ? (
-                  <SizableText fontFamily={'$body'} fontSize={'$5'}>
-                    {member.email}
-                  </SizableText>
+                  <XStack
+                    backgroundColor={theme.borderColor}
+                    py="$2"
+                    justifyContent="space-between"
+                    onPress={() => alertToCopyEmail(member.email)}>
+                    <SizableText fontFamily={'$body'} fontSize={'$5'}>
+                      {member.email}
+                    </SizableText>
+                    <FontAwesome name="envelope-o" size={16} color={theme.text.get()} />
+                  </XStack>
                 ) : null}
                 {member.phoneNumber ? (
-                  <SizableText fontFamily={'$body'} fontSize={'$5'}>
-                    {member.phoneNumber}
-                  </SizableText>
+                  <XStack
+                    backgroundColor={theme.borderColor}
+                    py="$2"
+                    justifyContent="space-between"
+                    onPress={() => alertToCopyPhone(member.phoneNumber as string)}>
+                    <SizableText fontFamily={'$body'} fontSize={'$5'}>
+                      {member.phoneNumber}
+                    </SizableText>
+                    <FontAwesome name="phone" size={16} color={theme.text.get()} />
+                  </XStack>
                 ) : null}
               </YStack>
             </XStack>
@@ -155,16 +205,29 @@ function PendingListItem({
           <SizableText fontFamily={'$body'} fontSize={'$6'}>
             {member.firstName} {member.lastName}
           </SizableText>
-          {/* Convert to Icons */}
           {member.email ? (
-            <SizableText fontFamily={'$body'} fontSize={'$5'}>
-              {member.email}
-            </SizableText>
+            <XStack
+              backgroundColor={theme.borderColor}
+              py="$2"
+              justifyContent="space-between"
+              onPress={() => alertToCopyEmail(member.email)}>
+              <SizableText fontFamily={'$body'} fontSize={'$5'}>
+                {member.email}
+              </SizableText>
+              <FontAwesome name="envelope-o" size={16} color={theme.text.get()} />
+            </XStack>
           ) : null}
           {member.phoneNumber ? (
-            <SizableText fontFamily={'$body'} fontSize={'$5'}>
-              {member.phoneNumber}
-            </SizableText>
+            <XStack
+              backgroundColor={theme.borderColor}
+              py="$2"
+              justifyContent="space-between"
+              onPress={() => alertToCopyPhone(member.phoneNumber as string)}>
+              <SizableText fontFamily={'$body'} fontSize={'$5'}>
+                {member.phoneNumber}
+              </SizableText>
+              <FontAwesome name="phone" size={16} color={theme.text.get()} />
+            </XStack>
           ) : null}
         </YStack>
       </XStack>

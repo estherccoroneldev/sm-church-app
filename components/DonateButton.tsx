@@ -1,6 +1,6 @@
 import * as Clipboard from 'expo-clipboard';
 import React from 'react';
-import { Alert, Image, Linking, Pressable, StyleSheet } from 'react-native';
+import { Alert, Image, Pressable, StyleSheet } from 'react-native';
 import { H5, useTheme, XStack } from 'tamagui';
 
 // This is the official Zelle website. It explains Zelle, but doesn't
