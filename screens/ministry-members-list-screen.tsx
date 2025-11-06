@@ -18,9 +18,12 @@ const MinistryMembersListScreen: React.FC = () => {
   const { params } = useRoute<MinistryMembersListRouteProp>();
   const user = useAuth((state) => state.user);
   const acceptMember = useMinistryStore((state) => state.acceptMember);
-  const getMinistry = useMinistryStore((state) => state.getMinistry);
   const ministryId = params.id;
   const { ministry, isLoading } = useGetMinistry(ministryId);
+
+  React.useEffect(() => {
+    console.info('Ministry updated members');
+  }, [ministry?.acceptedMembers, ministry?.pendingMembers]);
 
   const handleConfirmMember = async (member: UserProfile) => {
     if (user?.id !== ministry?.coordinatorId) {
@@ -36,12 +39,10 @@ const MinistryMembersListScreen: React.FC = () => {
           pendingMembers: firestore.FieldValue.arrayRemove(member),
         });
       acceptMember({ userId: member.uid, ministryId });
-      getMinistry(ministryId);
 
       Alert.alert('Miembro confirmado exitosamente", La lista ha sido actualizada.');
     } catch (error) {
       console.error('Error confirming member:', error);
-      // Alert.alert('Error', 'Hubo un error al confirmar el miembro.');
     }
   };
 
@@ -74,20 +75,24 @@ const MinistryMembersListScreen: React.FC = () => {
 
   return (
     <Container>
-      <H4 marginBottom="$4">Solicitudes Pendientes</H4>
-      <YStack py="$3" marginBottom="$5">
-        {ministry?.pendingMembers?.length === 0 ? (
-          <SizableText size={'$5'}>No se encontraron solicitudes pendientes.</SizableText>
-        ) : (
-          ministry?.pendingMembers?.map((member) => (
-            <PendingListItem
-              member={member}
-              onConfirmPress={() => handleConfirmMember(member)}
-              onRejectPress={() => handleRejectMember(member)}
-            />
-          ))
-        )}
-      </YStack>
+      {ministry?.pendingMembers && user?.id === ministry.coordinatorId && (
+        <>
+          <H4 marginBottom="$4">Solicitudes Pendientes</H4>
+          <YStack py="$3" marginBottom="$5">
+            {ministry?.pendingMembers?.length === 0 ? (
+              <SizableText size={'$5'}>No se encontraron solicitudes pendientes.</SizableText>
+            ) : (
+              ministry?.pendingMembers?.map((member) => (
+                <PendingListItem
+                  member={member}
+                  onConfirmPress={() => handleConfirmMember(member)}
+                  onRejectPress={() => handleRejectMember(member)}
+                />
+              ))
+            )}
+          </YStack>
+        </>
+      )}
 
       <H4 marginBottom="$4">Miembros</H4>
       <YStack py="$3">
@@ -101,7 +106,11 @@ const MinistryMembersListScreen: React.FC = () => {
                 <SizableText fontFamily={'$body'} fontSize={'$6'}>
                   {member.firstName} {member.lastName}
                 </SizableText>
-                {/* TO DO: Convert to Icons */}
+                {member.uid === ministry.coordinatorId ? (
+                  <SizableText fontFamily={'$body'} fontSize={'$5'} color={theme.primary.get()}>
+                    Coordinador
+                  </SizableText>
+                ) : null}
                 {member.email ? (
                   <SizableText fontFamily={'$body'} fontSize={'$5'}>
                     {member.email}
