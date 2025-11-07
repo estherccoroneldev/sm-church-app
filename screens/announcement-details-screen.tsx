@@ -30,6 +30,17 @@ const AnnouncementDetails: React.FC = () => {
     }
   };
 
+  // const handleAddReminder = async () => {
+  //   if (!announcement) {
+  //     return;
+  //   }
+
+  //   const result = await setEventReminder(announcement);
+  //   if (result) {
+  //     Alert.alert('Reminder agregado');
+  //   }
+  // };
+
   if (!announcement) {
     return (
       <Container>

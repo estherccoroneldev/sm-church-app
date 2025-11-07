@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { getData } from 'services/announcements';
+import { useAnnouncementsStore } from 'store/announcements-store';
 import { Announcement } from '../@types/announcement';
 
 export default function useAnnouncements() {
-  const [announcements, setAnnouncements] = React.useState<Announcement[]>([]);
+  const setAnnouncements = useAnnouncementsStore((state) => state.setAnnouncements);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -27,8 +28,17 @@ export default function useAnnouncements() {
     fetchAnnouncements();
   }, []);
 
+  const announcements = useAnnouncementsStore((state) => state.announcements);
   return React.useMemo(
-    () => ({ announcements, loading, error, fetchAnnouncements }),
+    () => ({
+      announcements:
+        Object.values(announcements).filter(
+          (announcement): announcement is Announcement => announcement !== undefined
+        ) ?? [],
+      loading,
+      error,
+      fetchAnnouncements,
+    }),
     [loading, error, announcements, fetchAnnouncements]
   );
 }

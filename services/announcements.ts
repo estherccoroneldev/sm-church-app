@@ -34,7 +34,7 @@ async function getAnnouncementsFromFirestore(): Promise<Announcement[]> {
   }
 }
 
-const getData = getAnnouncementsFromFirestore;
-// const getData = __DEV__ ? fetchAnnouncements : getAnnouncementsFromFirestore;
+// const getData = getAnnouncementsFromFirestore;
+const getData = __DEV__ ? fetchAnnouncements : getAnnouncementsFromFirestore;
 
 export { getData };
