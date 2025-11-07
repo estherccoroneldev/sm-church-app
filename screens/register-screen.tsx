@@ -279,7 +279,8 @@ const Register: React.FC = () => {
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
                     size="$4"
-                    backgroundColor={'$tertiary'}
+                    backgroundColor={values.olderThan13Years === 'yes' ? '$gray3' : '$gray5'}
+                    checked={values.olderThan13Years === 'yes'}
                     onCheckedChange={(value) => {
                       handleChange('olderThan13Years')(value ? 'yes' : 'no');
                     }}
