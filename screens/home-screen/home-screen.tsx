@@ -2,13 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { SizableText } from 'tamagui';
-import { useAuth } from '../../store/auth-store';
 
 import useAnnouncements from 'hooks/use-announcements';
 import useMinistries from 'hooks/use-ministries';
 import { ListRenderItem } from 'react-native';
 import Footer from 'screens/home-screen/footer';
 import Header from 'screens/home-screen/header';
+import { useAuthStore } from 'store/auth-store';
 import { Announcement } from '../../@types/announcement';
 import { Event } from '../../@types/event';
 import { Ministry } from '../../@types/ministry';
@@ -27,13 +27,13 @@ function keyExtractor<T extends { id: string }>(item: T) {
 
 const Home: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const user = useAuth((state) => state.user);
+  const store = useAuthStore();
 
   React.useEffect(() => {
-    if (user && !user.isGuest && user.id) {
-      registerForPushNotificationsAsync(user.id);
+    if (store.user && !store.isGuest && store.user.uid) {
+      registerForPushNotificationsAsync(store.user.uid);
     }
-  }, [user]);
+  }, [store.user]);
 
   const { recentEvents, loading: loadingEvents, error: eventsError } = useUpcomingEvents();
   const { ministries, loading, error } = useMinistries();
