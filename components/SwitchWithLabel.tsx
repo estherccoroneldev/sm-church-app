@@ -22,7 +22,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
         {props.label}
       </Label>
       <Switch defaultChecked={props.defaultChecked} {...props}>
-        <Switch.Thumb animation="quick" />
+        <Switch.Thumb animation="bouncy" backgroundColor="$primary" />
       </Switch>
     </XStack>
   );

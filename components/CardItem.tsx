@@ -8,7 +8,8 @@ interface BaseItem {
   id: string;
   title: string;
   description?: string;
-  date?: string;
+  startDate?: string;
+  endDate?: string;
   imageUrl?: string;
   place?: string;
   downloadUrl?: string;
@@ -81,7 +82,7 @@ const CardItem = <T extends BaseItem>({
               <YStack padding={'$4'} gap="$2" overflow="hidden">
                 <YStack>
                   <Title numberOfLines={1}>{item.title}</Title>
-                  {hasDateSection && item.date ? <Subtitle text={item.date} /> : null}
+                  {hasDateSection && item.startDate ? <Subtitle text={item.startDate} /> : null}
                 </YStack>
                 {hasDescription && item.description ? (
                   <SizableText fontSize={'$6'} numberOfLines={3}>
