@@ -4,7 +4,7 @@ import { HomeParamList } from 'navigation/tab-navigator';
 import React, { useState } from 'react';
 import { Alert, FlatList, TouchableOpacity } from 'react-native';
 import { assignCoordinatorToMinistry } from 'services/assign-coordinator-to-ministry';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { useMinistryStore } from 'store/ministries-store';
 import { useUsersStore } from 'store/users-store';
 import { Card, Separator, SizableText, Text, useTheme, XStack, YStack } from 'tamagui';
@@ -22,7 +22,7 @@ const SelectMinistryCoordinatorScreen: React.FC = () => {
   const acceptMember = useMinistryStore((state) => state.acceptMember);
   const updateMinistry = useMinistryStore((state) => state.updateMinistry);
   const [selectedUserId, setSelectedUserId] = useState<UserProfile['uid'] | null>(null);
-  const user = useAuth((state) => state.user);
+  const user = useAuthStore((state) => state.userData);
 
   React.useEffect(() => {
     fetchAllUsers();

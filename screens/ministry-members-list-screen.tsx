@@ -6,7 +6,7 @@ import * as Clipboard from 'expo-clipboard';
 import { useGetMinistry } from 'hooks/use-get-ministry';
 import React from 'react';
 import { Alert } from 'react-native';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { useMinistryStore } from 'store/ministries-store';
 import { Button, H4, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
 import { UserProfile } from '../@types/user';
@@ -52,7 +52,7 @@ const alertToCopyPhone = (phone: string) => {
 const MinistryMembersListScreen: React.FC = () => {
   const theme = useTheme();
   const { params } = useRoute<MinistryMembersListRouteProp>();
-  const user = useAuth((state) => state.user);
+  const user = useAuthStore((state) => state.user);
   const acceptMember = useMinistryStore((state) => state.acceptMember);
   const ministryId = params.id;
   const { ministry, isLoading } = useGetMinistry(ministryId);
@@ -62,7 +62,7 @@ const MinistryMembersListScreen: React.FC = () => {
   }, [ministry?.acceptedMembers, ministry?.pendingMembers]);
 
   const handleConfirmMember = async (member: UserProfile) => {
-    if (user?.id !== ministry?.coordinatorId) {
+    if (user?.uid !== ministry?.coordinatorId) {
       Alert.alert('Error', 'Only the coordinator can confirm members.');
       return;
     }
@@ -83,7 +83,7 @@ const MinistryMembersListScreen: React.FC = () => {
   };
 
   const handleRejectMember = async (member: UserProfile) => {
-    if (user?.id !== ministry?.coordinatorId) {
+    if (user?.uid !== ministry?.coordinatorId) {
       Alert.alert('Error', 'Only the coordinator can confirm members.');
       return;
     }
@@ -111,7 +111,7 @@ const MinistryMembersListScreen: React.FC = () => {
 
   return (
     <Container>
-      {ministry?.pendingMembers && user?.id === ministry.coordinatorId && (
+      {ministry?.pendingMembers && user?.uid === ministry.coordinatorId && (
         <>
           <H4 marginBottom="$4">Solicitudes Pendientes</H4>
           <YStack py="$3" marginBottom="$5">

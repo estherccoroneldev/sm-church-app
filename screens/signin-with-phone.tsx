@@ -83,7 +83,7 @@ const SignInWithPhoneNumberScreen: React.FC = () => {
       {!confirmation ? (
         <YStack flex={1} gap="$4" px="$4">
           <TextField
-            label=""
+            label="Número de Teléfono"
             // placeholder="Número de Teléfono"
             keyboardType="phone-pad"
             returnKeyType="done"

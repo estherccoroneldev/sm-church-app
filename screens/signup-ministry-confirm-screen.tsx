@@ -3,10 +3,11 @@ import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Container } from 'components/Container';
 import { Alert } from 'react-native';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { useMinistryStore } from 'store/ministries-store';
 import { SizableText, useTheme } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
+import { UserProfile } from '../@types/user';
 import { ConnectParamList } from '../navigation/tab-navigator';
 import { signupUserToPendingMemberArray } from '../services/signup-pending-member';
 
@@ -21,8 +22,9 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
 }) => {
   const theme = useTheme();
   const { userId, ministryId, ministryName } = route.params;
-  const user = useAuth((state) => state.user);
-  const signOutAuth = useAuth((state) => state.signOut);
+  const user = useAuthStore((state) => state.userData);
+  const signOutAuth = useAuthStore((state) => state.signOut);
+  const isGuest = useAuthStore((state) => state.isGuest);
   const updateMinistry = useMinistryStore((state) => state.updateMinistry);
   const getMinistry = useMinistryStore((state) => state.getMinistry);
   const ministry = getMinistry(ministryId);
@@ -38,10 +40,7 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
         updateMinistry({
           ministryId,
           newData: {
-            pendingMembers: [
-              ...(ministry?.pendingMembers || []),
-              { uid: user?.id, ...user } as any,
-            ],
+            pendingMembers: [...(ministry?.pendingMembers || []), user as UserProfile],
           },
         });
 
@@ -64,7 +63,7 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
 
   return (
     <Container>
-      {user && !user.isGuest ? (
+      {user && !isGuest ? (
         <>
           <SizableText fontSize="$7" py="$4" color={theme.foreground} textAlign="center">
             Confirmar inscripción al ministerio

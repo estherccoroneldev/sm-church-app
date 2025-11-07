@@ -5,9 +5,9 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
+import { useAuthStore } from 'store/auth-store';
 import { H3, Image, SizableText, YStack } from 'tamagui';
 import { Container, PrimaryButton } from 'tamagui.config';
-import { useAuth } from '../store/auth-store';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,11 +15,12 @@ type WelcomeScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList,
 const Welcome: React.FC = () => {
   const navigation = useNavigation<WelcomeScreenNavigationProp>();
 
-  const signInAsGuest = useAuth((state) => state.signInAsGuest);
+  const signInAsGuest = useAuthStore((state) => state.signInAsGuest);
   const handleSignInAsGuest = async () => {
     try {
       await auth().signInAnonymously();
-      signInAsGuest();
+      const user = auth().currentUser;
+      signInAsGuest(user!);
     } catch (error: Error | any) {
       // Handle each firebase auth error
       const errorCode = error.code;

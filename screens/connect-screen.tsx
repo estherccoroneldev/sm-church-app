@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 import { HeaderButton } from 'components/HeaderButton';
 import React from 'react';
 import { Alert, Linking } from 'react-native';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { Sheet, SizableText, useTheme, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import CardItem from '../components/CardItem';
@@ -66,7 +66,7 @@ const Connect: React.FC = () => {
     }
   };
 
-  const signOutAuth = useAuth((state) => state.signOut);
+  const signOutAuth = useAuthStore((state) => state.signOut);
   const handleSignOut = async () => {
     try {
       signOutAuth();

@@ -5,7 +5,7 @@ import { RedirectItemPress } from 'components/RedirectItem';
 import { useGetMinistry } from 'hooks/use-get-ministry';
 import React from 'react';
 import { Alert, Dimensions, Linking } from 'react-native';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { H3, Image, Separator, SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { HomeParamList } from '../navigation/tab-navigator';
@@ -23,7 +23,7 @@ const MinistryDetails: React.FC = () => {
   const { navigate } = useNavigation<MinistryDetailsScreenNavigationProp>();
   const { params } = useRoute<MinistryDetailsRouteProp>();
   const theme = useTheme();
-  const user = useAuth((state) => state.user);
+  const user = useAuthStore((state) => state.userData);
   const ministryId = params.id;
   const { ministry, isLoading } = useGetMinistry(ministryId);
 
@@ -45,7 +45,7 @@ const MinistryDetails: React.FC = () => {
 
   const handleGoToConfirmationScreen = () => {
     navigate('SignupMinistryConfirm', {
-      userId: user?.id || '',
+      userId: user?.uid || '',
       ministryId: ministry.id,
       ministryName: ministry.title,
     });
@@ -81,10 +81,10 @@ const MinistryDetails: React.FC = () => {
   };
 
   const FooterComponent = () => {
-    const memberIsAccepted = ministry.acceptedMembers?.some((member) => member.uid === user?.id);
-    const memberIsPending = ministry.pendingMembers?.some((member) => member.uid === user?.id);
-    const shouldShowCoordinatorSection = user?.id === ministry.coordinatorId;
-    const shouldShowAdminSection = user?.role === 'admin' && user?.id !== ministry.coordinatorId;
+    const memberIsAccepted = ministry.acceptedMembers?.some((member) => member.uid === user?.uid);
+    const memberIsPending = ministry.pendingMembers?.some((member) => member.uid === user?.uid);
+    const shouldShowCoordinatorSection = user?.uid === ministry.coordinatorId;
+    const shouldShowAdminSection = user?.role === 'admin' && user?.uid !== ministry.coordinatorId;
 
     if (shouldShowAdminSection) {
       return (

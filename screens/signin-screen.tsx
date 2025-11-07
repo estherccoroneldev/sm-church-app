@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
@@ -41,7 +41,7 @@ const SignInScreen: React.FC = () => {
   const emailInputRef = React.useRef<TextInput>(null);
   const passwordInputRef = React.useRef<TextInput>(null);
 
-  const signIn = useAuth((state) => state.signIn);
+  const signIn = useAuthStore((state) => state.signIn);
 
   const handleSubmitForm = async (values: typeof initialValues, actions: any) => {
     // Ensure Firebase Auth is initialized
@@ -65,10 +65,12 @@ const SignInScreen: React.FC = () => {
 
       // TO DO: sets the actual name from DB source
       signIn({
-        id: user.uid,
-        name: `${user.displayName ?? ''}`,
-        isGuest: false,
-      });
+        uid: user.uid,
+        email: user.email || '',
+        firstName: user.displayName || 'User',
+        lastName: '', // TO DO: fetch last name from DB
+        role: 'member',
+      } as any);
 
       actions.resetForm();
       actions.setSubmitting(false);

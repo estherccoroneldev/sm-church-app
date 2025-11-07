@@ -23,13 +23,9 @@ const EventDetails: React.FC = () => {
   //     return;
   //   }
 
-  //   // setLoading(true);
   //   const result = await setEventReminder(eventDetails);
   //   if (result) {
-  //     Alert.alert('Reminder is set');
-
-  //   } else {
-  //     // setError('Could not set reminder.');
+  //     Alert.alert('Reminder agregado');
   //   }
   // };
 
@@ -40,7 +36,7 @@ const EventDetails: React.FC = () => {
 
     const result = await addEventToCalendar(eventDetails);
     if (result) {
-      Alert.alert('Event is added');
+      Alert.alert('Evento agregado al calendario');
     }
   };
 
