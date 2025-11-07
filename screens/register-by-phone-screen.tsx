@@ -1,7 +1,7 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { db, firestore } from 'config/firebase';
 import { Formik } from 'formik';
-import { AuthStackParamList } from 'navigation/auth-navigator';
+import { RootStackParamList } from 'navigation/root-stack-navigator';
 import React from 'react';
 import {
   Keyboard,
@@ -14,7 +14,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAuth } from 'store/auth-store';
+import { useAuthStore } from 'store/auth-store';
 import { RadioGroup, SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import * as Yup from 'yup';
@@ -53,21 +53,21 @@ const PRIVACY_LINK = 'https://www.iglesiasanmateo.org/pp-de-la-app-de-san-mateo.
 // TO DO: accessibility: add labels to inputs, aria-labels
 // TO DO: localization: translate strings to different languages
 
-type RegisterByPhoneRouteProp = RouteProp<AuthStackParamList, 'RegisterByPhone'>;
+type RegisterByPhoneRouteProp = RouteProp<RootStackParamList, 'RegisterByPhone'>;
 
 const RegisterByPhone: React.FC = () => {
   const { params } = useRoute<RegisterByPhoneRouteProp>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const theme = useTheme();
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [error, setError] = React.useState('');
+  const signIn = useAuthStore((state) => state.signIn);
 
   const firstNameInputRef = React.useRef<TextInput>(null);
   const lastNameInputRef = React.useRef<TextInput>(null);
   const emailInputRef = React.useRef<TextInput>(null);
   const phoneNumberInputRef = React.useRef<TextInput>(null);
-
-  const signIn = useAuth((state) => state.signIn);
 
   const handleSubmitForm = async (values: typeof initialValues, actions: any) => {
     // Client-side validation for olderThan13Years
@@ -102,11 +102,8 @@ const RegisterByPhone: React.FC = () => {
       await userDocRef.set(initialUserProfile, { merge: true });
       setMessage('User created successfully!');
       signIn({
-        id: params.userId,
-        name: `${values.firstName}`,
-        role: values.role as 'admin' | 'member' | 'coordinator' | 'guest',
-        isGuest: false,
-      });
+        ...initialUserProfile,
+      } as UserProfile);
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -125,6 +122,7 @@ const RegisterByPhone: React.FC = () => {
       }
     } finally {
       setLoading(false);
+      navigation.navigate('TabNavigator');
     }
   };
 
@@ -225,7 +223,8 @@ const RegisterByPhone: React.FC = () => {
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
                     size="$4"
-                    backgroundColor={'$tertiary'}
+                    backgroundColor={values.olderThan13Years === 'yes' ? '$gray3' : '$gray5'}
+                    checked={values.olderThan13Years === 'yes'}
                     onCheckedChange={(value) => {
                       handleChange('olderThan13Years')(value ? 'yes' : 'no');
                     }}
