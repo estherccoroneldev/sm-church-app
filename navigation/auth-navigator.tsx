@@ -13,10 +13,8 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
   Welcome: undefined;
   Register: undefined;
-  RegisterByPhone: { phoneNumber: string; userId: string };
   SignIn: undefined;
   SignInWithPhoneNumber: undefined;
-  PhoneVerificationScreen: { phoneNumber: string };
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -63,19 +61,6 @@ export default function AuthNavigator() {
         }}
       />
       <Stack.Screen
-        name="PhoneVerificationScreen"
-        component={PhoneVerificationScreen}
-        options={{
-          headerShown: true,
-          headerTitle: 'Verificación',
-          headerTitleAlign: 'center',
-          headerShadowVisible: false,
-          headerBackVisible: false,
-          headerBackButtonDisplayMode: 'minimal',
-          headerTitleStyle,
-        }}
-      />
-      <Stack.Screen
         name="Register"
         component={Register}
         options={{
@@ -83,19 +68,6 @@ export default function AuthNavigator() {
           headerTitle: 'Registro',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
-          headerBackButtonDisplayMode: 'minimal',
-          headerTitleStyle,
-        }}
-      />
-      <Stack.Screen
-        name="RegisterByPhone"
-        component={RegisterByPhone}
-        options={{
-          headerShown: true,
-          headerTitle: 'Registro',
-          headerTitleAlign: 'center',
-          headerShadowVisible: false,
-          headerBackVisible: false,
           headerBackButtonDisplayMode: 'minimal',
           headerTitleStyle,
         }}
