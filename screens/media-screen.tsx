@@ -1,27 +1,90 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { FlatList, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, Linking, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { H5, Image, SizableText, Spinner, useTheme } from 'tamagui';
+import { H5, Image, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
 import { YouTubeVideo } from '../@types/ytvideo';
 import useSermons from '../hooks/use-sermons';
 
+// const sermons = [
+//   {
+//     etag: '1',
+//     id: {
+//       videoId: 'ZTm4wIoZT8M',
+//     },
+//     snippet: {
+//       title: 'Hossana',
+//       description: 'Descripción del video 1',
+//       thumbnails: {
+//         high: {
+//           url: 'https://i.ytimg.com/vi/ZTm4wIoZT8M/hqdefault.jpg',
+//         },
+//       },
+//     },
+//   },
+//   {
+//     etag: '2',
+
+//     id: {
+//       videoId: 'xtlVUf6wB5I',
+//     },
+//     snippet: {
+//       title: 'Una palabra de Fe en Viernes Santo',
+//       description: 'Descripción del video 2',
+//       thumbnails: {
+//         high: {
+//           url: 'https://i.ytimg.com/vi/xtlVUf6wB5I/hqdefault.jpg',
+//         },
+//       },
+//     },
+//   },
+//   {
+//     etag: '3',
+
+//     id: {
+//       videoId: 'dABFDuN1CG0',
+//     },
+//     snippet: {
+//       title: 'La deuda de Amor',
+//       description: 'Descripción del video 3',
+//       thumbnails: {
+//         high: {
+//           url: 'https://i.ytimg.com/vi/dABFDuN1CG0/hqdefault.jpg',
+//         },
+//       },
+//     },
+//   },
+// ];
 const handlePressVideo = (videoId: string) => {
   const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
   Linking.openURL(youtubeUrl).catch((err) => console.error("Couldn't open URL:", err));
 };
 
 const renderVideoItem = ({ item }: { item: YouTubeVideo }) => (
-  <TouchableOpacity onPress={() => handlePressVideo(item.id.videoId)} style={styles.videoItem}>
-    <Image style={styles.thumbnail} source={{ uri: item.snippet.thumbnails.high.url }} />
-    <View style={styles.videoDetails}>
-      <H5 numberOfLines={2}>{item.snippet.title}</H5>
-      <SizableText fontFamily="$body" fontSize="$5" numberOfLines={3}>
-        {item.snippet.description}
-      </SizableText>
-    </View>
-  </TouchableOpacity>
+  <Pressable onPress={() => handlePressVideo(item.id.videoId)}>
+    <XStack mb="$3" px="$3" alignItems="center">
+      <Image
+        width={'50%'}
+        borderRadius={'$4'}
+        source={{ uri: item.snippet.thumbnails.high.url, width: 120, height: 110 }}
+      />
+      <YStack flex={1} ov="visible" p="$2" gap="$1">
+        <H5 flexShrink={1} numberOfLines={2} color={'$text'}>
+          {item.snippet.title}
+        </H5>
+        <SizableText
+          flexShrink={1}
+          fontFamily="$body"
+          fontSize="$5"
+          numberOfLines={2}
+          color={'$text'}>
+          {item.snippet.description}
+        </SizableText>
+      </YStack>
+    </XStack>
+  </Pressable>
 );
+
 const Media: React.FC = () => {
   const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
@@ -49,7 +112,6 @@ const Media: React.FC = () => {
         contentContainerStyle={{
           paddingTop: 24,
           paddingBottom: 24 + BOTTOM_TAB_HEIGHT,
-          paddingHorizontal: 16,
         }}
         ListEmptyComponent={renderEmptyComponent}
         data={sermons}
@@ -74,26 +136,5 @@ function keyExtractor(item: YouTubeVideo, index: number): string {
   }
   return index.toString();
 }
-
-const styles = StyleSheet.create({
-  videoItem: {
-    flexDirection: 'row',
-    borderRadius: 8,
-    marginBottom: 10,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  thumbnail: {
-    width: 100,
-  },
-  videoDetails: {
-    flex: 1,
-    padding: 12,
-  },
-});
 
 export default Media;

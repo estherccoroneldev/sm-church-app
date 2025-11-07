@@ -1,13 +1,10 @@
 import uniqBy from 'lodash/uniqBy';
 import React from 'react';
 
-import { YouTubeVideo } from '@types/ytvideo';
 import { fetchVideos } from 'services/ytvideos';
-// import { Sermon } from '../@types/sermon';
-// import fetchSermons from '../services/sermons';
+import { YouTubeVideo } from '../@types/ytvideo';
 
 export default function useSermons() {
-  // const [sermons, setSermons] = React.useState<Sermon[]>([]);
   const [sermons, setSermons] = React.useState<YouTubeVideo[]>([]);
   const [nextPageToken, setNextPageToken] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -16,8 +13,6 @@ export default function useSermons() {
   const getSermons = React.useCallback(async () => {
     if (loading || (!nextPageToken && sermons.length > 0)) return;
     try {
-      // const data = await fetchSermons();
-      // setSermons(data);
       setLoading(true);
 
       const data = await fetchVideos(nextPageToken);
