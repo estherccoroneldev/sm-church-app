@@ -149,7 +149,6 @@ const MinistryMembersListScreen: React.FC = () => {
                 ) : null}
                 {member.email ? (
                   <XStack
-                    backgroundColor={theme.borderColor}
                     py="$2"
                     justifyContent="space-between"
                     onPress={() => alertToCopyEmail(member.email)}>
@@ -161,7 +160,6 @@ const MinistryMembersListScreen: React.FC = () => {
                 ) : null}
                 {member.phoneNumber ? (
                   <XStack
-                    backgroundColor={theme.borderColor}
                     py="$2"
                     justifyContent="space-between"
                     onPress={() => alertToCopyPhone(member.phoneNumber as string)}>
@@ -207,7 +205,6 @@ function PendingListItem({
           </SizableText>
           {member.email ? (
             <XStack
-              backgroundColor={theme.borderColor}
               py="$2"
               justifyContent="space-between"
               onPress={() => alertToCopyEmail(member.email)}>
@@ -219,7 +216,6 @@ function PendingListItem({
           ) : null}
           {member.phoneNumber ? (
             <XStack
-              backgroundColor={theme.borderColor}
               py="$2"
               justifyContent="space-between"
               onPress={() => alertToCopyPhone(member.phoneNumber as string)}>
