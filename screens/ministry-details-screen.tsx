@@ -2,11 +2,12 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Container } from 'components/Container';
 import { RedirectItemPress } from 'components/RedirectItem';
+import { Image } from 'expo-image';
 import { useGetMinistry } from 'hooks/use-get-ministry';
 import React from 'react';
 import { Alert, Dimensions, Linking } from 'react-native';
 import { useAuthStore } from 'store/auth-store';
-import { H3, Image, Separator, SizableText, Spinner, useTheme, YStack } from 'tamagui';
+import { H3, Separator, SizableText, Spinner, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { HomeParamList } from '../navigation/tab-navigator';
 
@@ -175,12 +176,17 @@ const MinistryDetails: React.FC = () => {
       <YStack marginBottom="$4">
         <Image
           source={ministry.imageUrl ? { uri: ministry.imageUrl } : DEFAULT_IMAGE}
-          width="100%"
-          height={height * 0.35}
-          borderRadius="$6"
-          marginBottom="$2"
+          placeholder={DEFAULT_IMAGE}
+          style={{
+            width: '100%',
+            height: height * 0.35,
+            borderRadius: 16,
+            marginBottom: 4,
+          }}
+          contentFit="cover"
           alt={ministry.title}
           aria-label={ministry.title}
+          accessibilityRole="image"
         />
         <YStack marginVertical="$4">
           <H3>{ministry.title}</H3>
