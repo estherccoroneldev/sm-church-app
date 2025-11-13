@@ -1,7 +1,7 @@
+import { Image } from 'expo-image';
 import React from 'react';
 import { Dimensions, Pressable } from 'react-native';
-import { H3, H5, Image, SizableText, YStack } from 'tamagui';
-
+import { H3, H5, SizableText, YStack } from 'tamagui';
 const { width } = Dimensions.get('window');
 
 interface BaseItem {
@@ -62,16 +62,18 @@ const CardItem = <T extends BaseItem>({
           <YStack flex={1}>
             <Image
               source={image}
-              defaultSource={DEFAULT_IMAGE}
-              width="100%"
-              height={fullmode ? 220 : 180}
-              borderRadius="$6"
-              marginBottom="$1"
+              style={{
+                width: '100%',
+                height: fullmode ? 220 : 180,
+                borderRadius: 16,
+                marginBottom: 4,
+              }}
+              contentFit="cover"
               alt={item.title}
               aria-label={item.title}
               onError={(event) => {
-                if (event.nativeEvent.error) {
-                  console.error('Error loading image', event.nativeEvent.error);
+                if (event.error) {
+                  console.error('Error loading image', event.error);
                   setImage(DEFAULT_IMAGE);
                 }
               }}

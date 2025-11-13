@@ -1,5 +1,5 @@
 import type { SizeTokens, SwitchProps } from 'tamagui';
-import { Label, Separator, Switch, XStack } from 'tamagui';
+import { Label, Switch, XStack } from 'tamagui';
 
 interface SwitchWithLabelProps extends SwitchProps {
   size: SizeTokens;

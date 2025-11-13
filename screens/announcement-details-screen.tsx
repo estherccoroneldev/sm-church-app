@@ -52,9 +52,9 @@ const AnnouncementDetails: React.FC = () => {
   return (
     <DetailsLayout currentDetail={announcement as Announcement}>
       <YStack py="$4">
-        <SizableText textTransform="uppercase" fontFamily={'$body'} size={'$4'}>
+        {/* <SizableText textTransform="uppercase" fontFamily={'$body'} size={'$4'}>
           Acciones
-        </SizableText>
+        </SizableText> */}
         {/* <Pressable onPress={handleAddReminder}>
           {({ pressed }) => (
             <XStack

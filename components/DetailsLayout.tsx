@@ -1,7 +1,8 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { H3, Image, SizableText, useTheme, XStack, YStack } from 'tamagui';
+import { H3, SizableText, useTheme, XStack, YStack } from 'tamagui';
 import { Announcement } from '../@types/announcement';
 import { Container } from './Container';
 
@@ -28,12 +29,16 @@ const DetailsLayout = <T extends Announcement>({
     <Container>
       <Image
         source={imageUrl ? { uri: imageUrl } : DEFAULT_IMAGE}
-        width="100%"
-        height={height * 0.35}
-        borderRadius="$6"
-        marginBottom="$2"
+        style={{
+          width: '100%',
+          height: height * 0.35,
+          borderRadius: 16,
+          marginBottom: 4,
+        }}
+        contentFit="cover"
         alt={title}
         aria-label={title}
+        accessibilityRole="image"
       />
       <YStack marginVertical="$4">
         <H3>{title}</H3>
