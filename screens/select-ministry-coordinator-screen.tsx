@@ -1,8 +1,9 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { Container } from 'components/Container';
 import { HomeParamList } from 'navigation/tab-navigator';
 import React, { useState } from 'react';
-import { Alert, FlatList, TouchableOpacity } from 'react-native';
+import { Alert, FlatList, Pressable } from 'react-native';
 import { assignCoordinatorToMinistry } from 'services/assign-coordinator-to-ministry';
 import { useAuthStore } from 'store/auth-store';
 import { useMinistryStore } from 'store/ministries-store';
@@ -62,11 +63,10 @@ const SelectMinistryCoordinatorScreen: React.FC = () => {
   };
 
   const renderUserItem = ({ item }: { item: UserProfile }) => (
-    <TouchableOpacity onPress={() => handleSelectUser(item.uid)}>
+    <Pressable onPress={() => handleSelectUser(item.uid)}>
       <Card
-        padding="$4"
-        marginBottom="$3"
-        elevate
+        px="$4"
+        py="$3"
         backgroundColor={item.uid === selectedUserId ? '$blueLight' : '$background'}>
         <XStack gap="$4" alignItems="center" justifyContent="space-between">
           <FontAwesome name="user-circle-o" size={36} color={theme.text.get()} />
@@ -86,37 +86,41 @@ const SelectMinistryCoordinatorScreen: React.FC = () => {
               </SizableText>
             ) : null}
             {item.role ? (
-              <SizableText fontFamily={'$body'} fontSize={'$5'}>
+              <SizableText fontFamily={'$body'} fontSize={'$5'} color="$green10">
                 {item.role}
               </SizableText>
             ) : null}
           </YStack>
         </XStack>
       </Card>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (
-    <YStack flex={1} padding="$4" backgroundColor="$background">
-      <Text fontSize="$8" fontWeight="bold" marginBottom="$4">
-        Seleccione un Coordinador para este ministerio.
-      </Text>
+    <Container>
       <FlatList
         data={users}
         keyExtractor={(item) => item.uid}
         renderItem={renderUserItem}
         ItemSeparatorComponent={() => <Separator />}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <Text fontSize="$6" fontWeight="bold" marginBottom="$4">
+            Seleccione un Coordinador para este ministerio.
+          </Text>
+        }
+        ListFooterComponent={
+          <PrimaryButton
+            onPress={handleSave}
+            mt={'$6'}
+            mb={'$4'}
+            backgroundColor={theme.primary.get() as string}
+            size={'$5'}>
+            Guardar
+          </PrimaryButton>
+        }
       />
-      <PrimaryButton
-        onPress={handleSave}
-        mt={'$6'}
-        mb={'$4'}
-        backgroundColor={theme.primary.get() as string}
-        size={'$5'}>
-        Guardar
-      </PrimaryButton>
-    </YStack>
+    </Container>
   );
 };
 
