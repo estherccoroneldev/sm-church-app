@@ -70,7 +70,7 @@ export const PrimaryButton = styled(ButtonTamagui, {
   pressStyle: {
     backgroundColor: '#5EA1CA',
   },
-  maxWidth: 500,
+  // maxWidth: 500,
 
   // Shaddows
   shadowColor: '#000',
@@ -92,6 +92,7 @@ const colorPalette = {
   black: '#000000',
   primary: '#076CB5',
   secondary: '#C6233F',
+  blueLight: '#96d2f7ff',
   gray1: '#F8F8F8', // Lighter gray for light theme backgrounds
   gray2: '#EFEFEF',
   gray3: '#D1D1D1',

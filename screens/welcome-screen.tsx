@@ -74,20 +74,26 @@ const Welcome: React.FC = () => {
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
-          <PrimaryButton my="$4" fontSize={'$7'} onPress={handlePressSignIn}>
-            Iniciar Sesión
-          </PrimaryButton>
-          <SizableText
-            fontFamily={'$heading'}
-            fontSize="$6"
-            textAlign="right"
-            marginBottom="$6"
-            onPress={handleGoToForgotPassword}
-            opacity={0.7}
-            pressStyle={{ opacity: 0.5 }}
-            color="$blue10">
-            Olvidó su contraseña?
-          </SizableText>
+          <YStack
+            minWidth={width * 0.9}
+            px="$6"
+            justifyContent="center"
+            alignSelf="center"
+            gap="$2"
+            mt="$8">
+            <PrimaryButton onPress={handlePressSignIn}>Iniciar Sesión</PrimaryButton>
+            <SizableText
+              fontFamily={'$heading'}
+              fontSize="$6"
+              textAlign="right"
+              marginBottom="$6"
+              onPress={handleGoToForgotPassword}
+              opacity={0.7}
+              pressStyle={{ opacity: 0.5 }}
+              color="$blue10">
+              Olvidó su contraseña?
+            </SizableText>
+          </YStack>
         </Container>
         <Container justifyContent="flex-end" pb={'$4'}>
           <SizableText
