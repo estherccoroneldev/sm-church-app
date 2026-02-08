@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { Platform } from 'react-native';
 // import Modal from '../screens/modal';
+import { Platform } from 'react-native';
 import PhoneVerificationScreen from 'screens/phone-verification-screen';
 import RegisterByPhone from 'screens/register-by-phone-screen';
+import { UserProfileScreen } from 'screens/user-profile-screen';
 import { useTheme } from 'tamagui';
 import TabNavigator from './tab-navigator';
 
@@ -58,7 +60,7 @@ export default function RootStack() {
           }}
         />
       </Stack.Group>
-      {/* <Stack.Group
+      <Stack.Group
         screenOptions={{
           presentation: Platform.OS === 'ios' ? 'modal' : 'formSheet',
           headerBackButtonDisplayMode: 'minimal',
@@ -66,17 +68,14 @@ export default function RootStack() {
         }}>
         <Stack.Screen
           name="Modal"
-          component={Modal}
+          component={UserProfileScreen}
           options={{
-            title: 'Settings',
-            headerTitleStyle: {
-              fontSize: 24,
-              fontFamily: 'Outfit_600SemiBold',
-            },
+            title: 'Profile',
+            headerTitleStyle,
             headerShadowVisible: false,
           }}
         />
-      </Stack.Group> */}
+      </Stack.Group>
     </Stack.Navigator>
   );
 }

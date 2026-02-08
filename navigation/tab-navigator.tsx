@@ -3,16 +3,17 @@ import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/b
 // import { StackScreenProps } from '@react-navigation/stack';
 
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ConnectDetailsScreen from 'screens/connect-details-screen';
+// import ConnectDetailsScreen from 'screens/connect-details-screen';
 import ServingListScreen from 'screens/ministries-list-screen';
 import MinistryDetails from 'screens/ministry-details-screen';
 import { Event } from '../@types/event';
 import { Ministry, MinistryChangeType } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
+import { ProfileButton } from 'components/ProfileButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SelectMinistryCoordinatorScreen from 'screens/select-ministry-coordinator-screen';
@@ -29,9 +30,10 @@ import Giving from '../screens/giving-screen';
 import Home from '../screens/home-screen';
 import MediaDetails from '../screens/media-details-screen';
 import Media from '../screens/media-screen';
+import { RootStackParamList } from './root-stack-navigator';
 
 const { width } = Dimensions.get('screen');
-// type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
@@ -316,7 +318,7 @@ export function ConnectStackScreen() {
         name="ConnectTab"
         component={Connect}
       />
-      <ConnectStack.Screen
+      {/* <ConnectStack.Screen
         options={{
           title: 'Conéctate',
           headerTitleStyle: {
@@ -328,7 +330,7 @@ export function ConnectStackScreen() {
         }}
         name="ConnectDetails"
         component={ConnectDetailsScreen}
-      />
+      /> */}
       <ConnectStack.Screen
         name="MinistryDetails"
         options={{
@@ -427,7 +429,7 @@ export function ConnectStackScreen() {
   );
 }
 
-export default function TabLayout() {
+export default function TabLayout({ navigation }: Props) {
   const { bottom } = useSafeAreaInsets();
   const theme = useTheme();
   const tabOptions = {
@@ -468,11 +470,11 @@ export default function TabLayout() {
         component={HomeStackScreen}
         options={{
           title: '',
-          headerShown: false,
+          headerShadowVisible: false,
+          headerRight: () => <ProfileButton onPress={() => navigation.navigate('Modal')} />,
           headerStyle: {
             backgroundColor: theme.background.get() as string,
           },
-          // TO DO: this button should be splitted out into a composed component, handle typos
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
