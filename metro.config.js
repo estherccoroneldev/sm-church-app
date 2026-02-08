@@ -3,7 +3,7 @@ const { getDefaultConfig } = require('@expo/metro-config');
 const config = getDefaultConfig(__dirname);
 // This is needed to support the `cjs` extension for CommonJS modules
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'cjs'];
-
+config.resolver.resolverMainFields = ['browser', 'main'];
 // Disable package exports to avoid issues with certain packages (firebase/auth)
 // that may not be compatible with the package exports feature
 // This is particularly useful for packages that are not fully ESM compliant
