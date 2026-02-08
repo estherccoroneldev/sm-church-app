@@ -12,6 +12,7 @@ interface AuthState {
 
   setAuthUser: (user: FirebaseAuthTypes.User | null) => void;
   setUserData: (data: UserProfile | null) => void;
+  updateAvatarUrl: (url: string) => void;
   setInitializing: (isInitializing: boolean) => void;
   signIn: (userData: UserProfile) => void;
   signInAsGuest: (user: FirebaseAuthTypes.User) => void;
@@ -33,7 +34,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }),
 
   setUserData: (userData) => set({ userData }),
-
+  updateAvatarUrl: (url) =>
+    set((state) => ({
+      userData: state.userData ? { ...state.userData, avatarUrl: url } : null,
+    })),
   setInitializing: (initializing) => set({ initializing }),
 
   signIn: (userData) =>
