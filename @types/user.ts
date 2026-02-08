@@ -11,12 +11,8 @@ export type UserProfile = {
   olderThan13Years?: 'yes' | 'no';
   acceptedTermsCond?: 'yes' | 'no';
   ministryIds?: string[]; // references to Ministry documents
-  // avatarUrl?: string;
-  // isActive?: boolean;
-  isVerified?: boolean;
   isPhoneVerified?: boolean;
-  // knowMoreAboutMinistries?: 'yes' | 'no';
-  // hasSelectedMinistries?: 'yes' | 'no';
+  avatarUrl?: string;
   createdAt: FirebaseFirestoreTypes.Timestamp;
   updatedAt?: FirebaseFirestoreTypes.Timestamp;
 };
