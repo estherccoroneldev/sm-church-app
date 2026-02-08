@@ -13,12 +13,12 @@ import { Container } from '../components/Container';
 import { ConnectParamList } from '../navigation/tab-navigator';
 
 const connectItems = [
-  {
-    id: 'item-1',
-    title: 'Conéctate con nosotros',
-    description: 'Haznos saber cómo podemos apoyarte.',
-    imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-4296_orig.jpg',
-  },
+  // {
+  //   id: 'item-1',
+  //   title: 'Conéctate con nosotros',
+  //   description: 'Haznos saber cómo podemos apoyarte.',
+  //   imageUrl: 'https://www.iglesiasanmateo.org/uploads/5/6/5/4/56543779/dsc-4296_orig.jpg',
+  // },
   {
     id: 'item-2',
     title: 'Encuentra un grupo',
