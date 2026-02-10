@@ -16,6 +16,7 @@ import { Sermon } from '../@types/sermon';
 import { Group } from '@types/group';
 import { ProfileButton } from 'components/ProfileButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
+import GroupDetails from 'screens/group-details-screen';
 import GroupsListScreen from 'screens/groups-list-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SelectMinistryCoordinatorScreen from 'screens/select-ministry-coordinator-screen';
@@ -431,7 +432,7 @@ export function ConnectStackScreen() {
           headerBackButtonDisplayMode: 'minimal',
           headerShadowVisible: false,
         }}
-        component={GroupsListScreen} // TO DO: import GroupDetailsScreen
+        component={GroupDetails}
       />
 
       <ConnectStack.Screen
