@@ -5,8 +5,8 @@ import { H3, Image, YStack } from 'tamagui';
 const { width } = Dimensions.get('window');
 
 const Header = () => (
-  <YStack mt="$4" mb="$8" gap="$1">
-    <YStack backgroundColor={'$white'} py="$2" px="$6" my="$2" borderRadius={18} alignSelf="center">
+  <YStack mt="$2" mb="$4" gap="$1">
+    <YStack backgroundColor={'$white'} px="$6" borderRadius={18} alignSelf="center">
       <Image
         source={require('../../assets/logo-sm-w-shadow.png')}
         style={{

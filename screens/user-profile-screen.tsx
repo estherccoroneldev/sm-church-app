@@ -1,12 +1,14 @@
 import { db } from 'config/firebase';
 import { Formik } from 'formik';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as yup from 'yup';
 
 import { uploadProfilePhoto } from '../services/upload-profile-photo';
 
+import TextField from 'components/TextField';
+import { TextInput } from 'react-native';
 import { useAuthStore } from 'store/auth-store';
-import { Button, H3, Image, Input, Spinner, Square, Text, Theme, YStack } from 'tamagui';
+import { Button, H3, Image, Spinner, Square, Text, Theme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 
 interface ProfileFormValues {
@@ -26,7 +28,8 @@ export const profileSchema = yup.object().shape({
 export function UserProfileScreen() {
   const { setUserData, updateAvatarUrl, userData: user } = useAuthStore();
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
-
+  const firstNameInputRef = React.useRef<TextInput>(null);
+  const lastNameInputRef = React.useRef<TextInput>(null);
   if (!user) {
     return <Text>Loading User Data...</Text>;
   }
@@ -84,9 +87,9 @@ export function UserProfileScreen() {
 
   return (
     <Theme name="light">
-      <YStack flex={1} paddingHorizontal="$4" paddingTop="$10" backgroundColor="$background">
+      <YStack flex={1} px="$6" paddingTop="$10" backgroundColor="$background">
         <H3 marginBottom="$5" textAlign="center">
-          Edit Profile
+          Editar Perfil
         </H3>
 
         {/* --- Profile Photo Section --- */}
@@ -107,11 +110,11 @@ export function UserProfileScreen() {
 
           <Button
             marginTop="$2"
-            size="$3"
+            size="$4"
             onPress={handlePhotoUpload}
             disabled={isPhotoUploading}
             icon={isPhotoUploading ? () => <Spinner size="small" /> : undefined}>
-            {isPhotoUploading ? 'Uploading...' : 'Change Photo'}
+            {isPhotoUploading ? 'Cargando...' : 'Actualizar foto'}
           </Button>
         </YStack>
 
@@ -121,15 +124,18 @@ export function UserProfileScreen() {
           validationSchema={profileSchema}
           onSubmit={handleUpdateProfile}>
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
-            <YStack space="$4">
-              {/* First Name Input */}
+            <YStack gap="$4">
               <YStack>
-                <Input
-                  size="$4"
-                  placeholder="First Name"
+                {/* First Name Input */}
+                <TextField
+                  label="Nombre"
                   onChangeText={handleChange('firstName')}
                   onBlur={handleBlur('firstName')}
+                  returnKeyType="next"
+                  onSubmitEditing={() => lastNameInputRef.current?.focus()}
+                  ref={firstNameInputRef}
                   value={values.firstName}
+                  variant="primary"
                 />
                 {errors.firstName && touched.firstName && (
                   <Text color="$red10" fontSize="$2" marginTop="$1">
@@ -140,12 +146,14 @@ export function UserProfileScreen() {
 
               {/* Last Name Input */}
               <YStack>
-                <Input
-                  size="$4"
-                  placeholder="Last Name"
+                <TextField
+                  label="Apellido"
                   onChangeText={handleChange('lastName')}
                   onBlur={handleBlur('lastName')}
+                  returnKeyType="next"
+                  ref={lastNameInputRef}
                   value={values.lastName}
+                  variant="primary"
                 />
                 {errors.lastName && touched.lastName && (
                   <Text color="$red10" fontSize="$2" marginTop="$1">
@@ -158,11 +166,12 @@ export function UserProfileScreen() {
               <PrimaryButton
                 marginTop="$4"
                 size="$5"
-                // theme="active"
-                onPress={handleSubmit as any}
+                onPress={() => handleSubmit()}
                 disabled={isSubmitting}
-                icon={isSubmitting ? () => <Spinner size="small" /> : undefined}>
-                {isSubmitting ? 'Saving...' : 'Save Changes'}
+                icon={
+                  isSubmitting ? () => <Spinner size="small" color="$background" /> : undefined
+                }>
+                {isSubmitting ? 'Guardando...' : 'Guardar'}
               </PrimaryButton>
             </YStack>
           )}
