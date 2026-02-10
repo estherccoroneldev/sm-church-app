@@ -54,8 +54,10 @@ const Connect: React.FC = () => {
 
   const handlePress = (itemId: string) => () => {
     switch (itemId) {
-      case 'item-1':
-        return navigate('ConnectDetails');
+      // case 'item-1':
+      //   return navigate('ConnectDetails');
+      case 'item-2':
+        return navigate('GroupsList');
       case 'item-3':
         return navigate('ServingList');
       case 'item-4':
@@ -127,7 +129,7 @@ const Connect: React.FC = () => {
 
   return (
     <Container>
-      <YStack mt="$2">
+      <YStack mt="$8">
         <XStack flex={1} justifyContent="space-between" py="$4" mb="$2">
           <SizableText fontFamily={'$heading'} fontSize={'$8'}>
             Conéctate
@@ -156,63 +158,77 @@ const Connect: React.FC = () => {
         onPositionChange={setPosition}
         zIndex={100_000}
         animation="lazy">
-        <Sheet.Overlay />
-        <YStack flex={1} backgroundColor={theme.background.get() as string}>
-          <SizableText
-            fontFamily={'$heading'}
-            fontSize={'$8'}
-            alignSelf="center"
-            px="$4"
-            py="$4"
-            mb="$8">
-            Settings
-          </SizableText>
-          <XStack my="$6" mx="$6" justifyContent="space-between" alignItems="center">
+        <Sheet.Overlay
+          animation="lazy"
+          enterStyle={{ opacity: 0 }}
+          exitStyle={{ opacity: 0 }}
+          backgroundColor="$shadowColor"
+          opacity={0.5}
+        />
+        <Sheet.Handle />
+
+        <Sheet.Frame
+          padding="$4"
+          justifyContent="center"
+          borderTopLeftRadius="$9"
+          borderTopRightRadius="$9">
+          <YStack flex={1} backgroundColor={theme.background.get() as string}>
             <SizableText
               fontFamily={'$heading'}
-              fontSize="$5"
-              color="#076CB5"
-              textDecorationLine="underline"
-              onPress={() => {
-                // Open terms of service link
-                Linking.openURL(TERMS_LINK);
-              }}>
-              Términos de Servicio
+              fontSize={'$8'}
+              alignSelf="center"
+              px="$4"
+              py="$4"
+              mb="$8">
+              Preferencias
             </SizableText>
-            {/* <Separator mx="$2" vertical /> */}
-            <SizableText
-              fontFamily={'$heading'}
-              fontSize="$5"
-              color="#076CB5"
-              textDecorationLine="underline"
-              onPress={() => {
-                // Open privacy policy link
-                Linking.openURL(PRIVACY_LINK);
-              }}>
-              Políticas de Privacidad
-            </SizableText>
-          </XStack>
-          <YStack flex={1} mt="$2" p="$8" justifyContent="flex-end">
-            <SizableText
-              fontFamily="$body"
-              fontSize="$6"
-              color={'#C6233F'}
-              textAlign="center"
-              onPress={handlePressDeleteAccount}>
-              Eliminar Cuenta
-            </SizableText>
-            <PrimaryButton
-              size="$5"
-              mt="$6"
-              mb="$2"
-              fontSize={'$6'}
-              onPress={handleSignOut}
-              backgroundColor={'#076CB5'}
-              pressStyle={{ opacity: 0.9 }}>
-              Cerrar Sesión
-            </PrimaryButton>
+            <YStack gap="$4" my="$6" mx="$6" justifyContent="space-between" alignItems="center">
+              <SizableText
+                fontFamily={'$heading'}
+                fontSize="$6"
+                color="#076CB5"
+                textDecorationLine="underline"
+                onPress={() => {
+                  // Open terms of service link
+                  Linking.openURL(TERMS_LINK);
+                }}>
+                Términos de Servicio
+              </SizableText>
+              {/* <Separator mx="$2" vertical /> */}
+              <SizableText
+                fontFamily={'$heading'}
+                fontSize="$6"
+                color="#076CB5"
+                textDecorationLine="underline"
+                onPress={() => {
+                  // Open privacy policy link
+                  Linking.openURL(PRIVACY_LINK);
+                }}>
+                Políticas de Privacidad
+              </SizableText>
+            </YStack>
+            <YStack flex={1} mt="$2" p="$8" justifyContent="flex-end">
+              <SizableText
+                fontFamily="$body"
+                fontSize="$6"
+                color={'#C6233F'}
+                textAlign="center"
+                onPress={handlePressDeleteAccount}>
+                Eliminar Cuenta
+              </SizableText>
+              <PrimaryButton
+                size="$5"
+                mt="$6"
+                mb="$2"
+                fontSize={'$6'}
+                onPress={handleSignOut}
+                backgroundColor={'#076CB5'}
+                pressStyle={{ opacity: 0.9 }}>
+                Cerrar Sesión
+              </PrimaryButton>
+            </YStack>
           </YStack>
-        </YStack>
+        </Sheet.Frame>
       </Sheet>
     </Container>
   );
