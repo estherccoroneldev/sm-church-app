@@ -1,12 +1,13 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { useAuthStore } from 'store/auth-store';
-import { H3, Image, SizableText, YStack } from 'tamagui';
+import { H4, SizableText, YStack } from 'tamagui';
 import { Container, PrimaryButton } from 'tamagui.config';
 
 const { width, height } = Dimensions.get('window');
@@ -44,14 +45,32 @@ const Welcome: React.FC = () => {
 
   return (
     <>
-      <StatusBar translucent hideTransitionAnimation="fade" />
-      <YStack justifyContent="center" alignItems="center" flex={1.5}>
-        <Image
-          source={require('../assets/background-welcome.png')}
+      <StatusBar style="light" translucent hideTransitionAnimation="fade" />
+      <YStack justifyContent="center" alignItems="center" flex={1.6}>
+        {/* <Image
+          source={require('../assets/SM-church.jpeg')}
+          // source={require('../assets/welcome-to-church.jpeg')}
+          // source={require('../assets/background-welcome.png')}
           alt="Logo"
           width={width}
           height={height * 0.5}
-          resizeMethod="scale"
+          resizeMethod="resize"
+          content="contain"
+        /> */}
+
+        <Image
+          // source={require('../assets/SM-church.jpeg')}
+          source={require('../assets/welcome-to-church.jpeg')}
+          style={{
+            width: '100%',
+            height: height * 0.5,
+          }}
+          contentFit="cover"
+          contentPosition="top"
+          alt="Logo"
+          transition={200}
+          cachePolicy="disk"
+          accessibilityRole="image"
         />
       </YStack>
 
@@ -66,11 +85,11 @@ const Welcome: React.FC = () => {
         padding="$4">
         <Container>
           {/* Welcome to San Mateo Episcopal Church */}
-          <H3 textAlign="center" marginBottom="$4">
+          <H4 textAlign="center" marginBottom="$4">
             Le damos la bienvenida a la Iglesia Episcopal San Mateo
-          </H3>
+          </H4>
           {/* Join us in our mission to serve the community and grow in faith. */}
-          <SizableText fontFamily={'$body'} fontSize="$6" textAlign="center" marginBottom="$6">
+          <SizableText fontFamily={'$body'} fontSize="$5" textAlign="center" marginBottom="$6">
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
@@ -84,7 +103,7 @@ const Welcome: React.FC = () => {
             <PrimaryButton onPress={handlePressSignIn}>Iniciar Sesión</PrimaryButton>
             <SizableText
               fontFamily={'$heading'}
-              fontSize="$6"
+              fontSize="$4"
               textAlign="right"
               marginBottom="$6"
               onPress={handleGoToForgotPassword}
@@ -98,7 +117,7 @@ const Welcome: React.FC = () => {
         <Container justifyContent="flex-end" pb={'$4'}>
           <SizableText
             fontFamily={'$body'}
-            fontSize="$6"
+            fontSize="$4"
             textAlign="center"
             marginBottom="$2"
             onPress={handleSignInAsGuest}
@@ -106,13 +125,13 @@ const Welcome: React.FC = () => {
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
             Continuar como{' '}
-            <SizableText fontFamily={'$heading'} fontSize="$6" color="$blue10">
+            <SizableText fontFamily={'$heading'} fontSize="$4" color="$blue10">
               Invitado
             </SizableText>
           </SizableText>
           <SizableText
             fontFamily={'$body'}
-            fontSize="$6"
+            fontSize="$4"
             textAlign="center"
             marginBottom="$2"
             onPress={handlePressRegister}
@@ -120,7 +139,7 @@ const Welcome: React.FC = () => {
             hoverStyle={{ opacity: 1 }}
             pressStyle={{ opacity: 0.5 }}>
             No tiene una cuenta?{' '}
-            <SizableText fontFamily={'$heading'} fontSize="$6" color="$blue10">
+            <SizableText fontFamily={'$heading'} fontSize="$4" color="$blue10">
               Crear cuenta
             </SizableText>
           </SizableText>
