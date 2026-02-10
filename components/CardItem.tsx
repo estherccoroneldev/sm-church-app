@@ -69,6 +69,7 @@ const CardItem = <T extends BaseItem>({
                 marginBottom: 4,
               }}
               contentFit="cover"
+              key={item.id}
               alt={item.title}
               aria-label={item.title}
               onError={(event) => {
@@ -77,6 +78,8 @@ const CardItem = <T extends BaseItem>({
                   setImage(DEFAULT_IMAGE);
                 }
               }}
+              transition={200}
+              cachePolicy="disk"
               accessibilityRole="image"
             />
 

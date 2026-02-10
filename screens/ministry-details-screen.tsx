@@ -27,7 +27,6 @@ const MinistryDetails: React.FC = () => {
   const user = useAuthStore((state) => state.userData);
   const ministryId = params.id;
   const { ministry, isLoading } = useGetMinistry(ministryId);
-
   if (isLoading) {
     return (
       <Container>
@@ -44,6 +43,9 @@ const MinistryDetails: React.FC = () => {
     );
   }
 
+  const [image, setImage] = React.useState(
+    ministry.imageUrl ? { uri: ministry.imageUrl } : DEFAULT_IMAGE
+  );
   const handleGoToConfirmationScreen = () => {
     navigate('SignupMinistryConfirm', {
       userId: user?.uid || '',
@@ -175,7 +177,7 @@ const MinistryDetails: React.FC = () => {
     <Container>
       <YStack marginBottom="$4">
         <Image
-          source={ministry.imageUrl ? { uri: ministry.imageUrl } : DEFAULT_IMAGE}
+          source={image}
           placeholder={DEFAULT_IMAGE}
           style={{
             width: '100%',
@@ -187,6 +189,14 @@ const MinistryDetails: React.FC = () => {
           alt={ministry.title}
           aria-label={ministry.title}
           accessibilityRole="image"
+          transition={200}
+          cachePolicy="disk"
+          onError={(event) => {
+            if (event.error) {
+              console.error('Error loading image', event.error);
+              setImage(DEFAULT_IMAGE);
+            }
+          }}
         />
         <YStack marginVertical="$4">
           <H3>{ministry.title}</H3>
@@ -196,7 +206,7 @@ const MinistryDetails: React.FC = () => {
         </SizableText>
       </YStack>
 
-      <Separator borderColor={theme.text.get()} my="$6" />
+      <Separator borderColor={theme.background.get()} my="$6" />
 
       <FooterComponent />
     </Container>

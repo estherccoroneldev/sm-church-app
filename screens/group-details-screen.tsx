@@ -16,6 +16,10 @@ const GroupDetails: React.FC = () => {
   const { params } = useRoute<GroupDetailsRouteProp>();
   const { group } = params;
 
+  const [image, setImage] = React.useState(
+    group.imageUrl ? { uri: group.imageUrl } : DEFAULT_IMAGE
+  );
+
   if (!group) {
     return (
       <Container>
@@ -38,7 +42,7 @@ const GroupDetails: React.FC = () => {
     <Container>
       <YStack marginBottom="$4">
         <Image
-          source={group.imageUrl ? { uri: group.imageUrl } : DEFAULT_IMAGE}
+          source={image}
           placeholder={DEFAULT_IMAGE}
           style={{
             width: '100%',
@@ -46,10 +50,19 @@ const GroupDetails: React.FC = () => {
             borderRadius: 16,
             marginBottom: 4,
           }}
+          key={group.id}
           contentFit="cover"
           alt={group.title}
           aria-label={group.title}
           accessibilityRole="image"
+          transition={200}
+          cachePolicy="disk"
+          onError={(event) => {
+            if (event.error) {
+              console.error('Error loading image', event.error);
+              setImage(DEFAULT_IMAGE);
+            }
+          }}
         />
         <YStack marginVertical="$4">
           <H3>{group.title}</H3>
@@ -58,15 +71,28 @@ const GroupDetails: React.FC = () => {
           {group.description}
         </SizableText>
         {group.contactName ? (
-          <SizableText fontFamily={'$body'} fontSize="$7">
-            {group.contactName}
-          </SizableText>
+          <YStack mt="$8">
+            <SizableText mb="$4" size="$4">
+              {'Contacto'.toUpperCase()}
+            </SizableText>
+
+            <SizableText fontFamily={'$body'} fontSize="$7">
+              {group.contactName}
+            </SizableText>
+          </YStack>
         ) : null}
         {group.contactPhone ? (
-          <SizableText fontFamily={'$body'} fontSize="$7">
-            {group.contactPhone}
-          </SizableText>
+          <YStack mt="$8">
+            <SizableText mb="$4" size="$4">
+              {'Número de Contacto'.toUpperCase()}
+            </SizableText>
+
+            <SizableText fontFamily={'$body'} fontSize="$7">
+              {group.contactPhone}
+            </SizableText>
+          </YStack>
         ) : null}
+
         {group.groupLink && (
           <>
             <SizableText fontSize="$5" textAlign="center" marginTop="$2" color="$green10">
