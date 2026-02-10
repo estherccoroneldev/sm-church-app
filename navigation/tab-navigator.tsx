@@ -13,8 +13,10 @@ import { Event } from '../@types/event';
 import { Ministry, MinistryChangeType } from '../@types/ministry';
 import { Sermon } from '../@types/sermon';
 // import { HeaderButton } from '../components/HeaderButton';
+import { Group } from '@types/group';
 import { ProfileButton } from 'components/ProfileButton';
 import AnnouncementDetails from 'screens/announcement-details-screen';
+import GroupsListScreen from 'screens/groups-list-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SelectMinistryCoordinatorScreen from 'screens/select-ministry-coordinator-screen';
 import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
@@ -111,6 +113,10 @@ export type ConnectParamList = {
   };
   ConnectDetails: undefined;
   ServingList: undefined;
+  GroupsList: undefined;
+  GroupDetails: {
+    group: Group;
+  };
 };
 
 // Define the type for the Tab Navigator's parameter list
@@ -399,6 +405,35 @@ export function ConnectStackScreen() {
         }}
         component={SignupMinistryConfirmScreen}
       />
+
+      <ConnectStack.Screen
+        name="GroupsList"
+        options={{
+          headerTitle: 'Grupos',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerBackButtonDisplayMode: 'minimal',
+          headerShadowVisible: false,
+        }}
+        component={GroupsListScreen}
+      />
+
+      <ConnectStack.Screen
+        name="GroupDetails"
+        options={{
+          headerTitle: 'Detalles',
+          headerTitleStyle: {
+            ...headerTitleStyle,
+            color: theme.text.get() as string,
+          },
+          headerBackButtonDisplayMode: 'minimal',
+          headerShadowVisible: false,
+        }}
+        component={GroupsListScreen} // TO DO: import GroupDetailsScreen
+      />
+
       <ConnectStack.Screen
         name="ServingList"
         options={{

@@ -1,6 +1,4 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { Platform } from 'react-native';
-// import Modal from '../screens/modal';
 import { Platform } from 'react-native';
 import PhoneVerificationScreen from 'screens/phone-verification-screen';
 import RegisterByPhone from 'screens/register-by-phone-screen';
@@ -70,7 +68,7 @@ export default function RootStack() {
           name="Modal"
           component={UserProfileScreen}
           options={{
-            title: 'Profile',
+            title: '',
             headerTitleStyle,
             headerShadowVisible: false,
           }}
