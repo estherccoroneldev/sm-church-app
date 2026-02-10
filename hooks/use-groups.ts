@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Group } from '@types/group';
-import { fetchGroups } from 'services/groups';
+import { getData } from 'services/groups';
 
 export default function useGroups() {
   const [groups, setGroups] = React.useState<Group[]>([]);
@@ -12,7 +12,7 @@ export default function useGroups() {
     try {
       setLoading(true);
 
-      const data = await fetchGroups();
+      const data = await getData();
 
       if (data) {
         setGroups(data);
