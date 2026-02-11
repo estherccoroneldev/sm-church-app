@@ -68,8 +68,7 @@ export default function RootStack() {
           name="Modal"
           component={UserProfileScreen}
           options={{
-            title: '',
-            headerTitleStyle,
+            headerShown: false,
             headerShadowVisible: false,
           }}
         />

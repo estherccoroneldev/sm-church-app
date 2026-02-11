@@ -1,29 +1,28 @@
 import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/bottom-tabs';
-// import { RootStackParamList } from './root-stack-navigator';
-// import { StackScreenProps } from '@react-navigation/stack';
 
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Dimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import ConnectDetailsScreen from 'screens/connect-details-screen';
-import ServingListScreen from 'screens/ministries-list-screen';
-import MinistryDetails from 'screens/ministry-details-screen';
-import { Event } from '../@types/event';
-import { Ministry, MinistryChangeType } from '../@types/ministry';
-import { Sermon } from '../@types/sermon';
-// import { HeaderButton } from '../components/HeaderButton';
+import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import { Group } from '@types/group';
 import { ProfileButton } from 'components/ProfileButton';
+import { Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnnouncementDetails from 'screens/announcement-details-screen';
 import GroupDetails from 'screens/group-details-screen';
 import GroupsListScreen from 'screens/groups-list-screen';
+import ServingListScreen from 'screens/ministries-list-screen';
+import MinistryDetails from 'screens/ministry-details-screen';
 import MinistryMembersListScreen from 'screens/ministry-members-list-screen';
 import SelectMinistryCoordinatorScreen from 'screens/select-ministry-coordinator-screen';
 import SignupMinistryConfirmScreen from 'screens/signup-ministry-confirm-screen';
 import UpdateGroupLinkScreen from 'screens/update-group-link-screen';
 import { useTheme } from 'tamagui';
 import { Announcement } from '../@types/announcement';
+import { Event } from '../@types/event';
+import { Ministry, MinistryChangeType } from '../@types/ministry';
+import { Sermon } from '../@types/sermon';
 import { TabBarIcon } from '../components/TabBarIcon';
 import AboutUsScreen from '../screens/about-us-screen';
 import { default as Connect } from '../screens/connect-screen';
@@ -36,7 +35,7 @@ import Media from '../screens/media-screen';
 import { RootStackParamList } from './root-stack-navigator';
 
 const { width } = Dimensions.get('screen');
-type Props = NativeStackScreenProps<RootStackParamList, 'TabNavigator'>;
+type Props = NativeStackNavigationProp<RootStackParamList, 'TabNavigator'>;
 
 export type HomeParamList = {
   Home: undefined;
@@ -143,6 +142,7 @@ const headerTitleStyle = {
 } as const;
 
 export function HomeStackScreen() {
+  const { navigate } = useNavigation<Props>();
   const theme = useTheme();
   return (
     <HomeStack.Navigator
@@ -154,14 +154,19 @@ export function HomeStackScreen() {
       <HomeStack.Screen
         name="Home"
         options={{
-          headerShown: false,
+          title: '',
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: theme.background.get() as string,
+          },
+          headerRight: () => <ProfileButton onPress={() => navigate('Modal')} />,
         }}
         component={Home}
       />
       <HomeStack.Screen
         name="MinistryDetails"
         options={{
-          title: 'Detalles',
+          title: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -229,7 +234,7 @@ export function HomeStackScreen() {
       <HomeStack.Screen
         name="EventDetails"
         options={{
-          title: 'Detalles del evento',
+          title: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -242,7 +247,7 @@ export function HomeStackScreen() {
       <HomeStack.Screen
         name="AnnouncementDetails"
         options={{
-          title: 'Detalles del anúncio',
+          title: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -341,7 +346,7 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         name="MinistryDetails"
         options={{
-          title: 'Detalles',
+          title: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -424,7 +429,7 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         name="GroupDetails"
         options={{
-          headerTitle: 'Detalles',
+          headerTitle: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -451,7 +456,7 @@ export function ConnectStackScreen() {
       <ConnectStack.Screen
         name="AboutUs"
         options={{
-          headerTitle: 'Sobre nosotros',
+          headerTitle: 'Conócenos',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -465,7 +470,7 @@ export function ConnectStackScreen() {
   );
 }
 
-export default function TabLayout({ navigation }: Props) {
+export default function TabLayout() {
   const { bottom } = useSafeAreaInsets();
   const theme = useTheme();
   const tabOptions = {
@@ -505,12 +510,7 @@ export default function TabLayout({ navigation }: Props) {
         name="HomeStack"
         component={HomeStackScreen}
         options={{
-          title: '',
-          headerShadowVisible: false,
-          headerRight: () => <ProfileButton onPress={() => navigation.navigate('Modal')} />,
-          headerStyle: {
-            backgroundColor: theme.background.get() as string,
-          },
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
