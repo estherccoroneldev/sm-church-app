@@ -5,10 +5,20 @@ import * as yup from 'yup';
 
 import { uploadProfilePhoto } from '../services/upload-profile-photo';
 
+import { FontAwesome } from '@expo/vector-icons';
 import TextField from 'components/TextField';
-import { TextInput } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuthStore } from 'store/auth-store';
-import { Button, H3, Image, Spinner, Square, Text, Theme, YStack } from 'tamagui';
+import { Avatar, H3, ScrollView, SizableText, Spinner, Text, useTheme, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 
 interface ProfileFormValues {
@@ -26,19 +36,48 @@ export const profileSchema = yup.object().shape({
 });
 
 export function UserProfileScreen() {
-  const { setUserData, updateAvatarUrl, userData: user } = useAuthStore();
+  const theme = useTheme();
+
+  const { setUserData, updateAvatarUrl, userData: user, isGuest } = useAuthStore();
+  const userFB = useAuthStore((state) => state.user);
+  const signOutAuth = useAuthStore((state) => state.signOut);
+
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
   const firstNameInputRef = React.useRef<TextInput>(null);
   const lastNameInputRef = React.useRef<TextInput>(null);
-  if (!user) {
-    return <Text>Loading User Data...</Text>;
+
+  const handleRedirectToLogin = async () => {
+    try {
+      signOutAuth();
+    } catch (error) {
+      console.error('Error signing out:', JSON.stringify(error));
+    }
+  };
+
+  if (!user || userFB?.isAnonymous || (userFB && isGuest)) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: theme.background.get() as string,
+          justifyContent: 'center',
+          padding: 50,
+        }}>
+        <PrimaryButton
+          size="$5"
+          mt="$6"
+          mb="$2"
+          fontSize={'$6'}
+          onPress={handleRedirectToLogin}
+          pressStyle={{ opacity: 0.9 }}>
+          Iniciar Sesión
+        </PrimaryButton>
+      </SafeAreaView>
+    );
   }
 
-  // --- HANDLERS ---
-
-  // ** 1. Photo Picker Handler **
   const handlePhotoUpload = useCallback(async () => {
-    if (!user.uid) return;
+    if (!user?.uid) return;
 
     setIsPhotoUploading(true);
     try {
@@ -55,7 +94,6 @@ export function UserProfileScreen() {
     }
   }, [user.uid, updateAvatarUrl]);
 
-  // ** 2. Form Submission Handler **
   const handleUpdateProfile = useCallback(
     async (values: ProfileFormValues, actions: any) => {
       actions.setSubmitting(true);
@@ -65,7 +103,6 @@ export function UserProfileScreen() {
           lastName: values.lastName,
         });
 
-        // Update Zustand Store
         setUserData({ ...user, ...values });
 
         console.info('Profile updated successfully!');
@@ -79,104 +116,123 @@ export function UserProfileScreen() {
     [user, setUserData]
   );
 
-  // --- RENDER ---
   const initialValues: ProfileFormValues = {
     firstName: user.firstName,
     lastName: user.lastName,
   };
 
   return (
-    <Theme name="light">
-      <YStack flex={1} px="$6" paddingTop="$10" backgroundColor="$background">
-        <H3 marginBottom="$5" textAlign="center">
-          Editar Perfil
-        </H3>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: theme.background.get() as string,
+      }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            keyboardShouldPersistTaps="handled">
+            <YStack flex={1} px="$4" backgroundColor="$background">
+              <H3 pb="$4" textAlign="center">
+                Editar Perfil
+              </H3>
 
-        {/* --- Profile Photo Section --- */}
-        <YStack alignItems="center" marginBottom="$6">
-          <Square size={120} borderRadius="$12" overflow="hidden" backgroundColor="$gray5">
-            {user.avatarUrl ? (
-              <Image
-                source={{ uri: user.avatarUrl }}
-                style={{ width: '100%', height: '100%' }}
-                resizeMode="cover"
-              />
-            ) : (
-              <Text fontSize="$6" color="$gray10">
-                No Photo
-              </Text>
-            )}
-          </Square>
-
-          <Button
-            marginTop="$2"
-            size="$4"
-            onPress={handlePhotoUpload}
-            disabled={isPhotoUploading}
-            icon={isPhotoUploading ? () => <Spinner size="small" /> : undefined}>
-            {isPhotoUploading ? 'Cargando...' : 'Actualizar foto'}
-          </Button>
-        </YStack>
-
-        {/* --- Formik / Name Fields Section --- */}
-        <Formik
-          initialValues={initialValues}
-          validationSchema={profileSchema}
-          onSubmit={handleUpdateProfile}>
-          {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
-            <YStack gap="$4">
-              <YStack>
-                {/* First Name Input */}
-                <TextField
-                  label="Nombre"
-                  onChangeText={handleChange('firstName')}
-                  onBlur={handleBlur('firstName')}
-                  returnKeyType="next"
-                  onSubmitEditing={() => lastNameInputRef.current?.focus()}
-                  ref={firstNameInputRef}
-                  value={values.firstName}
-                  variant="primary"
-                />
-                {errors.firstName && touched.firstName && (
-                  <Text color="$red10" fontSize="$2" marginTop="$1">
-                    {errors.firstName}
-                  </Text>
-                )}
+              <YStack flex={1} alignItems="center" mb="$2" gap="$2">
+                <TouchableOpacity onPress={handlePhotoUpload}>
+                  <Avatar circular size="$10">
+                    <Avatar.Image accessibilityLabel="profile-photo" src={user.avatarUrl} />
+                    <Avatar.Fallback delayMs={600} backgroundColor="$gray5" />
+                  </Avatar>
+                  <YStack position="absolute" bottom={0} right={10}>
+                    <FontAwesome name="edit" size={24} color={'#333333'} />
+                  </YStack>
+                </TouchableOpacity>
+                {isPhotoUploading ? (
+                  <SizableText size={'$3'}>La foto se está cargando...</SizableText>
+                ) : null}
               </YStack>
 
-              {/* Last Name Input */}
-              <YStack>
-                <TextField
-                  label="Apellido"
-                  onChangeText={handleChange('lastName')}
-                  onBlur={handleBlur('lastName')}
-                  returnKeyType="next"
-                  ref={lastNameInputRef}
-                  value={values.lastName}
-                  variant="primary"
-                />
-                {errors.lastName && touched.lastName && (
-                  <Text color="$red10" fontSize="$2" marginTop="$1">
-                    {errors.lastName}
-                  </Text>
-                )}
-              </YStack>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={profileSchema}
+                onSubmit={handleUpdateProfile}>
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  touched,
+                  isSubmitting,
+                }) => (
+                  <>
+                    <YStack>
+                      {/* First Name Input */}
+                      <TextField
+                        label="Nombre"
+                        onChangeText={handleChange('firstName')}
+                        onBlur={handleBlur('firstName')}
+                        returnKeyType="next"
+                        onSubmitEditing={() => lastNameInputRef.current?.focus()}
+                        ref={firstNameInputRef}
+                        value={values.firstName}
+                        variant="primary"
+                      />
+                      {errors.firstName && touched.firstName && (
+                        <Text color="$red10" fontSize="$2" marginTop="$1">
+                          {errors.firstName}
+                        </Text>
+                      )}
+                    </YStack>
 
-              {/* Submit Button */}
-              <PrimaryButton
-                marginTop="$4"
-                size="$5"
-                onPress={() => handleSubmit()}
-                disabled={isSubmitting}
-                icon={
-                  isSubmitting ? () => <Spinner size="small" color="$background" /> : undefined
-                }>
-                {isSubmitting ? 'Guardando...' : 'Guardar'}
-              </PrimaryButton>
+                    {/* Last Name Input */}
+                    <YStack>
+                      <TextField
+                        label="Apellido"
+                        onChangeText={handleChange('lastName')}
+                        onBlur={handleBlur('lastName')}
+                        returnKeyType="next"
+                        ref={lastNameInputRef}
+                        value={values.lastName}
+                        variant="primary"
+                      />
+                      {errors.lastName && touched.lastName && (
+                        <Text color="$red10" fontSize="$2" marginTop="$1">
+                          {errors.lastName}
+                        </Text>
+                      )}
+                    </YStack>
+
+                    {/* Submit Button */}
+                    <PrimaryButton
+                      my="$6"
+                      size="$5"
+                      onPress={() => handleSubmit()}
+                      disabled={isSubmitting}
+                      icon={
+                        isSubmitting
+                          ? () => <Spinner size="small" color="$background" />
+                          : undefined
+                      }>
+                      {isSubmitting ? 'Guardando...' : 'Guardar'}
+                    </PrimaryButton>
+                  </>
+                )}
+              </Formik>
             </YStack>
-          )}
-        </Formik>
-      </YStack>
-    </Theme>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+});
