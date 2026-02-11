@@ -80,32 +80,29 @@ const Welcome: React.FC = () => {
         borderTopRightRadius={30}
         borderTopLeftRadius={30}
         mt={-30}
-        pt={30}
+        pt={20}
         backgroundColor="$background"
-        padding="$4">
+        px="$4">
         <Container>
           {/* Welcome to San Mateo Episcopal Church */}
-          <H4 textAlign="center" marginBottom="$4">
-            Le damos la bienvenida a la Iglesia Episcopal San Mateo
-          </H4>
+          <H4 textAlign="center">Le damos la bienvenida!</H4>
           {/* Join us in our mission to serve the community and grow in faith. */}
-          <SizableText fontFamily={'$body'} fontSize="$5" textAlign="center" marginBottom="$6">
+          <SizableText fontFamily={'$body'} fontSize="$5" textAlign="center" my="$4">
             Únase a nosotros en nuestra misión de servir a la comunidad y crecer en la fe.
           </SizableText>
 
           <YStack
             minWidth={width * 0.9}
+            py="$8"
             px="$6"
             justifyContent="center"
             alignSelf="center"
-            gap="$2"
-            mt="$8">
+            gap="$2">
             <PrimaryButton onPress={handlePressSignIn}>Iniciar Sesión</PrimaryButton>
             <SizableText
               fontFamily={'$heading'}
               fontSize="$4"
               textAlign="right"
-              marginBottom="$6"
               onPress={handleGoToForgotPassword}
               opacity={0.7}
               pressStyle={{ opacity: 0.5 }}
@@ -114,12 +111,11 @@ const Welcome: React.FC = () => {
             </SizableText>
           </YStack>
         </Container>
-        <Container justifyContent="flex-end" pb={'$4'}>
+        <Container justifyContent="flex-end" gap="$1">
           <SizableText
             fontFamily={'$body'}
             fontSize="$4"
             textAlign="center"
-            marginBottom="$2"
             onPress={handleSignInAsGuest}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
@@ -133,7 +129,6 @@ const Welcome: React.FC = () => {
             fontFamily={'$body'}
             fontSize="$4"
             textAlign="center"
-            marginBottom="$2"
             onPress={handlePressRegister}
             opacity={0.7}
             hoverStyle={{ opacity: 1 }}
