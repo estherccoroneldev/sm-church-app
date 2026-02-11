@@ -129,7 +129,7 @@ const Connect: React.FC = () => {
 
   return (
     <Container>
-      <YStack mt="$8">
+      <YStack mt="$4">
         <XStack flex={1} justifyContent="space-between" py="$4" mb="$2">
           <SizableText fontFamily={'$heading'} fontSize={'$8'}>
             Conéctate

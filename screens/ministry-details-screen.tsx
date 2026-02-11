@@ -25,8 +25,13 @@ const MinistryDetails: React.FC = () => {
   const { params } = useRoute<MinistryDetailsRouteProp>();
   const theme = useTheme();
   const user = useAuthStore((state) => state.userData);
+  const userFB = useAuthStore((state) => state.user);
+  const isGuest = useAuthStore((state) => state.isGuest);
+  const signOutAuth = useAuthStore((state) => state.signOut);
+
   const ministryId = params.id;
   const { ministry, isLoading } = useGetMinistry(ministryId);
+
   if (isLoading) {
     return (
       <Container>
@@ -81,6 +86,14 @@ const MinistryDetails: React.FC = () => {
     navigate('SelectMinistryCoordinator', {
       ministryId: ministry.id,
     });
+  };
+
+  const handleRedirectToLogin = async () => {
+    try {
+      signOutAuth();
+    } catch (error) {
+      console.error('Error signing out:', JSON.stringify(error));
+    }
   };
 
   const FooterComponent = () => {
@@ -208,7 +221,19 @@ const MinistryDetails: React.FC = () => {
 
       <Separator borderColor={theme.background.get()} my="$6" />
 
-      <FooterComponent />
+      {!user || userFB?.isAnonymous || (userFB && isGuest) ? (
+        <PrimaryButton
+          size="$5"
+          mt="$6"
+          mb="$2"
+          fontSize={'$6'}
+          onPress={handleRedirectToLogin}
+          pressStyle={{ opacity: 0.9 }}>
+          Crear Cuenta
+        </PrimaryButton>
+      ) : (
+        <FooterComponent />
+      )}
     </Container>
   );
 };
