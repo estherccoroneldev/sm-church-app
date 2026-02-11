@@ -1,4 +1,3 @@
-import { getMonth } from 'date-fns';
 import React from 'react';
 import { getData } from 'services/events';
 import { useUpcomingEventsStore } from 'store/upcoming-events-store';
@@ -28,7 +27,8 @@ export default function useUpcomingEvents() {
 
   React.useEffect(() => {
     getEvents();
-  }, [getEvents]);
+  }, []);
+
   const upcomingEvents = useUpcomingEventsStore((state) => state.upcomingEvents);
   const events =
     Object.values(upcomingEvents).filter((event): event is Event => event !== undefined) ?? [];
@@ -43,9 +43,7 @@ export default function useUpcomingEvents() {
     }
     const indexES = months.spanish.findIndex((month) => month === monthLabel);
     const monthLabelEN = months.english[indexES];
-    // TO DO: remove this entire logic when implementing the intl month picker, pleeeeease. It's a mess
-
-    const monthIndex = getMonth(parseDate(`${monthLabelEN} 1, 2000`));
+    const monthIndex = parseDate(`${monthLabelEN} 1, 2000, 11:00:00 AM`).getMonth();
 
     setEventsByMonth(
       [...events].filter((eventItem) => {
