@@ -2,59 +2,10 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { FlatList, Linking, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { H5, Image, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
+import { H6, Image, Separator, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
 import { YouTubeVideo } from '../@types/ytvideo';
 import useSermons from '../hooks/use-sermons';
 
-// const sermons = [
-//   {
-//     etag: '1',
-//     id: {
-//       videoId: 'ZTm4wIoZT8M',
-//     },
-//     snippet: {
-//       title: 'Hossana',
-//       description: 'Descripción del video 1',
-//       thumbnails: {
-//         high: {
-//           url: 'https://i.ytimg.com/vi/ZTm4wIoZT8M/hqdefault.jpg',
-//         },
-//       },
-//     },
-//   },
-//   {
-//     etag: '2',
-
-//     id: {
-//       videoId: 'xtlVUf6wB5I',
-//     },
-//     snippet: {
-//       title: 'Una palabra de Fe en Viernes Santo',
-//       description: 'Descripción del video 2',
-//       thumbnails: {
-//         high: {
-//           url: 'https://i.ytimg.com/vi/xtlVUf6wB5I/hqdefault.jpg',
-//         },
-//       },
-//     },
-//   },
-//   {
-//     etag: '3',
-
-//     id: {
-//       videoId: 'dABFDuN1CG0',
-//     },
-//     snippet: {
-//       title: 'La deuda de Amor',
-//       description: 'Descripción del video 3',
-//       thumbnails: {
-//         high: {
-//           url: 'https://i.ytimg.com/vi/dABFDuN1CG0/hqdefault.jpg',
-//         },
-//       },
-//     },
-//   },
-// ];
 const handlePressVideo = (videoId: string) => {
   const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
   Linking.openURL(youtubeUrl).catch((err) => console.error("Couldn't open URL:", err));
@@ -62,20 +13,20 @@ const handlePressVideo = (videoId: string) => {
 
 const renderVideoItem = ({ item }: { item: YouTubeVideo }) => (
   <Pressable onPress={() => handlePressVideo(item.id.videoId)}>
-    <XStack mb="$3" px="$3" alignItems="center">
+    <XStack my="$2" px="$2">
       <Image
         width={'50%'}
         borderRadius={'$4'}
-        source={{ uri: item.snippet.thumbnails.high.url, width: 120, height: 110 }}
+        source={{ uri: item.snippet.thumbnails.high.url, height: 100 }}
       />
-      <YStack flex={1} ov="visible" p="$2" gap="$1">
-        <H5 flexShrink={1} numberOfLines={2} color={'$text'}>
+      <YStack flex={1} ov="visible" px="$2">
+        <H6 flexShrink={1} numberOfLines={2} color={'$text'}>
           {item.snippet.title}
-        </H5>
+        </H6>
         <SizableText
           flexShrink={1}
           fontFamily="$body"
-          fontSize="$5"
+          fontSize="$4"
           numberOfLines={2}
           color={'$text'}>
           {item.snippet.description}
@@ -118,8 +69,9 @@ const Media: React.FC = () => {
         renderItem={renderVideoItem}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator
+        ItemSeparatorComponent={() => <Separator />}
         // Load more when reaching the end of the list
-        onEndReached={getSermons}
+        onEndReached={() => getSermons()}
         onEndReachedThreshold={0.7}
         ListFooterComponent={sermons.length > 9 && loading ? <Spinner size="large" /> : null}
       />

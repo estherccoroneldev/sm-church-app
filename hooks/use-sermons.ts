@@ -4,32 +4,38 @@ import React from 'react';
 import { fetchVideos } from 'services/ytvideos';
 import { YouTubeVideo } from '../@types/ytvideo';
 
-export default function useSermons() {
+const useSermons = () => {
   const [sermons, setSermons] = React.useState<YouTubeVideo[]>([]);
-  const [nextPageToken, setNextPageToken] = React.useState<string>('');
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState(false);
+  const [nextPageToken, setNextPageToken] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
+  const isFetching = React.useRef(false);
+
   const getSermons = React.useCallback(async () => {
-    if (loading || (!nextPageToken && sermons.length > 0)) return;
+    if (isFetching.current) return;
+
+    if (sermons.length > 0 && !nextPageToken) return;
+
     try {
+      isFetching.current = true;
       setLoading(true);
+      setError(null);
 
       const data = await fetchVideos(nextPageToken);
 
       if (data) {
-        // Prevent duplicates
-        setSermons((prevSermons) => uniqBy([...prevSermons, ...data.items], 'id.videoId'));
-
-        setNextPageToken(data.nextPageToken);
+        setSermons((prev) => uniqBy([...prev, ...data.items], 'id.videoId'));
+        setNextPageToken(data.nextPageToken || null);
       }
-    } catch (error) {
+    } catch (err) {
       setError('Error fetching sermons');
-      console.error('Error fetching sermons:', JSON.stringify(error));
+      console.error(err);
     } finally {
       setLoading(false);
+      isFetching.current = false;
     }
-  }, []);
+  }, [nextPageToken, sermons.length]);
 
   React.useEffect(() => {
     getSermons();
@@ -37,6 +43,8 @@ export default function useSermons() {
 
   return React.useMemo(
     () => ({ sermons, loading, error, getSermons }),
-    [loading, error, sermons, getSermons]
+    [sermons, loading, error, getSermons]
   );
-}
+};
+
+export default useSermons;
