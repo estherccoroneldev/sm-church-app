@@ -102,9 +102,9 @@ const SignInWithPhoneNumberScreen: React.FC = () => {
           </PrimaryButton>
           <SizableText
             fontFamily={'$heading'}
-            fontSize="$6"
+            fontSize="$5"
             textAlign="right"
-            my="$6"
+            my="$2"
             onPress={handleGoToEmailSignIn}
             opacity={0.7}
             pressStyle={{ opacity: 0.5 }}

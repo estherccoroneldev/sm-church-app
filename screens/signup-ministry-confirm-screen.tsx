@@ -85,7 +85,7 @@ const SignupMinistryConfirmScreen: React.FC<SignupMinistryConfirmScreenProps> = 
       ) : (
         <>
           <SizableText fontSize="$6" marginBottom="$6" color={theme.foreground}>
-            Por favor inicie sesión para inscribirse en el ministerio {ministryName}. Pero no se
+            Por favor inicie sesión para inscribirse en el ministerio {ministryName}. No se
             preocupe, es rápido y sencillo.
           </SizableText>
           <PrimaryButton

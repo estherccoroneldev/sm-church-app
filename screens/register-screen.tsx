@@ -265,7 +265,7 @@ const Register: React.FC = () => {
                   ) : null}
 
                   <YStack>
-                    <SizableText fontSize="$6" marginBottom="$2" mt="$6">
+                    <SizableText fontSize="$5" marginBottom="$2" mt="$6">
                       Seleccione su género (opcional)
                     </SizableText>
                     <RadioGroup aria-labelledby="Select a gender" name="Genero (opcional)">
@@ -278,7 +278,7 @@ const Register: React.FC = () => {
 
                   <SwitchWithLabel
                     label="Es mayor de 13 años?"
-                    size="$4"
+                    size="$2"
                     backgroundColor={values.olderThan13Years === 'yes' ? '$gray3' : '$gray5'}
                     checked={values.olderThan13Years === 'yes'}
                     onCheckedChange={(value) => {

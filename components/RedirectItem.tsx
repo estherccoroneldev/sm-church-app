@@ -17,10 +17,10 @@ export const RedirectItemPress = forwardRef<
           my="$2"
           py="$3"
           opacity={pressed ? 0.8 : 1}>
-          <SizableText fontFamily={'$heading'} fontSize="$7" color={'$primary'}>
+          <SizableText fontFamily={'$heading'} fontSize="$6" color={'$primary'}>
             {title}
           </SizableText>
-          <FontAwesome name="arrow-right" size={20} color={theme.primary.get()} />
+          <FontAwesome name="arrow-right" size={16} color={theme.primary.get()} />
         </XStack>
       )}
     </Pressable>

@@ -7,7 +7,7 @@ import { SocialMediaButton } from '../../components/SocialMediaButton';
 
 const FACEBOOK_URL = 'https://www.facebook.com/sanmateohouston';
 const IG_URL = 'https://www.instagram.com/sanmateohouston';
-const YT_URL = 'https://www.youtube.com/channel/UCyGuJT26kWZ7XnUYJlYXk7g';
+const YT_URL = 'https://www.youtube.com/channel/UCye5RWxk9jsY7hTLl3QI41Q';
 const PAYPAL_URL =
   'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=94JP94PZWK5X4&source=url';
 
@@ -46,10 +46,10 @@ const Footer: React.FC = () => (
       <ZelleDonateButton />
     </YStack>
     <YStack my="$4">
-      <H3 aria-label="Follow Us" my="$6">
+      <H4 aria-label="Follow Us" my="$6" px="$4" textAlign="center">
         {/* Follow Us on Social Media */}
         Síguenos en Nuestras Redes Sociales
-      </H3>
+      </H4>
       <XStack justifyContent="space-around">
         <SocialMediaButton
           onPress={() => openExternalUrl(FACEBOOK_URL)}

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { User } from 'store/auth-store';
 import { H3, Image, YStack } from 'tamagui';
 const { width } = Dimensions.get('window');
 
 const Header = () => (
-  <YStack mt="$2" mb="$4" gap="$1">
+  <YStack mb="$4" gap="$1">
     <YStack backgroundColor={'$white'} px="$6" borderRadius={18} alignSelf="center">
       <Image
         source={require('../../assets/logo-sm-w-shadow.png')}

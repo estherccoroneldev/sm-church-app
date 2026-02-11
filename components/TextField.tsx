@@ -35,7 +35,7 @@ export type TextFieldProps = PropsWithChildren<TextInputProps> & {
 const TextField: React.FC<TextFieldProps> = ({ variant = 'default', label, ref, ...props }) => {
   return (
     <YStack mt="$4">
-      <SizableText my="$2" fontFamily={'$body'} color="$text" fontSize={'$6'}>
+      <SizableText my="$2" fontFamily={'$body'} color="$text" fontSize="$5">
         {label}
       </SizableText>
       <StyledTextInput ref={ref} {...props} style={[{}, props.style]} variant={variant} />

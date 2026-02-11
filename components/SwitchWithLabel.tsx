@@ -17,7 +17,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
         justifyContent="flex-end"
         size={props.size}
         fontFamily={'$body'}
-        fontSize="$6"
+        fontSize="$5"
         color="$text">
         {props.label}
       </Label>
