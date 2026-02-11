@@ -44,6 +44,10 @@
     ],
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "backgroundColor": "#00000000",
+      "translucent": true
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "buildNumber": "1",

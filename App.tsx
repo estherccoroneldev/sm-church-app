@@ -61,7 +61,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <TamaguiProvider config={config} defaultTheme={theme}>
-        <StatusBar style={'light'} translucent={false} />
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} translucent={false} />
         <NavigationContainer ref={navigationRef}>
           <AppNavigator />
         </NavigationContainer>
