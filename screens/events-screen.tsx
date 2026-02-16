@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useUpcomingEvents from 'hooks/use-upcoming-events';
 import React, { useState } from 'react';
 import { FlatList, ListRenderItem, Modal } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, H3, Separator, SizableText, Spinner, useTheme, XStack, YStack } from 'tamagui';
 import { PrimaryButton } from 'tamagui.config';
 import { Event } from '../@types/event';
@@ -31,6 +31,8 @@ const renderEmptyComponent = (loading: boolean) => () =>
 const EventsScreen: React.FC = () => {
   const theme = useTheme();
   const BOTTOM_TAB_HEIGHT = useBottomTabBarHeight();
+  const { bottom } = useSafeAreaInsets();
+
   const { navigate } = useNavigation<EventsScreenNavigationProp>();
   const { events, loading, eventsByMonth, getEventsByMonth } = useUpcomingEvents();
 
@@ -100,7 +102,8 @@ const EventsScreen: React.FC = () => {
             flex={1}
             justifyContent="flex-end"
             alignItems="center"
-            backgroundColor={'$background'}>
+            backgroundColor={'$background'}
+            pb={bottom}>
             <YStack
               width="100%"
               height="70%"

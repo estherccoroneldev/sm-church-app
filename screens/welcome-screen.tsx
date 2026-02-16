@@ -6,14 +6,16 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthStackParamList } from 'navigation/auth-navigator';
 import React from 'react';
 import { Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuthStore } from 'store/auth-store';
-import { H4, SizableText, YStack } from 'tamagui';
+import { H4, SizableText, useTheme, YStack } from 'tamagui';
 import { Container, PrimaryButton } from 'tamagui.config';
 
 const { width, height } = Dimensions.get('window');
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'Welcome'>;
 const Welcome: React.FC = () => {
+  const theme = useTheme();
   const navigation = useNavigation<WelcomeScreenNavigationProp>();
 
   const signInAsGuest = useAuthStore((state) => state.signInAsGuest);
@@ -44,22 +46,15 @@ const Welcome: React.FC = () => {
   };
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: theme.background.get() as string,
+      }}
+      edges={['left', 'right', 'bottom']}>
       <StatusBar style="light" translucent hideTransitionAnimation="fade" />
       <YStack justifyContent="center" alignItems="center" flex={1.6}>
-        {/* <Image
-          source={require('../assets/SM-church.jpeg')}
-          // source={require('../assets/welcome-to-church.jpeg')}
-          // source={require('../assets/background-welcome.png')}
-          alt="Logo"
-          width={width}
-          height={height * 0.5}
-          resizeMethod="resize"
-          content="contain"
-        /> */}
-
         <Image
-          // source={require('../assets/SM-church.jpeg')}
           source={require('../assets/welcome-to-church.jpeg')}
           style={{
             width: '100%',
@@ -140,7 +135,7 @@ const Welcome: React.FC = () => {
           </SizableText>
         </Container>
       </YStack>
-    </>
+    </SafeAreaView>
   );
 };
 

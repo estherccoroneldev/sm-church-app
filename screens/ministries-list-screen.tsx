@@ -42,7 +42,7 @@ const MinistriesListScreen: React.FC = () => {
       <Spinner size="large" color={'#076CB5'} />
     ) : (
       <SizableText size={'$6'} alignSelf="center">
-        No ministries.
+        Aún no hay oportunidades de servicio disponibles.
       </SizableText>
     );
 

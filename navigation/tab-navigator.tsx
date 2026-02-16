@@ -285,7 +285,7 @@ export function EventsStackScreen() {
       <EventsStack.Screen
         name="EventDetails"
         options={{
-          title: 'Evento',
+          title: '',
           headerTitleStyle: {
             ...headerTitleStyle,
             color: theme.text.get() as string,
@@ -479,7 +479,7 @@ export default function TabLayout() {
     tabBarStyle: {
       backgroundColor: theme.tertiary.get() as string,
       position: 'absolute',
-      bottom: 12 + bottom,
+      bottom: 8 + bottom, // TO DO: test this change on iOS as well
       borderRadius: 16,
       shadowColor: '#000',
       shadowOffset: {
