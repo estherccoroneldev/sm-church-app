@@ -3,6 +3,7 @@
     "name": "SanMateoIglesiaEpiscopal",
     "slug": "sm-church-app",
     "version": "1.0.1",
+    // "version": "1.0.2", // Android
     "web": {
       "favicon": "./assets/icon.png"
     },
@@ -40,6 +41,12 @@
           "calendarPermission": "The app needs to access your calendar.",
           "remindersPermission": "The app needs to access your reminders."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Iglesia San Mateo App requiere acceso a tu galería para que puedas elegir una imagen y personalizar tu foto de perfil dentro de la aplicación."
+        }
       ]
     ],
     "orientation": "portrait",
@@ -50,13 +57,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1",
       "icon": "./assets/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.lestherccoroneldev.smchurchapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": ["remote-notification", "fetch"]
+        "UIBackgroundModes": ["remote-notification", "fetch"],
+        "NSPhotoLibraryUsageDescription": "Iglesia San Mateo App requiere acceso a tu galería para que puedas elegir una imagen y personalizar tu foto de perfil dentro de la aplicación."
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "entitlements": {
