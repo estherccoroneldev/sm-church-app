@@ -61,7 +61,7 @@ The project leverages the following technologies:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/sm-church-app.git
+   git clone https://github.com/estherccoroneldev/sm-church-app.git
    cd sm-church-app
    ```
 
@@ -81,14 +81,6 @@ The project leverages the following technologies:
 
 4. Scan the QR code with the Expo Go app to run the app on your device.
 
-## Contributing
-
-Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) and adhere to the code of conduct.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For questions or feedback, please contact the project maintainers at **sanmateochurch@example.com**.

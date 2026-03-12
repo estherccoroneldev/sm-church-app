@@ -45,7 +45,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Iglesia San Mateo App requiere acceso a tu galería para que puedas elegir una imagen y personalizar tu foto de perfil dentro de la aplicación."
+          "photosPermission": "Allow access to your photo library to choose an image and personalize your profile picture."
         }
       ]
     ],
@@ -63,7 +63,7 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": ["remote-notification", "fetch"],
-        "NSPhotoLibraryUsageDescription": "Iglesia San Mateo App requiere acceso a tu galería para que puedas elegir una imagen y personalizar tu foto de perfil dentro de la aplicación."
+        "NSPhotoLibraryUsageDescription": "Allow access to your photo library to choose an image and personalize your profile picture."
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "entitlements": {
