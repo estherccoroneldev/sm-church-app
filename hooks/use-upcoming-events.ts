@@ -55,7 +55,7 @@ export default function useUpcomingEvents() {
 
   return React.useMemo(
     () => ({
-      events,
+      events: sortByDate([...events], 'desc'),
       recentEvents,
       eventsByMonth,
       getEventsByMonth,
